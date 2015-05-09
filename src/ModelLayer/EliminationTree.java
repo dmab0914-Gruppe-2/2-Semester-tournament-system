@@ -30,17 +30,23 @@ public class EliminationTree {
 			rounds = new ArrayList<>();
 			generateTree(calculateHeight(calculateNodes(startMatches)));
 		}
-		System.out.println("Heihgt: " + calculateHeight(calculateNodes(startMatches)));
+		System.out.println("");
+		System.out.println("Height: " + calculateHeight(calculateNodes(startMatches)));
 		System.out.println("matches: " + matches.size());
 		System.out.println("adjMatches: " + adjMatches.size());
+		for(LinkedList<Match> l : adjMatches) {
+			System.out.println(l.size());
+		}
 	}
 
-	private Match generateTree(int height) {
-		while(matches.size() < calculateNodes(startMatches)) {
+	private Match generateTree(int height) { //TODO add to rounds list
+		if(height != 0) {
+			System.out.println("Height: " + height);
 			Match match = new Match();
 			matches.add(match);
-			LinkedList<Match> list = new LinkedList<>();
 			int index = matches.indexOf(match);
+			System.out.println("Index: " + index);
+			LinkedList<Match> list = new LinkedList<>();
 			adjMatches.add(index, list);
 			adjMatches.get(index).add(generateTree(height - 1));
 			adjMatches.get(index).add(generateTree(height - 1));
