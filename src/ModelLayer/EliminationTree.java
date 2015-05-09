@@ -28,30 +28,27 @@ public class EliminationTree {
 			matches = new ArrayList<>();
 			adjMatches = new ArrayList<>();
 			rounds = new ArrayList<>();
+			generateTree(calculateHeight(calculateNodes(startMatches)));
 		}
-		System.out.println("Heihgt: " + calculateHeight(startMatches));
+		System.out.println("Heihgt: " + calculateHeight(calculateNodes(startMatches)));
+		System.out.println("matches: " + matches.size());
+		System.out.println("adjMatches: " + adjMatches.size());
 	}
-	
-	private void generateTree2() {
-		
-	}
-	
-	private void generateTree() {
-		for(int i = 0; i < startMatches; i++) {
-			matches.add(new Match());
+
+	private Match generateTree(int height) {
+		while(matches.size() < calculateNodes(startMatches)) {
+			Match match = new Match();
+			matches.add(match);
+			LinkedList<Match> list = new LinkedList<>();
+			int index = matches.indexOf(match);
+			adjMatches.add(index, list);
+			adjMatches.get(index).add(generateTree(height - 1));
+			adjMatches.get(index).add(generateTree(height - 1));
+			return match;
 		}
-		ArrayList<Match> list = matches;
-		
-		for(int i = startMatches / 2; i > list.size(); i--) {
-			Match match = new Match(); //New match which two matches will link to.
-			LinkedList lList = new LinkedList<Match>();
-			lList.add(list.get(i*2-1));
-			lList.add(list.get(i*2));
-			
-			//adjMatches.add();
-		}
+		return null;
 	}
-	
+
 	/**
 	 * Calculates the total amount of matches in the tree given from the amount of nodes farthest out.
 	 * @param matches
@@ -60,19 +57,19 @@ public class EliminationTree {
 	private int calculateNodes(int matches) {
 		return matches * 2 -1;
 	}
-	
+
 	/**
 	 * Calculates the height of the tree, depending on how many nodes it contain.
 	 * @param matchesInTree matches in the tree.
 	 * @return	The height of the tree.
 	 */
-	private int calculateHeight(int matchesInTree) {
-		if(matchesInTree == 0) {
+	private int calculateHeight(int nodesInTree) {
+		if(nodesInTree == 0) {
 			return 0;
 		}
-		else if(matchesInTree % 2 != 0) {
-			return 1 + calculateHeight(matchesInTree - 1);
+		else if(nodesInTree % 2 != 0) {
+			return 1 + calculateHeight(nodesInTree - 1);
 		}
-			return calculateHeight(matchesInTree / 2);
+		return calculateHeight(nodesInTree / 2);
 	}
 }
