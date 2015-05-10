@@ -14,7 +14,7 @@ import java.util.List;
 public class EliminationTree {
 
 	private ArrayList<Match> matches; //Should be changed to contain Matches when created.
-	private ArrayList<LinkedList<Match>> adjMatches; //Adjacent matches to every match within "matches". ID 0, will contain all matches adjacent to match with ID 0 in the "matches" list.
+	private ArrayList<LinkedList<Match>> childrenMatches; //children matches to another match. ID 0, will contain all matches adjacent to match with ID 0 in the "matches" list.
 	private ArrayList<ArrayList<Match>> rounds; //ID 0 will be round 1, ID 1 will be round 2. and so on..
 	private int startMatches; //Number of matches in first round.
 
@@ -26,15 +26,19 @@ public class EliminationTree {
 		this.startMatches = startMatches;
 		if(startMatches % 2 == 0) {
 			matches = new ArrayList<>();
-			adjMatches = new ArrayList<>();
+			childrenMatches = new ArrayList<>();
 			rounds = new ArrayList<>();
 			generateTree(calculateHeight(calculateNodes(startMatches)));
 		}
 		System.out.println("");
 		System.out.println("Height: " + calculateHeight(calculateNodes(startMatches)));
 		System.out.println("matches: " + matches.size());
-		System.out.println("adjMatches: " + adjMatches.size());
-		for(LinkedList<Match> l : adjMatches) {
+		System.out.println("adjMatches: " + childrenMatches.size());
+		System.out.println("Rounds size: " + rounds.size());
+		for(LinkedList<Match> l : childrenMatches) {
+			System.out.println(l.size());
+		}
+		for(ArrayList<Match> l : rounds) {
 			System.out.println(l.size());
 		}
 	}
@@ -47,9 +51,15 @@ public class EliminationTree {
 			int index = matches.indexOf(match);
 			System.out.println("Index: " + index);
 			LinkedList<Match> list = new LinkedList<>();
-			adjMatches.add(index, list);
-			adjMatches.get(index).add(generateTree(height - 1));
-			adjMatches.get(index).add(generateTree(height - 1));
+			childrenMatches.add(index, list);
+			childrenMatches.get(index).add(generateTree(height - 1));
+			childrenMatches.get(index).add(generateTree(height - 1));
+			if(rounds.isEmpty()) {
+				for(int i = 0; i < calculateHeight(calculateNodes(startMatches)); i++) {
+					rounds.add(i, new ArrayList<>());
+				}
+			}
+			rounds.get(height -1).add(match);
 			return match;
 		}
 		return null;
@@ -77,5 +87,28 @@ public class EliminationTree {
 			return 1 + calculateHeight(nodesInTree - 1);
 		}
 		return calculateHeight(nodesInTree / 2);
+	}
+	
+	public ArrayList<Match> getRound(int round) {
+		return rounds.get(round - 1);
+	}
+	
+	public Match getParent(Match match) {
+		for(int i = 0; i < childrenMatches.size(); i++) {
+			for(int ii = 0; ii < childrenMatches.get(i).size(); ii++) {
+				if(childrenMatches.get(i).get(ii) == match) {
+					return matches.get(i);
+				}
+			}
+		}
+		return null;
+	}
+	
+	public List<Match> getChildren(Match match) {
+		int i = matches.indexOf(match);
+		if(i != -1) {
+			return childrenMatches.get(i);
+		}
+		return null;
 	}
 }
