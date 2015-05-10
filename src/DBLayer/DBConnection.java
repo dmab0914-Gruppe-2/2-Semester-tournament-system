@@ -11,11 +11,11 @@ import java.sql.DriverManager;
 public class DBConnection {
 	// Constants used to get access to the database
 	// SQL Server
-	private static final String driver = "jdbc:sqlserver://INSERT HERE"; //Connection adress to the sql server
-	private static final String databaseName = ";databaseName=INSERT HERE"; //The sql server database
+	private static final String driver = "jdbc:sqlserver://INSERT_HERE"; //Connection adress to the sql server
+	private static final String databaseName = ";databaseName=INSERT_HERE"; //The sql server database
 
-	private static String userName = ";user=INSER HERE"; //sql database username
-	private static String password = ";password=INSERT HERE"; //sql database password
+	private static String userName = ";user=INSER_HERE"; //sql database username
+	private static String password = ";password=INSERT_HERE"; //sql database password
 
 	private DatabaseMetaData dma;
 	private static Connection con;
