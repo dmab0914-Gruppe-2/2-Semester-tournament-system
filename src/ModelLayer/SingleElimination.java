@@ -1,12 +1,13 @@
 package ModelLayer;
-//import java.util.ArrayList<Team> teams;
-//TODO Når team er oprettet, afkommenter linjen for oven.
+
+import java.util.ArrayList;
 
 /**
  * Created by Andreas on 09-05-2015.
  */
 public class SingleElimination {
 
-    public SingleElimination() {
+    public SingleElimination(ArrayList<Team> teams) {
+
     }//endConstructor
 }//endClass
