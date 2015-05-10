@@ -89,7 +89,7 @@ public class EliminationTree {
 		return calculateHeight(nodesInTree / 2);
 	}
 	
-	public ArrayList<Match> getRound(int round) {
+	public ArrayList<Match> getMatchesInRound(int round) {
 		return rounds.get(round - 1);
 	}
 	
