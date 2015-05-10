@@ -1,4 +1,4 @@
-import ModelLayer.EliminationTree;
+import CtrLayer.EliminationController;
 
 /**
  * 
@@ -15,7 +15,7 @@ public class Main {
 	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		new EliminationTree(8);
+		new EliminationController();
 	}
 
 }
