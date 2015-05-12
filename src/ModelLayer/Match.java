@@ -14,7 +14,7 @@ public class Match {
     private Team team2;
     private int team1Score;
     private int team2Score;
-    private int roundNbr;
+    private int roundNumber;
     private Status status;
 
 
@@ -59,11 +59,11 @@ public class Match {
     }
 
     public int getRoundNbr() {
-        return roundNbr;
+        return roundNumber;
     }
 
-    public void setRoundNbr(int roundNbr) {
-        this.roundNbr = roundNbr;
+    public void setRoundNbr(int roundNumber) {
+        this.roundNumber = roundNumber;
     }
 
     public Status getStatus() {
