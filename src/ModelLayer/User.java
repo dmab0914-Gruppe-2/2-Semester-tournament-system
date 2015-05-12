@@ -3,6 +3,9 @@
  */
 package ModelLayer;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+
 /**
  * @author nicklas
  *
@@ -11,23 +14,28 @@ public class User {
 	private int userID;
 	private String handle;
 	private String name;
-	private Team team;
+	private String password;
+	private boolean isAdmin;
+	private ArrayList<Team> team;
 
 	/**
 	 * Constructor for a all fields set!
 	 */
-	
-	public User(int id, String handle, String name, Team team) {
+
+	public User(int id, String handle, String name, String password,
+			boolean isAdmin) {
 		this.userID = id;
 		this.handle = handle;
 		this.name = name;
-		this.team = team;
+		this.password = password;
+		this.isAdmin = isAdmin;
+		// ArrayList<Team> team = new ArrayList<Team>();
 	}
-	
+
 	/**
 	 * Constructor for a empty User
 	 */
-	
+
 	public User() {
 
 	}
@@ -40,7 +48,8 @@ public class User {
 	}
 
 	/**
-	 * @param userID the userID to set
+	 * @param userID
+	 *            the userID to set
 	 */
 	public void setUserID(int userID) {
 		this.userID = userID;
@@ -54,7 +63,8 @@ public class User {
 	}
 
 	/**
-	 * @param handle the handle to set
+	 * @param handle
+	 *            the handle to set
 	 */
 	public void setHandle(String handle) {
 		this.handle = handle;
@@ -68,24 +78,73 @@ public class User {
 	}
 
 	/**
-	 * @param name the name to set
+	 * @param name
+	 *            the name to set
 	 */
 	public void setName(String name) {
 		this.name = name;
 	}
 
 	/**
+	 * @return the password
+	 */
+	public String getPassword() {
+		return password;
+	}
+
+	/**
+	 * @param password
+	 *            the password to set
+	 */
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	/**
+	 * @return the isAdmin
+	 */
+	public boolean isAdmin() {
+		return isAdmin;
+	}
+
+	/**
+	 * @param isAdmin
+	 *            the isAdmin to set
+	 */
+	public void setAdmin(boolean isAdmin) {
+		this.isAdmin = isAdmin;
+	}
+
+	/**
 	 * @return the team
 	 */
-	public Team getTeam() {
+	public ArrayList<Team> getTeam() {
 		return team;
 	}
 
 	/**
-	 * @param team the team to set
+	 * Adds a team to the user
+	 * 
+	 * @param t
 	 */
-	public void setTeam(Team team) {
-		this.team = team;
+	public void addTeam(Team t) {
+		if (!team.contains(t)) {
+			team.add(t);
+		}
+	}
+
+	public boolean removeTeam(String teamName) {
+		try {
+			Iterator<Team> it = team.iterator();
+			while (it.hasNext()) {
+				Team t = it.next();
+				if (t.getClass().equals(teamName))
+					it.remove();
+			}
+			return true;
+		} catch (IllegalArgumentException ie) {
+			return false;
+		}
 	}
 
 }
