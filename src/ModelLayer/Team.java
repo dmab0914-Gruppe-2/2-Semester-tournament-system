@@ -9,12 +9,14 @@ public class Team {
 
     private String name;
     private int id;
-    private String Leader;
+    private String leader;
     private ArrayList<User> users;
 
     public Team(String name, ArrayList<User> users) {
         this.setName(name);
         this.setUsers(users);
+        this.setId(id);
+        this.setLeader(leader);
     }
 
 	public String getName() {
@@ -42,10 +44,10 @@ public class Team {
 	}
 
 	public String getLeader() {
-		return Leader;
+		return leader;
 	}
 
 	public void setLeader(String leader) {
-		Leader = leader;
+		this.leader = leader;
 	}
 }
