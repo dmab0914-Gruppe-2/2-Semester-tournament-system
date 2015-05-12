@@ -18,6 +18,8 @@ public interface IFDBTournament {
 	
 	public Tournament getTournament(int tournamentID);
 	
+	public boolean addTournament(Tournament tournament);
+	
 	public boolean enableSignup(int tournamentID);
 	
 	public boolean startTournament(int tournamentID);
