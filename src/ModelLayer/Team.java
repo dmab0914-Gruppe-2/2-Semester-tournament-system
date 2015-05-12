@@ -7,6 +7,10 @@ import java.util.ArrayList;
  */
 public class Team {
 
+    public String getName() {
+        return name;
+    }
+
     private String name;
     private ArrayList<Player> players;
 
@@ -14,4 +18,5 @@ public class Team {
         this.name = name;
         this.players = players;
     }
+
 }
