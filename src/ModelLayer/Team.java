@@ -8,6 +8,8 @@ import java.util.ArrayList;
 public class Team {
 
     private String name;
+    private int id;
+    private String Leader;
     private ArrayList<User> users;
 
     public Team(String name, ArrayList<User> users) {
@@ -29,5 +31,21 @@ public class Team {
 
 	public void setUsers(ArrayList<User> users) {
 		this.users = users;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String getLeader() {
+		return Leader;
+	}
+
+	public void setLeader(String leader) {
+		Leader = leader;
 	}
 }
