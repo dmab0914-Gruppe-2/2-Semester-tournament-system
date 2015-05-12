@@ -84,7 +84,7 @@ public class User {
 	/**
 	 * @param team the team to set
 	 */
-	public void setTeam(String team) {
+	public void setTeam(Team team) {
 		this.team = team;
 	}
 
