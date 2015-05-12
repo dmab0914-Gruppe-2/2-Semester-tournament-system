@@ -19,6 +19,8 @@ public interface IFUserController {
 	
 	public void addTeamToUser(Team team);
 	
+	public User findUserByHandle(String handle);
+	
 	public User findUser(String name);
 
 	public int updateUser(int id, String handle, String name, String password,
