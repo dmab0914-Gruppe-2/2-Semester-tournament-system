@@ -77,7 +77,7 @@ public class User {
 	/**
 	 * @return the team
 	 */
-	public String getTeam() {
+	public Team getTeam() {
 		return team;
 	}
 
