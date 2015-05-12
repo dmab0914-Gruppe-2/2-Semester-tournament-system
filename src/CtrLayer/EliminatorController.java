@@ -17,10 +17,14 @@ public class EliminatorController {
         //generateSETournament(generateDummyTeams(), new ArrayList<Integer>());
     }//endConstructor
 
+    /**
+     * Generates dummy classes for testing purposes
+     * @return list of dummy classes
+     */
     public ArrayList<Team> generateDummyTeams() {
         int i= 0;
         ArrayList<Team> teams = new ArrayList<>();
-        while(i<10){
+        while(i<11){
             String s = "The Awesome Thingy No." + Integer.toString(i);
             Team team = new Team(s, new ArrayList<User>());
             System.out.println("Team name: " + s);
@@ -28,7 +32,7 @@ public class EliminatorController {
             i++;
         }
         return teams;
-    }
+    }//endMethod
 
     /**
      *
@@ -37,15 +41,26 @@ public class EliminatorController {
      *               If this is the first match, throw an empty list of scores and a random setup will be generated
      * @return ArrayList of Match(es) to be played
      */
-    public ArrayList<Match> generateSETournament(ArrayList<Team> teams, ArrayList<Integer> scores)
+    public ArrayList<Match> generateSERound(ArrayList<Team> teams, ArrayList<Integer> scores)
     {
         System.out.println("Match lineup: ");
-        ArrayList<Match> matches = singleElimination.generateSETournament(teams, scores);
-        for(int i = 0; i<matches.size(); i++){
-            System.out.println(matches.get(i).getTeam1().getName());
-            System.out.println(matches.get(i).getTeam2().getName());
+        ArrayList<Match> matches;
+
+        try{
+            matches = singleElimination.generateSERound(teams, scores);
+            return matches;
         }
-        return matches;
-    }
+        catch (WrongDataInputException e){
+            System.out.println(e);
+            e.printStackTrace();
+            return null;
+        }
+        catch(IndexOutOfBoundsException e){
+            System.out.println(e);
+            e.printStackTrace();
+            return null;
+        }//endTryCatch
+
+    }//endMethod
 
 }//endClass

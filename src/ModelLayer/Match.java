@@ -5,14 +5,25 @@ package ModelLayer;
  */
 public class Match {
 
+    enum Status {
+        waiting, playing, done, cancelled
+    }
+
+    private int id;
     private Team team1;
     private Team team2;
     private int team1Score;
     private int team2Score;
+    private int roundNbr;
+    private Status status;
+
+
+
 
     public Match() {
 
     }
+
 
 
     public Team getTeam1() {
@@ -47,7 +58,20 @@ public class Match {
         this.team2Score = team2Score;
     }
 
+    public int getRoundNbr() {
+        return roundNbr;
+    }
 
+    public void setRoundNbr(int roundNbr) {
+        this.roundNbr = roundNbr;
+    }
 
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
 
 }
