@@ -19,7 +19,7 @@ public class DBConnection {
 
 	private DatabaseMetaData dma;
 	private static Connection con;
-	// an instance of the class is generetated
+	// an instance of the class is generated
 	private static DBConnection instance = null;
 
 	// the constructor is private to ensure that only one object of this class
@@ -41,7 +41,7 @@ public class DBConnection {
 			// connection to the database
 
 			con = DriverManager.getConnection(url);
-			// set autocommit
+			// set auto commit
 			con.setAutoCommit(true);
 			dma = con.getMetaData(); // get meta data
 			System.out.println("Connection to " + dma.getURL());
