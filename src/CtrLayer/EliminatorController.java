@@ -22,7 +22,7 @@ public class EliminatorController {
         ArrayList<Team> teams = new ArrayList<>();
         while(i<10){
             String s = "The Awesome Thingy No." + Integer.toString(i);
-            Team team = new Team(s, new ArrayList<Player>());
+            Team team = new Team(s, new ArrayList<User>());
             System.out.println("Team name: " + s);
             teams.add(team);
             i++;
