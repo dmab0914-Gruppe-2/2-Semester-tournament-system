@@ -14,32 +14,69 @@ public class DBUser implements IFDBUser {
 
 	@Override
 	public ArrayList<User> getAllUsers() {
-		// TODO Auto-generated method stub
-		return null;
+		return miscWhere("");
 	}
 
 	@Override
 	public User findUserByHandle(String handle) {
-		// TODO Auto-generated method stub
-		return null;
+		String wClause =" handle = '" + handle + "'";
+		return singleWhere(wClause);
 	}
 
 	@Override
 	public User findUserByName(String name) {
-		// TODO Auto-generated method stub
-		return null;
+		String wClause =" name = '" + name + "'";
+		return singleWhere(wClause);
 	}
 
 	@Override
-	public int inserUser(User user) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int insertUser(User user) throws Exception {
+		int rc = -1;
+		String query = "INSERT INTO User(handle,name,password,isAdmin) VALUES('"
+				+ user.getHandle()
+				+ "','"
+				+ user.getName()
+				+ "','"
+				+ user.getPassword()
+				+ "','"
+				+ user.isAdmin() + "')";
+		
+		System.out.println("insert : " + query);
+		try { // insert new User
+			Statement stmt = con.createStatement();
+			stmt.setQueryTimeout(5);
+			rc = stmt.executeUpdate(query);
+			stmt.close();
+		}// end try
+		catch (SQLException ex) {
+			System.out.println("User ikke oprettet");
+			throw new Exception("User is not inserted correct");
+		}
+		return (rc);
 	}
 
 	@Override
 	public int updateUser(User user) {
-		// TODO Auto-generated method stub
-		return 0;
+		int rc = -1;
+		String query = "UPDATE User SET " + "handle = '" + user.getHandle()
+				+ "', " + "name ='" + user.getName()
+				+ "', " + "password ='" + user.getPassword()
+				+ "', " + "isAdmin ='" + user.isAdmin() +"'";
+		
+		System.out.println("Update query:" + query);
+
+		try { // update user
+			Statement stmt = con.createStatement();
+			stmt.setQueryTimeout(5);
+			rc = stmt.executeUpdate(query);
+
+			stmt.close();
+		}// slut try
+		catch (Exception ex) {
+			System.out.println("Update exception in user db: " + ex);
+		}
+
+		return rc;
 	}
 
 	// Help methods. NOT IN IF!

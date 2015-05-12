@@ -1,6 +1,7 @@
 package DBLayer;
 
 import java.util.ArrayList;
+
 import ModelLayer.*;
 
 public interface IFDBUser {
@@ -15,7 +16,7 @@ public interface IFDBUser {
 	public User findUserByName(String name);
 
 	// insert new user
-	public int inserUser(User user);
+	public int insertUser(User user) throws Exception;
 
 	// update user
 	public int updateUser(User user);
