@@ -24,6 +24,8 @@ public interface IFDBTournament {
 	
 	public boolean startTournament(int tournamentID);
 	
+	public boolean abortTurnament(int tournamentID);
+	
 	public ArrayList<Team> getTournamentTeams(int tournamentID);
 	
 	public int advanceTournament(int tournamentID);
