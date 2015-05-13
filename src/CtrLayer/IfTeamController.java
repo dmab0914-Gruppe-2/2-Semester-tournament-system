@@ -18,7 +18,7 @@ public interface IfTeamController {
 	
 	public void addUserToTeam(User user);
 	
-	public User findTeam(String name);
+	public Team findTeam(String name);
 
 	public int updateTeam(int id, String name, String leader);
 	

@@ -20,4 +20,7 @@ public interface IFDBUser {
 
 	// update user
 	public int updateUser(User user);
+
+	// Delete User
+	public int deleteUser(int id);
 }
