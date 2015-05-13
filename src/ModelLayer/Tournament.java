@@ -12,7 +12,7 @@ import java.util.Date;
 public class Tournament {
 
 	enum Status {
-		afventer, igangværende, afsluttet, anulleret
+		awaiting, running, done, cancelled
 	}
 
 	private int id;
@@ -22,7 +22,7 @@ public class Tournament {
 	private boolean withPlayOff;
 	private Status status;
 	private Date startTime;
-	private Team winnerTeam;
+	private Team winnerTeam; //The team that won the tournament. Will only be defined if the status is done.
 	private int roundNumber;
 	private ArrayList<Team> teams;
 	private ArrayList<Match> matches;
