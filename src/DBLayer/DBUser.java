@@ -79,6 +79,24 @@ public class DBUser implements IFDBUser {
 		return rc;
 	}
 
+	@Override
+	public int deleteUser(int id) {
+		int rc = -1;
+		
+		String query = "DELETE FROM User WHERE id = '" + id + "'";
+		System.out.println("DELETE query: " + query);
+		
+		try {
+			Statement stmt = con.createStatement();
+			stmt.setQueryTimeout(5);
+			rc = stmt.executeUpdate(query);
+			stmt.close();
+		} catch(Exception ex) {
+			System.out.println("Delete exception in User db: " + ex);
+		}
+		return rc;
+	}
+
 	// Help methods. NOT IN IF!
 	// private methods
 	/**

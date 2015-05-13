@@ -10,7 +10,7 @@ import ModelLayer.User;
 public class UserController implements IFUserController {
 
 	@Override
-	public void addCustomer(int id, String handle, String name,
+	public void addUser(int id, String handle, String name,
 			String password, boolean isAdmin) throws Exception {
 		User user = new User();
 		user.setHandle(handle);
@@ -34,35 +34,48 @@ public class UserController implements IFUserController {
 
 	@Override
 	public User findUser(String name) {
-		IFDBUser dbCUs = new DBUser();
-		
-		return dbCUs.findUserByName(name);
+		IFDBUser dbUser = new DBUser();
+
+		return dbUser.findUserByName(name);
 	}
 
 	@Override
 	public User findUserByHandle(String handle) {
-		IFDBUser dbCUs = new DBUser();
-	 
-		return dbCUs.findUserByHandle(handle);
+		IFDBUser dbUser = new DBUser();
+
+		return dbUser.findUserByHandle(handle);
 	}
-	
+
 	@Override
 	public int updateUser(int id, String handle, String name, String password,
 			boolean isAdmin) {
-		// TODO Auto-generated method stub
-		return 0;
+
+		IFDBUser dbUser = new DBUser();
+		User user = new User();
+
+		user.setHandle(handle);
+		user.setName(name);
+		user.setPassword(password);
+		user.setAdmin(isAdmin);
+
+		try {
+			return dbUser.updateUser(user);
+		} catch (Exception e) {
+			System.out.println("Update exception in User db: " + e);
+			return -1;
+		}
 	}
 
 	@Override
 	public int deleteUser(int id) {
-		// TODO Auto-generated method stub
-		return 0;
+		IFDBUser dbUser = new DBUser();
+		return dbUser.deleteUser(id);
 	}
 
 	@Override
 	public ArrayList<User> getAllUsers() {
-		// TODO Auto-generated method stub
-		return null;
+		IFDBUser dbUser = new DBUser();
+		return dbUser.getAllUsers();
 	}
 
 }
