@@ -7,11 +7,11 @@ import java.util.ArrayList;
 /**
  * Created by Andreas on 09-05-2015.
  */
-public class EliminatorController {
+public class EliminationController {
     private SingleElimination singleElimination;
 
 
-    public EliminatorController() {
+    public EliminationController() {
         singleElimination = new SingleElimination();
 
         //generateSETournament(generateDummyTeams(), new ArrayList<Integer>());
