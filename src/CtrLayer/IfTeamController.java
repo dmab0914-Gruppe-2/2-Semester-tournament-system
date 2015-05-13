@@ -12,7 +12,7 @@ import ModelLayer.User;
  * @author Ronnie
  *
  */
-public interface IfTeamController {
+public interface IFTeamController  {
 
 	public void addTeam(int id, String name, String leader);
 	
