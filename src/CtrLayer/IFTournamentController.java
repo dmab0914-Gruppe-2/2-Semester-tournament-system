@@ -20,7 +20,7 @@ public interface IFTournamentController {
 	
 	public boolean enableSignup(int tournamentID);
 	
-	public ArrayList<Match> startTournament(int tournamentID);
+	public ArrayList<Match> startTournament(int tournamentID) throws Exception;
 	
 	public boolean setMatchResults(int matchID, int team1Score, int team2Score);
 	
