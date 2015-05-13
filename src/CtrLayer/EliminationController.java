@@ -7,7 +7,7 @@ import java.util.ArrayList;
 /**
  * Created by Andreas on 09-05-2015.
  */
-public class EliminationController {
+public class EliminationController implements IFEliminationController {
     private SingleElimination singleElimination;
 
 
