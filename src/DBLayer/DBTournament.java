@@ -3,6 +3,7 @@
  */
 package DBLayer;
 
+import java.sql.Connection;
 import java.util.ArrayList;
 
 import ModelLayer.Team;
@@ -13,6 +14,12 @@ import ModelLayer.Tournament;
  *
  */
 public class DBTournament implements IFDBTournament {
+	
+	private Connection con;
+	
+	public DBTournament() {
+		con = DBConnection.getInstance().getDBcon(); //Get instance of DbConnection, which creates the connection to DB.
+	}
 
 	/* (non-Javadoc)
 	 * @see DBLayer.IFDBTournament#getTournaments()
