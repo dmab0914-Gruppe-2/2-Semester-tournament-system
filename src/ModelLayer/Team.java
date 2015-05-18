@@ -18,6 +18,10 @@ public class Team {
         this.setId(id);
         this.setLeader(leader);
     }
+    
+    public Team(){
+    
+    }
 
 	public String getName() {
 		return name;
