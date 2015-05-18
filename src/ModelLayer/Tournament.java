@@ -12,7 +12,7 @@ import java.util.Date;
 public class Tournament {
 
 	enum Status {
-		awaiting, running, done, cancelled
+		waiting, running, done, cancelled
 	}
 
 	private int id;

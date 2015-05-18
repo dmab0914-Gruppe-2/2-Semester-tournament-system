@@ -6,7 +6,7 @@ package ModelLayer;
 public class Match {
 
     enum Status {
-        waiting, playing, done, cancelled
+        waiting, running, done, cancelled
     }
 
     private int id;
