@@ -21,10 +21,12 @@ public class DBTournament implements IFDBTournament {
 	
 	private Connection con;
 	private IFTeamController teamController;
+	private IFDBTournamentTeams dbTournamentTeams;
 	
 	public DBTournament() {
 		con = DBConnection.getInstance().getDBcon(); //Get instance of DbConnection, which creates the connection to DB.
 		teamController = new TeamController();
+		dbTournamentTeams = new DBTournamentTeams();
 	}
 
 	/* (non-Javadoc)
@@ -122,7 +124,8 @@ public class DBTournament implements IFDBTournament {
 				for(Tournament tournamentObj : list){
 					tournamentObj.setWinnerTeam(teamController.findTeamById(tournamentObj.getWinnerTeam().getId()));
 					System.out.println("Winner Team have been added");
-					//TODO Build list of Tournament Teams
+					//Build list of Tournament Teams
+					tournamentObj.setTeams(dbTournamentTeams.getTeamsFromTournament(tournamentObj.getId()));
 				}
 			}//end if 
 		}// end try
@@ -152,7 +155,8 @@ public class DBTournament implements IFDBTournament {
 				{   
 					tournamentObj.setWinnerTeam(teamController.findTeamById(tournamentObj.getWinnerTeam().getId()));
 					System.out.println("Winner Team have been added");
-					//TODO Build list of Tournament Teams
+					//Build list of Tournament Teams
+					tournamentObj.setTeams(dbTournamentTeams.getTeamsFromTournament(tournamentObj.getId()));
 				}
 
 			} else { // no tournament was found
@@ -165,7 +169,6 @@ public class DBTournament implements IFDBTournament {
 		return tournamentObj;
 	}
 	
-	//TODO remake to tournament
 	private String buildQuery(String wClause) {
 		String query = "SELECT id, name, gameName, teamSize, withPlayOff, statusID, startTime, winnerTeam, roundNumber FROM Tournament";
 		if (wClause.length() > 0)
