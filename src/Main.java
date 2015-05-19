@@ -2,7 +2,10 @@
  * 
  */
 
-import java.security.MessageDigest;
+/*import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;*/
+
+import UILayer.MainUI;
 
 /**
  * @author Jacob 12/05/2015
@@ -10,10 +13,19 @@ import java.security.MessageDigest;
  */
 public class Main {
 	/**
+	 * Launch the application
 	 * @param args
 	 */
-	public static void main(String[] args) throws Exception{
-
+	public static void main(String[] args) {
+		try {
+		new MainUI();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/*private void andreasTest() throws Exception {
 		System.out.print("Please enter a password for hashing: ");
         String password = System.console().readLine();
 
@@ -28,5 +40,5 @@ public class Main {
             stringBuffer.append(Integer.toString(byteData[i] & 0xff + 0x100, 16).substring(1));
         }
         System.out.print("HEX Format method 1: "+stringBuffer.toString() + "\n");
-	}
+	}*/
 }
