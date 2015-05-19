@@ -14,6 +14,7 @@ import CtrLayer.TeamController;
 import ModelLayer.IdAllreadyExsistException;
 import ModelLayer.Team;
 import ModelLayer.Tournament;
+import ModelLayer.Tournament.Status;
 
 /**
  * @author Jacob 18/05/2015
@@ -42,7 +43,6 @@ public class DBTournament implements IFDBTournament {
 	 * @see DBLayer.IFDBTournament#getTournament(int)
 	 */
 	public Tournament getTournament(int tournamentID, boolean retriveAssociation) {
-		// TODO Auto-generated method stub
 		String wClause = "  tournamentID = '" + tournamentID + "'";
 		return singleWhere(wClause, retriveAssociation);
 	}
@@ -98,6 +98,25 @@ public class DBTournament implements IFDBTournament {
 	 */
 	public boolean enableSignup(int tournamentID) {
 		// TODO Auto-generated method stub
+		Tournament tournament = getTournament(tournamentID, false);
+		if(tournament != null) {
+			String query="UPDATE Tournament SET "+
+					"statusID ='"+ tournament.statusToInt(Status.waiting) + "', "+
+					" WHERE id = '"+ tournamentID + "'";
+			System.out.println("Update query:" + query);
+			try{ // update product
+				Statement stmt = con.createStatement();
+				stmt.setQueryTimeout(5);
+				stmt.executeUpdate(query);
+
+				stmt.close();
+			}//end try
+			catch(Exception ex){
+				System.out.println("Update exception in employee db: "+ex);
+				return false;
+			}
+			return true;
+		}
 		return false;
 	}
 
