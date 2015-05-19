@@ -11,7 +11,7 @@ import java.util.Date;
  */
 public class Tournament {
 
-	enum Status {
+	public enum Status {
 		waiting, running, done, cancelled
 	}
 
@@ -229,6 +229,25 @@ public class Tournament {
 	public void setMatches(ArrayList<Match> matches) {
 		this.matches = matches;
 	}
-
-
+	
+	/**
+	 * Converts the status to the specified id in the database.
+	 * @param status The status to get related integer for
+	 * @return	The related integer handwritten in db.
+	 */
+	public int statusToInt(Status status) {
+		if(status.equals(Status.waiting)) {
+			return 1;
+		}
+		if(status.equals(Status.running)) {
+			return 2;
+		}
+		if(status.equals(Status.done)) {
+			return 3;
+		}
+		if(status.equals(Status.cancelled)) {
+			return 4;
+		}
+		return 0;
+	}
 }//endClass

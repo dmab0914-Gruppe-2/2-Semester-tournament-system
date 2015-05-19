@@ -1,13 +1,11 @@
 package ModelLayer;
 
+import ModelLayer.Tournament.Status;
+
 /**
  * Created by Andreas on 11-05-2015.
  */
 public class Match {
-
-    public enum Status {
-        waiting, running, done, cancelled
-    }
 
     private int id;
     private Team team1;
