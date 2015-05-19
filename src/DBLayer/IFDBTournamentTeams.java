@@ -13,7 +13,7 @@ import ModelLayer.Team;
  */
 public interface IFDBTournamentTeams {
 
-	public ArrayList<Team> getTeamsFromTournament(int TournamentID);
+	public ArrayList<Team> getTeamsFromTournament(int tournamentID);
 	
 	public boolean addTeamToTournament(int tournamentID, Team team);
 }
