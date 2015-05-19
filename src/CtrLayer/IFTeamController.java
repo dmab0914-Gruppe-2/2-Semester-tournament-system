@@ -14,13 +14,13 @@ import ModelLayer.User;
  */
 public interface IFTeamController  {
 
-	public void addTeam(int id, String name, String leader);
+	public void addTeam(int id, String name, String leader) throws Exception;
 	
 	public void addUserToTeam(User user);
 	
 	public Team findTeam(String name);
 	
-	public Team findTeam(int id);
+	public Team findTeamById(int id);
 
 	public int updateTeam(int id, String name, String leader);
 	
