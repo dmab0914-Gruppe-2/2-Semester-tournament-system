@@ -10,7 +10,7 @@ import ModelLayer.User;
 public class UserController implements IFUserController {
 
 	@Override
-	public void addUser(int id, String handle, String name,
+	public void addUser(String handle, String name,
 			String password, boolean isAdmin) throws Exception {
 		User user = new User();
 		user.setHandle(handle);

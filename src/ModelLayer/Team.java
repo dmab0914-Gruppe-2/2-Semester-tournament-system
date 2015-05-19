@@ -19,6 +19,10 @@ public class Team {
         this.setLeader(leader);
     }
     
+    public Team(int id) {
+    	this.id = id;
+    }
+    
     public Team(){
     
     }

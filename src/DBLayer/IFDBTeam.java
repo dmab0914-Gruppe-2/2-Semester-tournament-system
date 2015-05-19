@@ -12,6 +12,9 @@ public interface IFDBTeam {
 
 	// find a Team by name
 	public Team findTeamByName(String name);
+	
+	//find a Team by id
+	public Team findTeamById(int id);
 
 	// insert new Team
 	public int insertTeam(Team Team) throws Exception;

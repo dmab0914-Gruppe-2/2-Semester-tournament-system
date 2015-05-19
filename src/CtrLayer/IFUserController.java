@@ -14,7 +14,7 @@ import ModelLayer.User;
  */
 public interface IFUserController {
 
-	public void addUser(int id, String handle, String name, String password,
+	public void addUser(String handle, String name, String password,
 			boolean isAdmin) throws Exception;
 	
 	public void addTeamToUser(Team team);
