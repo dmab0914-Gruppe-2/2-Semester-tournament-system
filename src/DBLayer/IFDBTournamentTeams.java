@@ -15,5 +15,5 @@ public interface IFDBTournamentTeams {
 
 	public ArrayList<Team> getTeamsFromTournament(int tournamentID);
 	
-	public boolean addTeamToTournament(int tournamentID, Team team);
+	public boolean addTeamToTournament(int tournamentID, int teamID);
 }
