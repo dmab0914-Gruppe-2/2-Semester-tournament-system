@@ -25,11 +25,11 @@ public class TournamentController implements IFTournamentController {
 	}
 
 	public ArrayList<Tournament> getTournaments() {
-		return dbTournament.getTournaments();
+		return dbTournament.getTournaments(false);
 	}
 
 	public Tournament getTournamet(int tournamentID) {
-		return dbTournament.getTournament(tournamentID);
+		return dbTournament.getTournament(tournamentID, true); 
 	}
 
 	public boolean enableSignup(int tournamentID) {
