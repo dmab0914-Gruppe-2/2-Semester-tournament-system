@@ -11,8 +11,15 @@ import java.util.Date;
  */
 public class Tournament {
 
+	/*
+	 * waiting = tournament is waiting to be opened for accepting teams
+	 * ready = tournament is ready for teams to signup
+	 * running = tournament is in progress
+	 * done = tournament is done
+	 * cancelled = tournament is cancelled
+	 */
 	public enum Status {
-		ready, waiting, running, done, cancelled
+		waiting, ready, running, done, cancelled
 	}
 
 	private int id;
@@ -236,20 +243,20 @@ public class Tournament {
 	 * @return	The related integer handwritten in db.
 	 */
 	public int statusToInt(Status status) {
-		if(status.equals(Status.ready)) {
-			return 1;
-		}
 		if(status.equals(Status.waiting)) {
 			return 1;
 		}
-		if(status.equals(Status.running)) {
+		if(status.equals(Status.ready)) {
 			return 2;
 		}
-		if(status.equals(Status.done)) {
+		if(status.equals(Status.running)) {
 			return 3;
 		}
-		if(status.equals(Status.cancelled)) {
+		if(status.equals(Status.done)) {
 			return 4;
+		}
+		if(status.equals(Status.cancelled)) {
+			return 5;
 		}
 		return 0;
 	}
