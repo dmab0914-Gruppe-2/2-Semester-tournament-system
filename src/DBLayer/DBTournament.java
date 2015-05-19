@@ -82,16 +82,13 @@ public class DBTournament implements IFDBTournament {
 				returnSet.next();
 				int id = returnSet.getInt(1);*/
 				stmt.close();
+				tournament.setId(rc);
+				return tournament;
 			}//end try
 			catch(SQLException ex){
 				System.out.println("Product haven't been created");
-				//throw new Exception ("Product is not added correctly");
-			}
-			if(rc == 0) {
 				throw new Exception("Adding Tournament: " + tournament.getName() + " Couldn't be added.");
 			}
-			tournament.setId(rc);
-			return tournament;
 		}
 		throw new IdAllreadyExsistException ("Tournament: " + tournament.getName() + " Allready exsist.");
 	}
