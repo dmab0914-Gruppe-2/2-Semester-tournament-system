@@ -177,8 +177,8 @@ public class DBTournament implements IFDBTournament {
 			}// end while
 			stmt.close();
 			// Association is to be build
-			if(retrieveAssociation)
-			{   //The winnerTeam is to be build as well
+			if(retrieveAssociation) {
+				//The winnerTeam is to be build as well
 				for(Tournament tournamentObj : list){
 					tournamentObj.setWinnerTeam(teamController.findTeamById(tournamentObj.getWinnerTeam().getId()));
 					System.out.println("Winner Team have been added");
@@ -209,8 +209,7 @@ public class DBTournament implements IFDBTournament {
 				tournamentObj = buildTournament(results);
 				stmt.close();
 				// Association is to be build
-				if(retrieveAssociation)
-				{   
+				if(retrieveAssociation) {   
 					tournamentObj.setWinnerTeam(teamController.findTeamById(tournamentObj.getWinnerTeam().getId()));
 					System.out.println("Winner Team have been added");
 					//Build list of Tournament Teams

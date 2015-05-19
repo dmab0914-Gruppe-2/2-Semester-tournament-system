@@ -39,8 +39,7 @@ public class DBTournamentTeams implements IFDBTournamentTeams {
 	/* (non-Javadoc)
 	 * @see DBLayer.IFDBTournamentTeams#addTeamToTournament(int, ModelLayer.Team)
 	 */
-	public boolean addTeamToTournament(int tournamentID, int teamID) {
-		int rc = -1;
+	public void addTeamToTournament(int tournamentID, int teamID) {
 		String query="INSERT INTO TournamentTeams(tournamentID, teamID)  VALUES('"+
 				tournamentID  + "','"  +
 				teamID + "')";
@@ -49,17 +48,52 @@ public class DBTournamentTeams implements IFDBTournamentTeams {
 		try{
 			Statement stmt = con.createStatement();
 			stmt.setQueryTimeout(5);
-			rc = stmt.executeUpdate(query);
+			stmt.executeUpdate(query);
 			stmt.close();
 		}//end try
 		catch(SQLException ex){
 			System.out.println("ERROR: Team couldn't be added");
 			//throw new Exception ("Team is not added correctly");
 		}
-		if(rc == 0) {
-			return false;
+	}
+
+	/* (non-Javadoc)
+	 * @see DBLayer.IFDBTournamentTeams#removeTeamFromTournament(int tournamentID, int teamID)
+	 */
+	public void removeTeamFromTournament(int tournamentID, int teamID) {
+		String query="DELETE FROM TournamentTeams WHERE tournamentID = '" +
+				tournamentID + "'" +
+				" AND  teamID='" + 
+				teamID + "'";
+		System.out.println(query);
+		try{ // delete from TournamentTeams
+			Statement stmt = con.createStatement();
+			stmt.setQueryTimeout(5);
+			stmt.executeUpdate(query);
+			stmt.close();
+		}//end try	
+		catch(Exception ex){
+			System.out.println("Error in removing team: " + teamID + " from tournament: " + tournamentID + " Exception: " + ex);
 		}
-		return true;
+	}
+
+	/* (non-Javadoc)
+	 * @see DBLayer.IFDBTournamentTeams#removeAllTeamsFromTournament(int)
+	 */
+	@Override
+	public void removeAllTeamsFromTournament(int tournamentID) {
+		String query="DELETE FROM TournamentTeams WHERE tournamentID = '" +
+				tournamentID + "'";
+		System.out.println(query);
+		try{ // delete from TournamentTeams
+			Statement stmt = con.createStatement();
+			stmt.setQueryTimeout(5);
+			stmt.executeUpdate(query);
+			stmt.close();
+		}//end try	
+		catch(Exception ex){
+			System.out.println("Error in removing all teams from tournament: " + tournamentID + " Exception: " + ex);
+		}
 	}
 
 	private ArrayList<Team> miscWhere(String wClause) {
