@@ -32,7 +32,7 @@ public class DBUser implements IFDBUser {
 	@Override
 	public int insertUser(User user) throws Exception {
 		int rc = -1;
-		String query = "INSERT INTO User(handle,name,password,isAdmin) VALUES('"
+		String query = "INSERT INTO dbo.[User](handle,name,password,isAdmin) VALUES('"
 				+ user.getHandle()
 				+ "','"
 				+ user.getName()
@@ -49,7 +49,7 @@ public class DBUser implements IFDBUser {
 			stmt.close();
 		}// end try
 		catch (SQLException ex) {
-			System.out.println("User ikke oprettet");
+			System.out.println("insert exception in user db:");
 			throw new Exception("User is not inserted correct");
 		}
 		return (rc);
@@ -58,10 +58,11 @@ public class DBUser implements IFDBUser {
 	@Override
 	public int updateUser(User user) {
 		int rc = -1;
-		String query = "UPDATE User SET " + "handle = '" + user.getHandle()
+		String query = "UPDATE dbo.[User] SET " + "handle = '" + user.getHandle()
 				+ "', " + "name ='" + user.getName()
 				+ "', " + "password ='" + user.getPassword()
-				+ "', " + "isAdmin ='" + user.isAdmin() +"'";
+				+ "', " + "isAdmin ='" + user.isAdmin() +"' WHERE id = '"
+				+ user.getUserID() + "'";
 		
 		System.out.println("Update query:" + query);
 
@@ -83,7 +84,7 @@ public class DBUser implements IFDBUser {
 	public int deleteUser(int id) {
 		int rc = -1;
 		
-		String query = "DELETE FROM User WHERE id = '" + id + "'";
+		String query = "DELETE FROM dbo.[User] WHERE id = '" + id + "'";
 		System.out.println("DELETE query: " + query);
 		
 		try {
@@ -170,7 +171,7 @@ public class DBUser implements IFDBUser {
 	 */
 	private String buildQuery(String wClause) {
 
-		String query = "SELECT * FROM User";
+		String query = "SELECT * FROM dbo.[User]";
 
 		if (wClause.length() > 0)
 			query = query + " WHERE " + wClause;

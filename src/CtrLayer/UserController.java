@@ -53,6 +53,7 @@ public class UserController implements IFUserController {
 		IFDBUser dbUser = new DBUser();
 		User user = new User();
 
+		user.setUserID(id);
 		user.setHandle(handle);
 		user.setName(name);
 		user.setPassword(password);

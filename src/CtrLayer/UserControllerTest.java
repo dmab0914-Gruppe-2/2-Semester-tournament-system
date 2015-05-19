@@ -57,9 +57,9 @@ public class UserControllerTest {
 	@Test
 	public void testUpdateUser() {
 		User u = userController.findUser("Jens");
-
-		int i = userController.updateUser(u.getUserID(), "hallooo", "Jens",
-				"password", false);
+		
+		int i = userController.updateUser(u.getUserID(), "superman", "Jens",
+				"password", true);
 		if (i == 1) {
 		} else
 			fail("failed");
@@ -67,7 +67,14 @@ public class UserControllerTest {
 
 	@Test
 	public void testDeleteUser() {
-		User u = userController.findUser("name");
+		try {
+			userController.addUser("test", "test", "password", true);
+		} catch (Exception e) {
+			fail("cant insert, to delete test");
+		}
+		
+		
+		User u = userController.findUser("test");
 		int d = userController.deleteUser(u.getUserID());
 		if (d == 1) {
 
