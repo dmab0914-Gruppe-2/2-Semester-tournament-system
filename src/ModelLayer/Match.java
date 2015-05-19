@@ -4,6 +4,7 @@ import ModelLayer.Tournament.Status;
 
 /**
  * Created by Andreas on 11-05-2015.
+ * The class use the enum type Status from the Tournament Class, as they're identical.
  */
 public class Match {
 
@@ -13,7 +14,7 @@ public class Match {
     private int team1Score;
     private int team2Score;
     private int roundNumber;
-    private Status status;
+    private Status status; //Uses the enum Status from the Tournament class. Please check it out for usage information.
 
     public Match() {
 
