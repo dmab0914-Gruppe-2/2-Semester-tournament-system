@@ -172,7 +172,7 @@ public class EliminationController implements IFEliminationController {
         Match match = new Match();
         match.setTeam1(one);
         match.setTeam2(two);
-        match.setStatus(Match.Status.waiting);
+        match.setStatus(Tournament.Status.waiting);
         return match;
     }
 
