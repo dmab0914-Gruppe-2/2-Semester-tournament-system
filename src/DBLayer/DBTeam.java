@@ -22,6 +22,12 @@ public class DBTeam implements IFDBTeam {
 		String wClause =" name = '" + name + "'";
 		return singleWhere(wClause);
 	}
+	
+	@Override
+	public Team findTeamById(int id) {
+		String wClause =" id = '" + id + "'";
+		return singleWhere(wClause);
+	}
 
 	@Override
 	public int insertTeam(Team team) throws Exception {
