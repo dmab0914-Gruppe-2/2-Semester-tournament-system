@@ -14,11 +14,11 @@ import ModelLayer.Tournament;
  */
 public interface IFDBTournament {
 	
-	public ArrayList<Tournament> getTournaments();
+	public ArrayList<Tournament> getTournaments(boolean retriveAssociation);
 	
-	public Tournament getTournament(int tournamentID);
+	public Tournament getTournament(int tournamentID, boolean retriveAssociation);
 	
-	public boolean addTournament(Tournament tournament);
+	public Tournament addTournament(Tournament tournament)  throws Exception;
 	
 	public boolean enableSignup(int tournamentID);
 	
@@ -30,5 +30,5 @@ public interface IFDBTournament {
 	
 	public int advanceTournament(int tournamentID);
 	
-	public Tournament endTournament(int tournamentID);
+	public Tournament endTournament(int tournamentID, boolean retriveAssociation);
 }
