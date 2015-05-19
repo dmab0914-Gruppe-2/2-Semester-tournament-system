@@ -5,7 +5,7 @@ package ModelLayer;
  */
 public class Match {
 
-    enum Status {
+    public enum Status {
         waiting, running, done, cancelled
     }
 

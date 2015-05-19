@@ -45,7 +45,7 @@ public class TournamentController implements IFTournamentController {
 		if(dbTournament.startTournament(tournamentID)) {
 			ArrayList<Team> teams = dbTournament.getTournamentTeams(tournamentID);
 			//Asks for a list of matches from the given teams and given scores. As there isn't any scores to give atm, it asks for an empty ArrayList.
-			ArrayList<Match> matches = eliminationController.generateSERound(teams, new ArrayList<Integer>());
+			ArrayList<Match> matches = eliminationController.generateRound(teams, new ArrayList<Integer>());
 			ArrayList<Match> newMatches = new ArrayList<Match>(); //new list with the matches including their id. makes it easier to revert in case one gives an error.
 			for(int i = 0; i < matches.size(); i++) {
 				matches.get(i).setRoundNumber(1); //First round is always round 1. 

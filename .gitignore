@@ -15,3 +15,8 @@ hs_err_pid*
 .project
 .classpath
 wbp-meta/org.eclipse.wb.rcp.wbp-palette.xml
+*.name
+.idea/compiler.xml
+*.xml
+.idea/dataSources.ids
+*.iml
