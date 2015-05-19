@@ -12,7 +12,7 @@ import java.util.Date;
 public class Tournament {
 
 	public enum Status {
-		waiting, running, done, cancelled
+		ready, waiting, running, done, cancelled
 	}
 
 	private int id;
@@ -236,6 +236,9 @@ public class Tournament {
 	 * @return	The related integer handwritten in db.
 	 */
 	public int statusToInt(Status status) {
+		if(status.equals(Status.ready)) {
+			return 1;
+		}
 		if(status.equals(Status.waiting)) {
 			return 1;
 		}
