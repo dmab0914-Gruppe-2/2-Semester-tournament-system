@@ -22,6 +22,8 @@ public interface IFUserController {
 	public User findUserByHandle(String handle);
 	
 	public User findUser(String name);
+	
+	public User findUserID(int id);
 
 	public int updateUser(int id, String handle, String name, String password,
 			boolean isAdmin);

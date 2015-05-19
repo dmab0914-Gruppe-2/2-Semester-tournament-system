@@ -30,6 +30,12 @@ public class DBUser implements IFDBUser {
 	}
 
 	@Override
+	public User findUserById(int id) {
+		String wClause =" id = '" + id + "'";
+		return singleWhere(wClause);
+	}
+
+	@Override
 	public int insertUser(User user) throws Exception {
 		int rc = -1;
 		String query = "INSERT INTO dbo.[User](handle,name,password,isAdmin) VALUES('"

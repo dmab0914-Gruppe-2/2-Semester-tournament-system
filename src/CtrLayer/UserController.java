@@ -47,6 +47,12 @@ public class UserController implements IFUserController {
 	}
 
 	@Override
+	public User findUserID(int id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
 	public int updateUser(int id, String handle, String name, String password,
 			boolean isAdmin) {
 

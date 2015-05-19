@@ -14,6 +14,9 @@ public interface IFDBUser {
 
 	// find one user by name
 	public User findUserByName(String name);
+	
+	// find one user by id
+	public User findUserById(int id);
 
 	// insert new user
 	public int insertUser(User user) throws Exception;
