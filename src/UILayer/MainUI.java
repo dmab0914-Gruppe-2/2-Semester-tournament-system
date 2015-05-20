@@ -122,8 +122,7 @@ public class MainUI {
 		JButton btnCreateUser = new JButton("Create");
 		btnCreateUser.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				createUserWindow cuw = new createUserWindow();
-				cuw.createUserWindow();
+				CreateUserWindow.createUserWindow();
 			}
 		});
 		btnCreateUser.setFont(new Font("Tahoma", Font.PLAIN, 9));
