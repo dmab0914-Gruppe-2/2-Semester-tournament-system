@@ -32,6 +32,7 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JTabbedPane;
 
 /**
  * @author Jacob 19/05/2015
@@ -96,6 +97,20 @@ public class MainUI {
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(panelBottom, GroupLayout.DEFAULT_SIZE, 386, Short.MAX_VALUE))
 		);
+		panelBottom.setLayout(null);
+		
+		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+		tabbedPane.setBounds(0, 0, 383, 386);
+		panelBottom.add(tabbedPane);
+		
+		JTabbedPane tpTournaments = new JTabbedPane(JTabbedPane.TOP);
+		tabbedPane.addTab("Tournaments", null, tpTournaments, null);
+		
+		JTabbedPane tpTeams = new JTabbedPane(JTabbedPane.TOP);
+		tabbedPane.addTab("Teams", null, tpTeams, null);
+		
+		JTabbedPane tpPlayers = new JTabbedPane(JTabbedPane.TOP);
+		tabbedPane.addTab("Players", null, tpPlayers, null);
 		
 		JPanel panelLogin = new JPanel();
 		panelLogin.setAlignmentX(Component.LEFT_ALIGNMENT);
