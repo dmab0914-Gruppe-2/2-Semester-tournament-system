@@ -260,4 +260,28 @@ public class Tournament {
 		}
 		return 0;
 	}
+	
+	/**
+	 * Converts the statusID to the specified Status in the database.
+	 * @param	statusID The id to get the related Status for
+	 * @return	The related Status handwritten in db.
+	 */
+	public Status IntToStatus(int statusID) {
+		if(statusID == 1) {
+			return Status.waiting;
+		}
+		if(statusID == 2) {
+			return Status.ready;
+		}
+		if(statusID == 3) {
+			return Status.running;
+		}
+		if(statusID == 4) {
+			return Status.done;
+		}
+		if(statusID == 5) {
+			return Status.cancelled;
+		}
+		return null;
+	}
 }//endClass
