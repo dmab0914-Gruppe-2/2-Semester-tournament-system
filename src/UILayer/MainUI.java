@@ -28,6 +28,10 @@ import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.JPasswordField;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 /**
  * @author Jacob 19/05/2015
@@ -82,15 +86,15 @@ public class MainUI {
 		GroupLayout groupLayout = new GroupLayout(frmTournamentplanner.getContentPane());
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.TRAILING)
-				.addComponent(panelBottom, GroupLayout.DEFAULT_SIZE, 784, Short.MAX_VALUE)
 				.addComponent(panelTop, GroupLayout.DEFAULT_SIZE, 784, Short.MAX_VALUE)
+				.addComponent(panelBottom, GroupLayout.DEFAULT_SIZE, 784, Short.MAX_VALUE)
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addComponent(panelTop, GroupLayout.PREFERRED_SIZE, 169, GroupLayout.PREFERRED_SIZE)
-					.addGap(27)
-					.addComponent(panelBottom, GroupLayout.DEFAULT_SIZE, 365, Short.MAX_VALUE))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(panelBottom, GroupLayout.DEFAULT_SIZE, 386, Short.MAX_VALUE))
 		);
 		
 		JPanel panelLogin = new JPanel();
@@ -101,9 +105,9 @@ public class MainUI {
 		lblLogin.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		
 		txtloginHandle = new JTextField();
-		txtloginHandle.setText("Youre handle");
 		txtloginHandle.setToolTipText("Youre handle");
 		txtloginHandle.setColumns(10);
+		
 		
 		JButton btnlogin = new JButton("Login");
 		btnlogin.setFont(new Font("Tahoma", Font.PLAIN, 8));
@@ -112,10 +116,16 @@ public class MainUI {
 		lblErrorMessage.setForeground(Color.RED);
 		
 		pwdPassword = new JPasswordField();
+
 		pwdPassword.setToolTipText("Youre password");
-		pwdPassword.setText("Password");
 		
 		JButton btnCreateUser = new JButton("Create");
+		btnCreateUser.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				createUserWindow cuw = new createUserWindow();
+				cuw.createUserWindow();
+			}
+		});
 		btnCreateUser.setFont(new Font("Tahoma", Font.PLAIN, 9));
 		
 		JLabel lblUsername = new JLabel("Username:");
