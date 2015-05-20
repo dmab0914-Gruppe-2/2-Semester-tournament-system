@@ -100,17 +100,18 @@ public class MainUI {
 		panelBottom.setLayout(null);
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-		tabbedPane.setBounds(0, 0, 383, 386);
 		panelBottom.add(tabbedPane);
+		tabbedPane.setBounds(0, 0, 383, 386);
 		
 		JTabbedPane tpTournaments = new JTabbedPane(JTabbedPane.TOP);
-		tabbedPane.addTab("Tournaments", null, tpTournaments, null);
-		
 		JTabbedPane tpTeams = new JTabbedPane(JTabbedPane.TOP);
-		tabbedPane.addTab("Teams", null, tpTeams, null);
-		
 		JTabbedPane tpPlayers = new JTabbedPane(JTabbedPane.TOP);
-		tabbedPane.addTab("Players", null, tpPlayers, null);
+		
+		ListUsersUI listUsersUI = new ListUsersUI();
+		
+		tabbedPane.addTab("Tournaments", null, tpTournaments, null);
+		tabbedPane.addTab("Teams", null, tpTeams, null);
+		tabbedPane.addTab("Players", null, listUsersUI, null);
 		
 		JPanel panelLogin = new JPanel();
 		panelLogin.setAlignmentX(Component.LEFT_ALIGNMENT);
