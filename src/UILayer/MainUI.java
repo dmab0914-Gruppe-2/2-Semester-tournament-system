@@ -79,29 +79,18 @@ public class MainUI {
 		JPanel panelTop = new JPanel();
 		
 		JPanel panelBottom = new JPanel();
-		
-		JSeparator separator = new JSeparator();
-		separator.setForeground(Color.BLACK);
-		separator.setPreferredSize(new Dimension(700, 2));
-		separator.setAlignmentY(Component.TOP_ALIGNMENT);
 		GroupLayout groupLayout = new GroupLayout(frmTournamentplanner.getContentPane());
 		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
+			groupLayout.createParallelGroup(Alignment.TRAILING)
 				.addComponent(panelBottom, GroupLayout.DEFAULT_SIZE, 784, Short.MAX_VALUE)
 				.addComponent(panelTop, GroupLayout.DEFAULT_SIZE, 784, Short.MAX_VALUE)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addContainerGap()
-					.addComponent(separator, GroupLayout.DEFAULT_SIZE, 764, Short.MAX_VALUE)
-					.addContainerGap())
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
-					.addComponent(panelTop, GroupLayout.PREFERRED_SIZE, 129, GroupLayout.PREFERRED_SIZE)
-					.addGap(4)
-					.addComponent(separator, GroupLayout.PREFERRED_SIZE, 4, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(panelBottom, GroupLayout.DEFAULT_SIZE, 418, Short.MAX_VALUE))
+					.addComponent(panelTop, GroupLayout.PREFERRED_SIZE, 169, GroupLayout.PREFERRED_SIZE)
+					.addGap(27)
+					.addComponent(panelBottom, GroupLayout.DEFAULT_SIZE, 365, Short.MAX_VALUE))
 		);
 		
 		JPanel panelLogin = new JPanel();
@@ -117,43 +106,69 @@ public class MainUI {
 		txtloginHandle.setColumns(10);
 		
 		JButton btnlogin = new JButton("Login");
+		btnlogin.setFont(new Font("Tahoma", Font.PLAIN, 8));
 		
 		JLabel lblErrorMessage = new JLabel("Error Message");
 		lblErrorMessage.setForeground(Color.RED);
-		lblErrorMessage.setVisible(false);
 		
 		pwdPassword = new JPasswordField();
 		pwdPassword.setToolTipText("Youre password");
 		pwdPassword.setText("Password");
+		
+		JButton btnCreateUser = new JButton("Create");
+		btnCreateUser.setFont(new Font("Tahoma", Font.PLAIN, 9));
+		
+		JLabel lblUsername = new JLabel("Username:");
+		
+		JLabel lblPassword = new JLabel("Password:");
 		GroupLayout gl_panelLogin = new GroupLayout(panelLogin);
 		gl_panelLogin.setHorizontalGroup(
 			gl_panelLogin.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panelLogin.createSequentialGroup()
 					.addContainerGap()
 					.addGroup(gl_panelLogin.createParallelGroup(Alignment.LEADING)
-						.addComponent(lblErrorMessage, GroupLayout.DEFAULT_SIZE, 152, Short.MAX_VALUE)
-						.addComponent(txtloginHandle, GroupLayout.DEFAULT_SIZE, 152, Short.MAX_VALUE)
+						.addGroup(gl_panelLogin.createSequentialGroup()
+							.addComponent(lblErrorMessage, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+							.addGap(148))
+						.addGroup(gl_panelLogin.createSequentialGroup()
+							.addComponent(btnlogin)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(btnCreateUser)
+							.addContainerGap(44, Short.MAX_VALUE))
+						.addGroup(gl_panelLogin.createSequentialGroup()
+							.addComponent(pwdPassword, GroupLayout.PREFERRED_SIZE, 130, GroupLayout.PREFERRED_SIZE)
+							.addContainerGap(44, Short.MAX_VALUE))
 						.addGroup(gl_panelLogin.createSequentialGroup()
 							.addComponent(lblLogin)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(btnlogin, GroupLayout.DEFAULT_SIZE, 72, Short.MAX_VALUE))
-						.addComponent(pwdPassword, GroupLayout.DEFAULT_SIZE, 152, Short.MAX_VALUE))
-					.addContainerGap())
+							.addContainerGap(44, Short.MAX_VALUE))
+						.addGroup(gl_panelLogin.createSequentialGroup()
+							.addComponent(lblUsername)
+							.addContainerGap(44, Short.MAX_VALUE))
+						.addGroup(gl_panelLogin.createSequentialGroup()
+							.addComponent(txtloginHandle, GroupLayout.PREFERRED_SIZE, 147, GroupLayout.PREFERRED_SIZE)
+							.addContainerGap(44, Short.MAX_VALUE))
+						.addGroup(gl_panelLogin.createSequentialGroup()
+							.addComponent(lblPassword)
+							.addContainerGap(44, Short.MAX_VALUE))))
 		);
 		gl_panelLogin.setVerticalGroup(
 			gl_panelLogin.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panelLogin.createSequentialGroup()
-					.addGap(24)
-					.addGroup(gl_panelLogin.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblLogin)
-						.addComponent(btnlogin))
+					.addComponent(lblLogin)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(lblUsername)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(txtloginHandle, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(lblPassword)
+					.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 					.addComponent(pwdPassword, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(lblErrorMessage)
-					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+					.addGroup(gl_panelLogin.createParallelGroup(Alignment.BASELINE)
+						.addComponent(btnlogin)
+						.addComponent(btnCreateUser))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(lblErrorMessage))
 		);
 		panelLogin.setLayout(gl_panelLogin);
 		
@@ -169,26 +184,36 @@ public class MainUI {
 		
 		JLabel lblYourTournamentMade = new JLabel("Your tournament made easier!");
 		lblYourTournamentMade.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 13));
+		
+		JSeparator separator = new JSeparator();
 		GroupLayout gl_panelTitle = new GroupLayout(panelTitle);
 		gl_panelTitle.setHorizontalGroup(
 			gl_panelTitle.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panelTitle.createSequentialGroup()
 					.addContainerGap()
 					.addGroup(gl_panelTitle.createParallelGroup(Alignment.LEADING)
-						.addComponent(separator_1, GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
-						.addComponent(lblYourTournamentMade))
-					.addContainerGap())
-				.addGroup(gl_panelTitle.createSequentialGroup()
-					.addGap(8)
-					.addComponent(lblTitle, GroupLayout.DEFAULT_SIZE, 420, Short.MAX_VALUE)
-					.addGap(12))
+						.addGroup(gl_panelTitle.createSequentialGroup()
+							.addGroup(gl_panelTitle.createParallelGroup(Alignment.LEADING)
+								.addComponent(separator_1, GroupLayout.DEFAULT_SIZE, 539, Short.MAX_VALUE)
+								.addComponent(lblYourTournamentMade))
+							.addContainerGap())
+						.addGroup(gl_panelTitle.createSequentialGroup()
+							.addComponent(lblTitle, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(separator, GroupLayout.PREFERRED_SIZE, 1, GroupLayout.PREFERRED_SIZE)
+							.addContainerGap(405, Short.MAX_VALUE))))
 		);
 		gl_panelTitle.setVerticalGroup(
 			gl_panelTitle.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panelTitle.createSequentialGroup()
-					.addGap(18)
-					.addComponent(lblTitle, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE)
-					.addGap(4)
+					.addGap(36)
+					.addGroup(gl_panelTitle.createParallelGroup(Alignment.TRAILING)
+						.addGroup(gl_panelTitle.createSequentialGroup()
+							.addComponent(separator, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+							.addGap(28))
+						.addGroup(gl_panelTitle.createSequentialGroup()
+							.addComponent(lblTitle, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.UNRELATED)))
 					.addComponent(separator_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(lblYourTournamentMade)
@@ -234,27 +259,33 @@ public class MainUI {
 					.addContainerGap(46, Short.MAX_VALUE))
 		);
 		panelDatabaseConnection.setLayout(gl_panelDatabaseConnection);
+		
+		JSeparator separator_2 = new JSeparator();
 		GroupLayout gl_panelTop = new GroupLayout(panelTop);
 		gl_panelTop.setHorizontalGroup(
 			gl_panelTop.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panelTop.createSequentialGroup()
 					.addComponent(panelLogin, GroupLayout.PREFERRED_SIZE, 172, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(panelTitle, GroupLayout.DEFAULT_SIZE, 421, Short.MAX_VALUE)
-					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGap(2)
+					.addComponent(panelTitle, GroupLayout.PREFERRED_SIZE, 421, Short.MAX_VALUE)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addComponent(panelDatabaseConnection, GroupLayout.PREFERRED_SIZE, 179, GroupLayout.PREFERRED_SIZE))
+				.addGroup(gl_panelTop.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(separator_2, GroupLayout.DEFAULT_SIZE, 751, Short.MAX_VALUE)
+					.addGap(23))
 		);
 		gl_panelTop.setVerticalGroup(
 			gl_panelTop.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panelTop.createSequentialGroup()
 					.addGroup(gl_panelTop.createParallelGroup(Alignment.LEADING)
-						.addGroup(Alignment.TRAILING, gl_panelTop.createParallelGroup(Alignment.TRAILING)
-							.addGroup(Alignment.LEADING, gl_panelTop.createSequentialGroup()
-								.addGap(2)
-								.addComponent(panelDatabaseConnection, GroupLayout.DEFAULT_SIZE, 131, Short.MAX_VALUE))
-							.addComponent(panelLogin, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 131, Short.MAX_VALUE))
-						.addComponent(panelTitle, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addContainerGap())
+						.addGroup(Alignment.TRAILING, gl_panelTop.createSequentialGroup()
+							.addGap(2)
+							.addComponent(panelDatabaseConnection, GroupLayout.DEFAULT_SIZE, 156, Short.MAX_VALUE))
+						.addComponent(panelTitle, Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(panelLogin, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+					.addGap(2)
+					.addComponent(separator_2, GroupLayout.PREFERRED_SIZE, 9, GroupLayout.PREFERRED_SIZE))
 		);
 		panelTop.setLayout(gl_panelTop);
 		frmTournamentplanner.getContentPane().setLayout(groupLayout);
