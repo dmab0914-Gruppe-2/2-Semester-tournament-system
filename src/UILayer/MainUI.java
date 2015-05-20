@@ -23,7 +23,7 @@ import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
 import java.awt.Color;
 import javax.swing.JLabel;
-import com.jgoodies.forms.factories.DefaultComponentFactory;
+//import com.jgoodies.forms.factories.DefaultComponentFactory;  wtf jacob??
 import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.JButton;
@@ -159,7 +159,7 @@ public class MainUI {
 		
 		JPanel panelTitle = new JPanel();
 		
-		JLabel lblTitle = DefaultComponentFactory.getInstance().createTitle("Tournament Planer");
+		JLabel lblTitle = new JLabel("Tournament Planer");
 		lblTitle.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTitle.setFont(new Font("Tahoma", Font.BOLD, 40));
 		
