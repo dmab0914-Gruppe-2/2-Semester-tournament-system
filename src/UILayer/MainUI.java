@@ -3,21 +3,12 @@
  */
 package UILayer;
 
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import java.awt.Dimension;
-import java.awt.Window.Type;
-import java.awt.Frame;
-import java.awt.Dialog.ModalExclusionType;
-import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 import java.awt.Component;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
@@ -28,8 +19,6 @@ import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.JPasswordField;
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JTabbedPane;
@@ -103,14 +92,12 @@ public class MainUI {
 		panelBottom.add(tabbedPane);
 		tabbedPane.setBounds(0, 0, 383, 386);
 		
-		JTabbedPane tpTournaments = new JTabbedPane(JTabbedPane.TOP);
-		JTabbedPane tpTeams = new JTabbedPane(JTabbedPane.TOP);
-		JTabbedPane tpPlayers = new JTabbedPane(JTabbedPane.TOP);
-		
+		ListTournamentsUI listTournamentsUI = new ListTournamentsUI();
+		ListTeamsUI listTeamsUI = new ListTeamsUI();
 		ListUsersUI listUsersUI = new ListUsersUI();
 		
-		tabbedPane.addTab("Tournaments", null, tpTournaments, null);
-		tabbedPane.addTab("Teams", null, tpTeams, null);
+		tabbedPane.addTab("Tournaments", null, listTournamentsUI, null);
+		tabbedPane.addTab("Teams", null, listTeamsUI, null);
 		tabbedPane.addTab("Players", null, listUsersUI, null);
 		
 		JPanel panelLogin = new JPanel();
