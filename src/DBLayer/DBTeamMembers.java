@@ -31,7 +31,7 @@ public class DBTeamMembers implements IFDBTeamMembers {
 	 * @see DBLayer.IFDBTeamMembers#getUsersFromTeam(int)
 	 */
 	public ArrayList<User> getUsersFromTeam(int teamID) {
-		String wClause = "  tournamentID = '" + teamID + "'";
+		String wClause = "  teamID = '" + teamID + "'";
 		return miscWhere(wClause);
 	}
 
