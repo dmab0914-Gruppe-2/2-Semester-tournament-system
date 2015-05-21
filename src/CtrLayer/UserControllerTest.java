@@ -82,6 +82,33 @@ public class UserControllerTest {
 			fail("Not yet implemented");
 	}
 
+	@Test
+	public void testHashing() throws Exception{
+		String password = "password";
+		String hashed1 = userController.stringToHash(password);
+		String password2 = "password";
+		String hashed2 = userController.stringToHash(password2);
+
+		//TEST
+		assertEquals(hashed1, hashed2);
+
+		password = "xfjclgghi544ytgoijsl38o92409u*(^&)*(PILOHG75y437tuiflsd785^&I*oij";
+		hashed1 = userController.stringToHash(password);
+		password2 = "xfjclgghi544ytgoijsl38o92409u*(^&)*(PILOHG75y437tuiflsd785^&I*oij";
+		hashed2 = userController.stringToHash(password2);
+
+		//TEST
+		assertEquals(hashed1, hashed2);
+
+		password = "guacamole";
+		hashed1 = userController.stringToHash(password);
+		password2 = "asdf";
+		hashed2 = userController.stringToHash(password2);
+
+		//TEST
+		assertNotEquals(hashed1, hashed2);
+	}
+
 	// @Test
 	// public void testGetAllUsers() {
 	// fail("Not yet implemented");
