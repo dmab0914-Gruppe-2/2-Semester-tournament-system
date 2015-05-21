@@ -6,16 +6,9 @@ package ModelLayer;
 public class WrongDataInputException extends RuntimeException {
 
 	private static final long serialVersionUID = 3439373942567435517L;
-	private String input;
 
-	/**
-	 * 
-	 */
 	public WrongDataInputException(String input) {
-		this.input = input;
-	}
+		super(input);
 
-	public String toString(){
-		return input;
 	}
 }
