@@ -22,6 +22,12 @@ import javax.swing.JPasswordField;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JTabbedPane;
+import javax.swing.border.LineBorder;
+import javax.swing.JList;
+import javax.swing.ListSelectionModel;
+import javax.swing.AbstractListModel;
+import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
 
 /**
  * @author Jacob 19/05/2015
@@ -32,6 +38,8 @@ public class MainUI {
 	private JFrame frmTournamentplanner;
 	private JTextField txtloginHandle;
 	private JPasswordField pwdPassword;
+	private JTextField textField;
+	private JTextField textField_1;
 
 	/**
 	 * Launch the application.
@@ -99,6 +107,78 @@ public class MainUI {
 		tabbedPane.addTab("Tournaments", null, listTournamentsUI, null);
 		tabbedPane.addTab("Teams", null, listTeamsUI, null);
 		tabbedPane.addTab("Players", null, listUsersUI, null);
+		
+		JPanel controlPanel = new JPanel();
+		controlPanel.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
+		controlPanel.setBounds(393, 23, 381, 363);
+		panelBottom.add(controlPanel);
+		controlPanel.setLayout(null);
+		
+		JLabel lblControlpanel = new JLabel("Control Panel");
+		lblControlpanel.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lblControlpanel.setBounds(10, 11, 100, 14);
+		controlPanel.add(lblControlpanel);
+		
+		JLabel lblTournament = new JLabel("Tournament");
+		lblTournament.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		lblTournament.setBounds(31, 41, 79, 14);
+		controlPanel.add(lblTournament);
+		
+		JComboBox comboBox = new JComboBox();
+		comboBox.setBounds(41, 66, 271, 20);
+		controlPanel.add(comboBox);
+		
+		JButton btnOpenTournament = new JButton("Open Tournament");
+		btnOpenTournament.setBounds(51, 97, 127, 23);
+		controlPanel.add(btnOpenTournament);
+		
+		JButton btnNewButton_1 = new JButton("New button");
+		btnNewButton_1.setBounds(207, 97, 89, 23);
+		controlPanel.add(btnNewButton_1);
+		
+		JSeparator separator_3 = new JSeparator();
+		separator_3.setBounds(10, 136, 361, 2);
+		controlPanel.add(separator_3);
+		
+		JLabel lblTeam = new JLabel("Team");
+		lblTeam.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		lblTeam.setBounds(31, 149, 46, 14);
+		controlPanel.add(lblTeam);
+		
+		JComboBox comboBox_1 = new JComboBox();
+		comboBox_1.setBounds(41, 174, 137, 20);
+		controlPanel.add(comboBox_1);
+		
+		textField = new JTextField();
+		textField.setBounds(188, 174, 124, 20);
+		controlPanel.add(textField);
+		textField.setColumns(10);
+		
+		JButton btnOpenTeam = new JButton("Open Team");
+		btnOpenTeam.setBounds(51, 205, 127, 23);
+		controlPanel.add(btnOpenTeam);
+		
+		JSeparator separator_4 = new JSeparator();
+		separator_4.setBounds(10, 243, 361, 2);
+		controlPanel.add(separator_4);
+		
+		JLabel lblPlayer = new JLabel("Player");
+		lblPlayer.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		lblPlayer.setBounds(31, 256, 46, 14);
+		controlPanel.add(lblPlayer);
+		
+		JComboBox comboBox_2 = new JComboBox();
+		comboBox_2.setBounds(41, 281, 137, 20);
+		controlPanel.add(comboBox_2);
+		
+		textField_1 = new JTextField();
+		textField_1.setBounds(188, 281, 124, 20);
+		controlPanel.add(textField_1);
+		textField_1.setColumns(10);
+		
+		JButton btnOpenPlayer = new JButton("Open Player");
+		btnOpenPlayer.setBounds(51, 312, 127, 23);
+		controlPanel.add(btnOpenPlayer);
 		
 		JPanel panelLogin = new JPanel();
 		panelLogin.setAlignmentX(Component.LEFT_ALIGNMENT);
