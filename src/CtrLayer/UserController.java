@@ -1,5 +1,6 @@
 package CtrLayer;
 
+import java.security.MessageDigest;
 import java.util.ArrayList;
 
 import DBLayer.DBUser;
@@ -83,6 +84,33 @@ public class UserController implements IFUserController {
 	public ArrayList<User> getAllUsers() {
 		IFDBUser dbUser = new DBUser();
 		return dbUser.getAllUsers();
+	}
+
+	/**
+	 * Takes a password as parameter which this method then hashes with the SHA-512 algorithm and returns the hashed password
+	 * -author Andreas
+	 * @param input unhashed password
+	 * @return hashed password
+	 * @throws Exception unknown
+	 */
+	public String stringToHash(String input) throws Exception{
+
+			System.out.print("Please enter a password for hashing: ");
+			String password = input;
+
+			MessageDigest messageDigest = MessageDigest.getInstance("SHA-512");
+			messageDigest.update(password.getBytes());
+
+			byte byteData[] = messageDigest.digest();
+
+			//Convert to HEX 1
+			StringBuffer stringBuffer = new StringBuffer();
+			for(int i = 0; i<byteData.length; i++){
+				stringBuffer.append(Integer.toString(byteData[i] & 0xff + 0x100, 16).substring(1));
+			}
+			//System.out.print("HEX Format method 1: "+stringBuffer.toString() + "\n");
+
+		return stringBuffer.toString();
 	}
 
 }
