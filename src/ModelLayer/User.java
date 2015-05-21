@@ -39,6 +39,14 @@ public class User {
 	public User() {
 
 	}
+	
+	/*
+	 * @return userID as string
+	 */
+	public String getUserIdAsString(){
+		String i = Integer.toString(this.userID);
+		return i;
+	}
 
 	/**
 	 * @return the userID

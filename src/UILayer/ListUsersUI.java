@@ -18,9 +18,10 @@ import ModelLayer.User;
 
 @SuppressWarnings("serial")
 public class ListUsersUI extends JPanel {
+	private JTable table;
 	DefaultTableModel userTable;
 	UserController userController;
-	private JTable table;
+	
 
 	/**
 	 * Create the panel.
@@ -34,26 +35,26 @@ public class ListUsersUI extends JPanel {
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(10, 11, 363, 348);
 		add(scrollPane);
-
-		table = new JTable();
-		table.setModel(new DefaultTableModel(
-			new Object[][] {
-				{null, null, null},
-			},
-			new String[] {
-				"id", "handle/alias", "Name"
-			}
-		));
-		scrollPane.setViewportView(table);
-
-	}
-
-	private void loadUserTable() {
+	//	loadUserTable();
+		DefaultTableModel data = new DefaultTableModel();
+		data.setColumnIdentifiers(new String[]{"id", "Handle", "name"});
 		ArrayList<User> users = userController.getAllUsers();
 		for (User u : users) {
-			userTable.addRow(new Object[] { u.getUserID(), u.getHandle(),
-					u.getName(), });
+		data.addRow(new String[]{u.getUserIdAsString(), u.getHandle(), u.getName()});
 		}
-		userTable.newDataAvailable(null);
+		
+		table = new JTable();
+		table.setModel(data);
+		scrollPane.setViewportView(table);
+		
 	}
+
+//	private void loadUserTable() {
+//		ArrayList<User> users = userController.getAllUsers();
+//		for (User u : users) {
+//			userTable.addRow(new Object[] { u.getUserID(), u.getHandle(),
+//					u.getName(), });
+//		}
+//		userTable.newDataAvailable(null);
+//	}
 }
