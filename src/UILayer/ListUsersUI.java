@@ -15,6 +15,7 @@ import javax.swing.table.DefaultTableModel;
 
 import CtrLayer.UserController;
 import ModelLayer.User;
+import javax.swing.ListSelectionModel;
 
 @SuppressWarnings("serial")
 public class ListUsersUI extends JPanel {
@@ -44,6 +45,8 @@ public class ListUsersUI extends JPanel {
 		}
 		
 		table = new JTable();
+		table.setEnabled(false);
+		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		table.setModel(data);
 		scrollPane.setViewportView(table);
 		

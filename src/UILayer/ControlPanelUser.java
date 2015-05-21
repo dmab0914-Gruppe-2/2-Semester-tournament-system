@@ -2,30 +2,25 @@ package UILayer;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.awt.Font;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-
-import java.awt.CardLayout;
-
-import javax.swing.BoxLayout;
-
-import java.awt.GridLayout;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-
 import javax.swing.JLabel;
-
-import java.awt.Font;
-
+import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
+
+import com.sun.corba.se.spi.orbutil.fsm.Guard.Result;
 
 import CtrLayer.UserController;
 
-public class CreateUserWindow extends JDialog {
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class ControlPanelUser extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
 	private JTextField txtHandle;
@@ -37,10 +32,9 @@ public class CreateUserWindow extends JDialog {
 	/**
 	 * Launch the application.
 	 */
-	public static void createUserWindow() {
+	public static void ControlPanelUser() {
 		try {
-
-			CreateUserWindow dialog = new CreateUserWindow();
+			ControlPanelUser dialog = new ControlPanelUser();
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
@@ -51,9 +45,8 @@ public class CreateUserWindow extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public CreateUserWindow() {
+	public ControlPanelUser() {
 		setAlwaysOnTop(true);
-
 		setBounds(100, 100, 425, 370);
 		getContentPane().setLayout(null);
 		contentPanel.setBounds(0, 0, 409, 293);
@@ -61,10 +54,10 @@ public class CreateUserWindow extends JDialog {
 		getContentPane().add(contentPanel);
 		contentPanel.setLayout(null);
 		{
-			JLabel lblNewLabel = new JLabel("Create new user");
-			lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 18));
-			lblNewLabel.setBounds(10, 11, 136, 14);
-			contentPanel.add(lblNewLabel);
+			JLabel lblUpdateUser = new JLabel("Update User");
+			lblUpdateUser.setFont(new Font("Tahoma", Font.PLAIN, 18));
+			lblUpdateUser.setBounds(10, 11, 136, 14);
+			contentPanel.add(lblUpdateUser);
 		}
 		{
 			JSeparator separator = new JSeparator();
@@ -79,6 +72,7 @@ public class CreateUserWindow extends JDialog {
 		}
 
 		txtHandle = new JTextField();
+		txtHandle.setEditable(false);
 		txtHandle.setBounds(248, 65, 120, 20);
 		contentPanel.add(txtHandle);
 		txtHandle.setColumns(10);
@@ -115,15 +109,15 @@ public class CreateUserWindow extends JDialog {
 			getContentPane().add(buttonPane);
 			buttonPane.setLayout(new GridLayout(0, 2, 0, 0));
 			{
-				JButton btnCreate = new JButton("Create");
-				btnCreate.addActionListener(new ActionListener() {
+				JButton btnUpdate = new JButton("Update");
+				btnUpdate.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						createUser();
+						updateUser();
 					}
 				});
-				btnCreate.setActionCommand("OK");
-				buttonPane.add(btnCreate);
-				getRootPane().setDefaultButton(btnCreate);
+				btnUpdate.setActionCommand("OK");
+				buttonPane.add(btnUpdate);
+				getRootPane().setDefaultButton(btnUpdate);
 			}
 			{
 				JButton btnClose = new JButton("Close / Cancel");
@@ -136,26 +130,31 @@ public class CreateUserWindow extends JDialog {
 				buttonPane.add(btnClose);
 			}
 		}
+
 	}
 
-	private void createUser() {
+	/* Private methods */
+
+	/*
+	 * 
+	 **/
+	private void updateUser() {
 		UserController userCtr = new UserController();
-		if (userCtr.findUserByHandle(txtHandle.getText()) == null) {
-			if (txtPassword.getText().length() >= 3
-					&& txtName.getText().length() > 2) {
-				try {
-					userCtr.addUser(txtHandle.getText(), txtName.getText(),
-							txtPassword.getText(), false);
-					lblStatus.setText("User Created");
-					txtHandle.setText("");
-					txtName.setText("");
-					txtPassword.setText("");
-				} catch (Exception e) {
-					lblStatus.setText("Error in inputs, please try again!");
-				}
-			} else
-				lblStatus.setText("Please, fill out all fields Thanks :)");
-		}else
-			lblStatus.setText("Sorry this handle is taken :(");
+		if (txtPassword.getText().length() >= 3
+				&& txtName.getText().length() > 2) {
+			try {
+				int result = userCtr.updateUser(1, txtHandle.getText(), // TODO fix to real ID from logged in user!
+						txtName.getText(), txtPassword.getText(), false);
+				if (result == 1) {
+					lblStatus.setText("User updated");
+				} else
+					lblStatus.setText("User not updated");
+
+			} catch (Exception e) {
+				lblStatus.setText("Error in inputs, please try again!");
+			}
+		} else
+			lblStatus.setText("Please, fill out all fields Thanks :)");
 	}
+
 }

@@ -179,6 +179,7 @@ public class MainUI {
 		JButton btnOpenPlayer = new JButton("Open Player");
 		btnOpenPlayer.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				ControlPanelUser.ControlPanelUser();
 			}
 		});
 		btnOpenPlayer.setBounds(51, 312, 127, 23);
