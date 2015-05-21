@@ -95,11 +95,8 @@ public class UserController implements IFUserController {
 	 */
 	public String stringToHash(String input) throws Exception{
 
-			System.out.print("Please enter a password for hashing: ");
-			String password = input;
-
 			MessageDigest messageDigest = MessageDigest.getInstance("SHA-512");
-			messageDigest.update(password.getBytes());
+			messageDigest.update(input.getBytes());
 
 			byte byteData[] = messageDigest.digest();
 
