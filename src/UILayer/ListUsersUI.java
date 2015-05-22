@@ -36,21 +36,10 @@ public class ListUsersUI extends JPanel {
 			data.addRow(new String[] { u.getUserIdAsString(), u.getHandle(),
 					u.getName() });
 		}
-
 		table = new JTable();
 		table.setEnabled(false);
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		table.setModel(data);
 		scrollPane.setViewportView(table);
-
 	}
-
-	// private void loadUserTable() {
-	// ArrayList<User> users = userController.getAllUsers();
-	// for (User u : users) {
-	// userTable.addRow(new Object[] { u.getUserID(), u.getHandle(),
-	// u.getName(), });
-	// }
-	// userTable.newDataAvailable(null);
-	// }
 }
