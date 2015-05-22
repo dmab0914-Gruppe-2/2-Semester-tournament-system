@@ -49,8 +49,8 @@ public class UserController implements IFUserController {
 
 	@Override
 	public User findUserID(int id) {
-		// TODO Auto-generated method stub
-		return null;
+		IFDBUser dbUser = new DBUser();
+		return dbUser.findUserById(id);
 	}
 
 	@Override
@@ -108,6 +108,14 @@ public class UserController implements IFUserController {
 			//System.out.print("HEX Format method 1: "+stringBuffer.toString() + "\n");
 
 		return stringBuffer.toString();
+	}
+	
+	public String findUserNameById(int id) {
+		IFDBUser dbUser = new DBUser();
+		
+		User u = dbUser.findUserById(id);
+		
+		return u.getHandle();
 	}
 
 }

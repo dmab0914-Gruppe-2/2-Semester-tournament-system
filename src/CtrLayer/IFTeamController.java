@@ -14,7 +14,7 @@ import ModelLayer.User;
  */
 public interface IFTeamController  {
 
-	public void addTeam(int id, String name, String leader) throws Exception;
+	public void addTeam(int id, String name, int leader) throws Exception;
 	
 	public void addUserToTeam(User user);
 	
@@ -22,7 +22,7 @@ public interface IFTeamController  {
 	
 	public Team findTeamById(int id);
 
-	public int updateTeam(int id, String name, String leader);
+	public int updateTeam(int id, String name, int leader);
 	
 	public int deleteTeam(int id);
 	

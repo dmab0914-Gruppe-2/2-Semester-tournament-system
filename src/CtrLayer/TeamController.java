@@ -10,7 +10,7 @@ import ModelLayer.User;
 public class TeamController implements IFTeamController {
 
 	@Override
-	public void addTeam(int id, String name,String leader) throws Exception {
+	public void addTeam(int id, String name,int leader) throws Exception {
 		Team team = new Team();
 		team.setId(id);
 		team.setName(name);
@@ -46,7 +46,7 @@ public class TeamController implements IFTeamController {
 	}
 
 	@Override
-	public int updateTeam(int id, String name, String leader) {
+	public int updateTeam(int id, String name, int leader) {
 
 		IFDBTeam dbTeam = new DBTeam();
 		Team team = new Team();

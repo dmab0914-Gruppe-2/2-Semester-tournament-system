@@ -9,7 +9,7 @@ public class Team {
 
     private String name;
     private int id;
-    private String leader;
+    private int leader;
     private ArrayList<User> users;
 
     public Team(String name, ArrayList<User> users) {
@@ -46,16 +46,21 @@ public class Team {
 	public int getId() {
 		return id;
 	}
+	
+	public String getIdAsString() {
+		String s = Integer.toString(this.id);
+		return s;
+	}
 
 	public void setId(int id) {
 		this.id = id;
 	}
 
-	public String getLeader() {
+	public int getLeader() {
 		return leader;
 	}
 
-	public void setLeader(String leader) {
+	public void setLeader(int leader) {
 		this.leader = leader;
 	}
 }

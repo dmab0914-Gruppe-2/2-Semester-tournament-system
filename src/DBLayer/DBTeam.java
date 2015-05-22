@@ -198,7 +198,7 @@ public class DBTeam implements IFDBTeam {
 		try { // the columns from the table team are used
 			teamObj.setId(results.getInt("id"));
 			teamObj.setName(results.getString("name"));
-			teamObj.setLeader(results.getString("Leader"));
+			teamObj.setLeader(results.getInt("leaderID"));
 		} catch (Exception e) {
 			System.out.println("error in building the team object");
 		}
