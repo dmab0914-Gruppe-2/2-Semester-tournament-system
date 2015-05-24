@@ -3,19 +3,20 @@ package CtrLayer;
 import java.util.ArrayList;
 
 import DBLayer.DBTeam;
+import DBLayer.DBTeamMembers;
 import DBLayer.IFDBTeam;
+import DBLayer.IFDBTeamMembers;
 import ModelLayer.Team;
 import ModelLayer.User;
 
 public class TeamController implements IFTeamController {
 
 	@Override
-	public void addTeam(int id, String name,int leader) throws Exception {
+	public void addTeam(int id, String name, int leader) throws Exception {
 		Team team = new Team();
 		team.setId(id);
 		team.setName(name);
 		team.setLeader(leader);
-		
 
 		try {
 			IFDBTeam dbTeam = new DBTeam();
@@ -26,9 +27,31 @@ public class TeamController implements IFTeamController {
 	}
 
 	@Override
-	public void addUserToTeam(User user) {
-		// TODO Auto-generated method stub
+	public ArrayList<User> getTeamMembers(int teamId) {
+		IFDBTeamMembers dbTM = new DBTeamMembers();
+		return dbTM.getUsersFromTeam(teamId);
+	}
 
+	@Override
+	public void addUserToTeam(User user, Team team) throws Exception {
+		IFDBTeamMembers dbTM = new DBTeamMembers();
+
+		try {
+			dbTM.addUserToTeam(team.getId(), user.getUserID());
+		} catch (Exception e) {
+			throw new Exception("Error: Team member not added!");
+		}
+	}
+
+	@Override
+	public void removeUserFromTeam(User user, Team team) throws Exception {
+		IFDBTeamMembers dbTM = new DBTeamMembers();
+
+		try {
+			dbTM.removeUserFromTeam(team.getId(), user.getUserID());
+		} catch (Exception e) {
+			throw new Exception("Error: Team member not removed!");
+		}		
 	}
 
 	@Override

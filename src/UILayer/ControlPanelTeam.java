@@ -4,20 +4,26 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JPasswordField;
 import javax.swing.JSeparator;
+import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
 
 import CtrLayer.TeamController;
 import CtrLayer.UserController;
 import ModelLayer.Team;
 import ModelLayer.User;
+
+import javax.swing.JScrollPane;
+import java.awt.Color;
 
 @SuppressWarnings("serial")
 public class ControlPanelTeam extends JDialog {
@@ -26,6 +32,8 @@ public class ControlPanelTeam extends JDialog {
 	private JTextField txtTeamName;
 	private JTextField txtLeader;
 	private JLabel lblStatus;
+	private JTable table;
+	DefaultTableModel userTable;
 
 	/**
 	 * Launch the application.
@@ -85,11 +93,48 @@ public class ControlPanelTeam extends JDialog {
 			contentPanel.add(txtLeader);
 			txtLeader.setColumns(10);
 		}
-		{
-			lblStatus = new JLabel("");
-			lblStatus.setBounds(152, 268, 105, 14);
-			contentPanel.add(lblStatus);
+
+		JButton btnSignUp = new JButton("Sign up for team");
+		btnSignUp.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				signup(team);
+			}
+		});
+		btnSignUp.setBounds(218, 216, 150, 23);
+		contentPanel.add(btnSignUp);
+
+		JButton btnRemoveFromTeam = new JButton("Remove from team");
+		btnRemoveFromTeam.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				removeMember(team);
+			}
+		});
+		btnRemoveFromTeam.setBounds(218, 259, 150, 23);
+		contentPanel.add(btnRemoveFromTeam);
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(10, 136, 195, 146);
+		contentPanel.add(scrollPane);
+		
+		/**
+		 * data table for team members
+		 **/
+		
+		TeamController teamCtr = new TeamController();
+		Team t = teamCtr.findTeam(team);
+		DefaultTableModel data = new DefaultTableModel();
+		data.setColumnIdentifiers(new String[] { "id", "Handle", "name" });
+		ArrayList<User> users = teamCtr.getTeamMembers(t.getId());
+		for (User u : users) {
+			data.addRow(new String[] { u.getUserIdAsString(), u.getHandle(),
+					u.getName() });
 		}
+		table = new JTable();
+		table.setEnabled(false);
+		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		table.setModel(data);
+		scrollPane.setViewportView(table);
+		
 		JPanel buttonPane = new JPanel();
 		buttonPane.setBounds(0, 304, 409, 27);
 		getContentPane().add(buttonPane);
@@ -115,6 +160,12 @@ public class ControlPanelTeam extends JDialog {
 			btnClose.setActionCommand("Cancel");
 			buttonPane.add(btnClose);
 
+		}
+		{
+			lblStatus = new JLabel("");
+			lblStatus.setForeground(Color.RED);
+			lblStatus.setBounds(152, 289, 105, 14);
+			getContentPane().add(lblStatus);
 		}
 		getTeamData(team);
 	}
@@ -145,11 +196,37 @@ public class ControlPanelTeam extends JDialog {
 	private void getTeamData(String team) {
 		TeamController teamCtr = new TeamController();
 		UserController userCtr = new UserController();
-		
+
 		Team t = teamCtr.findTeam(team);
 		User leader = userCtr.findUserID(t.getLeader());
-		
+
 		txtTeamName.setText(t.getName());
 		txtLeader.setText(leader.getHandle());
+	}
+
+	private void signup(String team) {
+		TeamController teamCtr = new TeamController();
+		UserController userCtr = new UserController();
+		// TODO
+		// get userID from the logged in user to signup for the team
+		User u = userCtr.findUserID(20); // dummy id to use method!
+
+		try {
+			teamCtr.addUserToTeam(u, teamCtr.findTeam(team));
+		} catch (Exception e) {
+			lblStatus.setText("Error in team sign up");
+		}
+	}
+	private void removeMember(String team) {
+		TeamController teamCtr = new TeamController();
+		UserController userCtr = new UserController();
+		
+		User u = userCtr.findUserID(20);
+		
+		try {
+			teamCtr.removeUserFromTeam(u, teamCtr.findTeam(team));
+		} catch (Exception e) {
+			lblStatus.setText("Error in team sign up");
+		}
 	}
 }

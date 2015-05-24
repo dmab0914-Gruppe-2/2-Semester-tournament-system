@@ -16,7 +16,11 @@ public interface IFTeamController  {
 
 	public void addTeam(int id, String name, int leader) throws Exception;
 	
-	public void addUserToTeam(User user);
+	public void addUserToTeam(User user, Team team) throws Exception;
+	
+	public void removeUserFromTeam(User user, Team team) throws Exception;
+	
+	public ArrayList<User> getTeamMembers(int teamId);
 	
 	public Team findTeam(String name);
 	
