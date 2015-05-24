@@ -55,8 +55,6 @@ public class MainUI {
 	private JFrame frmTournamentplanner;
 	private JTextField txtloginHandle;
 	private JPasswordField pwdPassword;
-	private JTextField txtSearchTeam;
-	private JTextField txtSearchUser;
 	private JComboBox cb_team;
 	private JComboBox cb_user;
 
@@ -167,12 +165,12 @@ public class MainUI {
 		cb_team.setBounds(41, 174, 137, 20);
 		controlPanel.add(cb_team);
 
-		txtSearchTeam = new JTextField();
-		txtSearchTeam.setBounds(188, 174, 124, 20);
-		controlPanel.add(txtSearchTeam);
-		txtSearchTeam.setColumns(10);
-
 		JButton btnOpenTeam = new JButton("Open Team");
+		btnOpenTeam.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ControlPanelTeam.controlPanelTeam(cb_team.getSelectedItem().toString());
+			}
+		});
 		btnOpenTeam.setBounds(51, 205, 127, 23);
 		controlPanel.add(btnOpenTeam);
 
@@ -189,15 +187,10 @@ public class MainUI {
 		cb_user.setBounds(41, 281, 137, 20);
 		controlPanel.add(cb_user);
 
-		txtSearchUser = new JTextField();
-		txtSearchUser.setBounds(188, 281, 124, 20);
-		controlPanel.add(txtSearchUser);
-		txtSearchUser.setColumns(10);
-
 		JButton btnOpenPlayer = new JButton("Open Player");
 		btnOpenPlayer.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ControlPanelUser.ControlPanelUser();
+				ControlPanelUser.controlPanelUser(cb_user.getSelectedItem().toString());
 			}
 		});
 		btnOpenPlayer.setBounds(51, 312, 127, 23);

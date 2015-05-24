@@ -1,7 +1,5 @@
 package UILayer;
 
-import java.awt.BorderLayout;
-import java.awt.FlowLayout;
 import java.awt.Font;
 
 import javax.swing.JButton;
@@ -12,29 +10,30 @@ import javax.swing.JSeparator;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
-import com.sun.corba.se.spi.orbutil.fsm.Guard.Result;
-
 import CtrLayer.UserController;
+import ModelLayer.User;
 
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.JPasswordField;
+
+@SuppressWarnings("serial")
 public class ControlPanelUser extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
 	private JTextField txtHandle;
 	private JTextField txtName;
-	private JTextField txtPassword;
-	private UserController uC;
 	private JLabel lblStatus;
+	private JPasswordField pwPassword;
 
 	/**
 	 * Launch the application.
 	 */
-	public static void ControlPanelUser() {
+	public static void controlPanelUser(String handle) {
 		try {
-			ControlPanelUser dialog = new ControlPanelUser();
+			ControlPanelUser dialog = new ControlPanelUser(handle);
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
@@ -45,7 +44,7 @@ public class ControlPanelUser extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public ControlPanelUser() {
+	public ControlPanelUser(String handle) {
 		setAlwaysOnTop(true);
 		setBounds(100, 100, 425, 370);
 		getContentPane().setLayout(null);
@@ -93,16 +92,14 @@ public class ControlPanelUser extends JDialog {
 			txtName.setColumns(10);
 		}
 		{
-			txtPassword = new JTextField();
-			txtPassword.setBounds(248, 223, 120, 20);
-			contentPanel.add(txtPassword);
-			txtPassword.setColumns(10);
-		}
-		{
 			lblStatus = new JLabel("");
 			lblStatus.setBounds(152, 268, 105, 14);
 			contentPanel.add(lblStatus);
 		}
+
+		pwPassword = new JPasswordField();
+		pwPassword.setBounds(248, 220, 120, 20);
+		contentPanel.add(pwPassword);
 		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setBounds(0, 304, 409, 27);
@@ -112,7 +109,7 @@ public class ControlPanelUser extends JDialog {
 				JButton btnUpdate = new JButton("Update");
 				btnUpdate.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						updateUser();
+						updateUser(handle);
 					}
 				});
 				btnUpdate.setActionCommand("OK");
@@ -130,6 +127,7 @@ public class ControlPanelUser extends JDialog {
 				buttonPane.add(btnClose);
 			}
 		}
+		getUserData(handle);
 
 	}
 
@@ -138,13 +136,17 @@ public class ControlPanelUser extends JDialog {
 	/*
 	 * 
 	 **/
-	private void updateUser() {
+	@SuppressWarnings("deprecation")
+	private void updateUser(String handle) {
 		UserController userCtr = new UserController();
-		if (txtPassword.getText().length() >= 3
+		User openUser = userCtr.findUserByHandle(handle);
+
+		if (pwPassword.getText().length() >= 3
 				&& txtName.getText().length() > 2) {
 			try {
-				int result = userCtr.updateUser(1, txtHandle.getText(), // TODO fix to real ID from logged in user!
-						txtName.getText(), txtPassword.getText(), false);
+				int result = userCtr.updateUser(openUser.getUserID(),
+						txtHandle.getText(), txtName.getText(),
+						pwPassword.getText(), false);
 				if (result == 1) {
 					lblStatus.setText("User updated");
 				} else
@@ -157,4 +159,10 @@ public class ControlPanelUser extends JDialog {
 			lblStatus.setText("Please, fill out all fields Thanks :)");
 	}
 
+	private void getUserData(String handle) {
+		UserController userCtr = new UserController();
+		User u = userCtr.findUserByHandle(handle);
+		txtHandle.setText(u.getHandle());
+		txtName.setText(u.getName());
+	}
 }
