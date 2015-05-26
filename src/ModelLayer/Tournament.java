@@ -32,6 +32,9 @@ public class Tournament {
 	private ArrayList<Team> teams;
 	private ArrayList<Match> matches;
 
+	/*
+	 * Empty constructor.
+	 */
 	public Tournament(){
 
 	}
@@ -60,14 +63,14 @@ public class Tournament {
 		this.roundNumber = roundNumber;
 	}
 	
-	public Tournament(int id, String name, String gameName, int teamSize, boolean withPlayOff, Status status) {
+	public Tournament(int id, String name, String gameName, int teamSize, boolean withPlayOff, Status status, int roundNumber) {
 		this.id = id;
 		this.name = name;
 		this.gameName = gameName;
 		this.teamSize = teamSize;
 		this.withPlayOff = withPlayOff;
 		this.status = status;
-		this.roundNumber = 1;
+		this.roundNumber = roundNumber;
 	}
 	
 	public Tournament(String name, String gameName, int teamSize, boolean withPlayOff, Status status) {
@@ -224,7 +227,7 @@ public class Tournament {
 	 * @param status The status to get related integer for
 	 * @return	The related integer handwritten in db.
 	 */
-	public int statusToInt(Status status) {
+	public static int statusToInt(Status status) {
 		if(status.equals(Status.waiting)) {
 			return 1;
 		}
@@ -248,7 +251,7 @@ public class Tournament {
 	 * @param	statusID The id to get the related Status for
 	 * @return	The related Status handwritten in db.
 	 */
-	public Status IntToStatus(int statusID) {
+	public static Status intToStatus(int statusID) {
 		if(statusID == 1) {
 			return Status.waiting;
 		}

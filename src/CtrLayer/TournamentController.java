@@ -2,6 +2,7 @@ package CtrLayer;
 
 import java.util.ArrayList;
 
+import DBLayer.DBTournament;
 import DBLayer.IFDBMatch;
 import DBLayer.IFDBTournament;
 import ModelLayer.Match;
@@ -19,8 +20,8 @@ public class TournamentController implements IFTournamentController {
 	private IFDBMatch dbMatch;
 
 	public TournamentController() {
-		//eliminationController = new EliminationController();
-		//dbTournament = new DBTournament();
+		eliminationController = new EliminationController();
+		dbTournament = new DBTournament();
 		//dbMatch = new DBMatch();
 	}
 
