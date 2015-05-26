@@ -98,6 +98,7 @@ public class ControlPanelTeam extends JDialog {
 		btnSignUp.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				signup(team);
+				lblStatus.setText("Close window for signup to take affect");
 			}
 		});
 		btnSignUp.setBounds(218, 216, 150, 23);
@@ -107,6 +108,7 @@ public class ControlPanelTeam extends JDialog {
 		btnRemoveFromTeam.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				removeMember(team);
+				lblStatus.setText("Close window for remove to take affect");
 			}
 		});
 		btnRemoveFromTeam.setBounds(218, 259, 150, 23);
@@ -164,7 +166,7 @@ public class ControlPanelTeam extends JDialog {
 		{
 			lblStatus = new JLabel("");
 			lblStatus.setForeground(Color.RED);
-			lblStatus.setBounds(152, 289, 105, 14);
+			lblStatus.setBounds(10, 289, 389, 14);
 			getContentPane().add(lblStatus);
 		}
 		getTeamData(team);
