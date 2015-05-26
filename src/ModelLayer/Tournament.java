@@ -67,6 +67,16 @@ public class Tournament {
 		this.teamSize = teamSize;
 		this.withPlayOff = withPlayOff;
 		this.status = status;
+		this.roundNumber = 1;
+	}
+	
+	public Tournament(String name, String gameName, int teamSize, boolean withPlayOff, Status status) {
+		this.name = name;
+		this.gameName = gameName;
+		this.teamSize = teamSize;
+		this.withPlayOff = withPlayOff;
+		this.status = status;
+		this.roundNumber = 1;
 	}
 
 	/**
