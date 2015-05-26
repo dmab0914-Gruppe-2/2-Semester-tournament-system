@@ -1,6 +1,9 @@
 package CtrLayer;
 
-import ModelLayer.*;
+import ModelLayer.Match;
+import ModelLayer.Team;
+import ModelLayer.Tournament;
+import ModelLayer.WrongDataInputException;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -12,9 +15,7 @@ public class EliminationController implements IFEliminationController {
 
 
     public EliminationController() {
-
-
-        //generateSETournament(generateDummyTeams(), new ArrayList<Integer>());
+        
     }//endConstructor
 
     /**
@@ -55,26 +56,7 @@ public class EliminationController implements IFEliminationController {
                         teams.remove(maxScorePos);
                     }else{ // if (teams.size() >= 1){
                         team2 = new Team();
-                    }//else {
-                        //throw new IndexOutOfBoundsException();
-                    //}
-
-
-
-
-                    /*if (teams.size() >= 2) {
-
-                        maxScorePos = getMaxScore(scores);
-                        if (maxScorePos != -1) {
-                            team2 = teams.get(maxScorePos);
-                            scores.remove(maxScorePos);
-                            teams.remove(maxScorePos);
-                        } else {
-                            throw new IndexOutOfBoundsException();
-                        }//endIf
-                    } else {
-                        team2 = new Team();
-                    }*/
+                    }
 
                     Match match = generateMatch(team1, team2);
                     matches.add(match);
