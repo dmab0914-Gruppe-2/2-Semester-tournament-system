@@ -4,6 +4,7 @@
 package DBLayer;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -11,7 +12,6 @@ import java.util.ArrayList;
 
 import CtrLayer.IFTeamController;
 import CtrLayer.TeamController;
-import ModelLayer.IdAllreadyExsistException;
 import ModelLayer.Team;
 import ModelLayer.Tournament;
 import ModelLayer.Tournament.Status;
@@ -51,45 +51,41 @@ public class DBTournament implements IFDBTournament {
 	 * @see DBLayer.IFDBTournament#addTournament(ModelLayer.Tournament)
 	 */
 	public Tournament addTournament(Tournament tournament) throws Exception {
-		// TODO Auto-generated method stub
-		if(getTournament(tournament.getId(), false) == null) {
-			int playOffBit;
-			if(tournament.isWithPlayOff()) {
-				playOffBit = 1;
-			}
-			else {
-				playOffBit = 0;
-			}
-
-			int rc = -1;
-			String query="INSERT INTO Tournament(id, name, gameName, teamSize, withPlayOff, statusID, winnerTeam, roundNumber)  VALUES('"+
-					tournament.getId()  + "','"  + //TODO 
-					tournament.getName()  + "','"  +
-					tournament.getGameName() + "','" +
-					tournament.getTeamSize() + "','" +
-					playOffBit + "','" +
-					tournament.statusToInt(tournament.getStatus()) + "','" +
-					tournament.getWinnerTeam() + "','" +
-					tournament.getRoundNumber() + "')";
-
-			System.out.println("insert : " + query);
-			try{
-				Statement stmt = con.createStatement();
-				stmt.setQueryTimeout(5);
-				rc = stmt.executeUpdate(query); //Returns the row count which may be the id.
-				/*ResultSet returnSet = stmt.executeQuery("Select SCOPE_IDENTIFIRY();"); //Alternative way to get the id, if before doesn't.
-				returnSet.next();
-				int id = returnSet.getInt(1);*/
-				stmt.close();
-				tournament.setId(rc);
-				return tournament;
-			}//end try
-			catch(SQLException ex){
-				System.out.println("Product haven't been created");
-				throw new Exception("Adding Tournament: " + tournament.getName() + " Couldn't be added.");
-			}
+		int playOffBit;
+		if(tournament.isWithPlayOff()) {
+			playOffBit = 1;
 		}
-		throw new IdAllreadyExsistException ("Tournament: " + tournament.getName() + " Allready exsist.");
+		else {
+			playOffBit = 0;
+		}
+		String query="INSERT INTO Tournament(name, gameName, teamSize, withPlayOff, statusID, winnerTeamID, roundNumber)  VALUES('"+
+				tournament.getName()  + "','"  +
+				tournament.getGameName() + "','" +
+				tournament.getTeamSize() + "','" +
+				playOffBit + "','" +
+				tournament.statusToInt(tournament.getStatus()) + "'," +
+				"NULL" + ",'" +
+				tournament.getRoundNumber() + "')";
+
+		System.out.println("insert : " + query);
+		ResultSet rs;
+		try{
+			Statement stmt = con.createStatement();
+			stmt.setQueryTimeout(5);
+			stmt.executeUpdate(query); //Returns the row count which may be the id.
+			rs = stmt.executeQuery("SELECT SCOPE_IDENTITY();"); //Makes it possible to retrieve the the incremental id.
+			rs.next();
+			int id = rs.getInt(1); //gets the incremental id.
+			rs.close();
+			stmt.close();
+			System.out.println("Tournaments databse ID: " + id);
+			tournament.setId(id);
+			return tournament;
+		}//end try
+		catch(SQLException ex){
+			System.out.println("Product haven't been added to db " + ex);
+			throw new Exception("Adding Tournament: " + tournament.getName() + " Couldn't be added.");
+		}
 	}
 
 	/* (non-Javadoc)
@@ -156,6 +152,22 @@ public class DBTournament implements IFDBTournament {
 	public Tournament endTournament(int tournamentID, boolean retriveAssociation) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	public boolean removeTournament(int tournamentID) {
+		String query = "DELETE FROM dbo.Tournament WHERE id = '" + tournamentID + "'";
+		System.out.println("DELETE query: " + query);
+
+		try {
+			Statement stmt = con.createStatement();
+			stmt.setQueryTimeout(5);
+			stmt.executeUpdate(query);
+			stmt.close();
+			return true;
+		} catch(Exception ex) {
+			System.out.println("Delete exception in Tournament db: " + ex);
+			return false;
+		}
 	}
 
 	private ArrayList<Tournament> miscWhere(String wClause, boolean retrieveAssociation) {
