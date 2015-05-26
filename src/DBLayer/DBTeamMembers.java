@@ -9,8 +9,11 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import CtrLayer.IFTeamController;
 import CtrLayer.IFUserController;
+import CtrLayer.TeamController;
 import CtrLayer.UserController;
+import ModelLayer.Team;
 import ModelLayer.User;
 
 /**
@@ -21,23 +24,25 @@ public class DBTeamMembers implements IFDBTeamMembers {
 
 	private Connection con;
 	private IFUserController userController;
+	private IFTeamController teamController;
 
 	public DBTeamMembers() {
 		con = DBConnection.getInstance().getDBcon(); //Get instance of DbConnection, which creates the connection to DB.
 		userController = new UserController();
+		teamController = new TeamController();
 	}
 
-	/* (non-Javadoc)
-	 * @see DBLayer.IFDBTeamMembers#getUsersFromTeam(int)
-	 */
 	public ArrayList<User> getUsersFromTeam(int teamID) {
 		String wClause = "  teamID = '" + teamID + "'";
 		return miscWhere(wClause);
 	}
 
-	/* (non-Javadoc)
-	 * @see DBLayer.IFDBTeamMembers#addUserToTeam(int, int)
-	 */
+	@Override
+	public ArrayList<Team> getTeamsFromUsers(int userID) {
+		String wClause = " userID = '" + userID + "'";
+		return miscWhereTeam(wClause);
+	}
+
 	public void addUserToTeam(int teamID, int userID) {
 		String query="INSERT INTO TeamMembers(teamID, userID)  VALUES('"+
 				teamID  + "','"  +
@@ -56,9 +61,6 @@ public class DBTeamMembers implements IFDBTeamMembers {
 		}
 	}
 
-	/* (non-Javadoc)
-	 * @see DBLayer.IFDBTeamMembers#removeUserFromTeam(int, int)
-	 */
 	public void removeUserFromTeam(int teamID, int UserID) {
 		String query="DELETE FROM TeamMembers WHERE teamID = '" +
 				teamID + "'" +
@@ -76,9 +78,6 @@ public class DBTeamMembers implements IFDBTeamMembers {
 		}
 	}
 	
-	/* (non-Javadoc)
-	 * @see DBLayer.IFDBTeamMembers#removeAllTeamsFromTournament(int)
-	 */
 	public void removeAllUsersFromTeam(int teamID) {
 		String query="DELETE FROM TeamMembers WHERE teamID = '" +
 				teamID + "'";
@@ -108,6 +107,33 @@ public class DBTeamMembers implements IFDBTeamMembers {
 			while (results.next()) {
 				User userObj = userController.findUserID(results.getInt("userID"));
 				list.add(userObj);
+			}// end while
+			stmt.close();
+			// Association is not to be build
+		}// end try
+		catch (Exception e) {
+			System.out.println("Query exception - select: " + e);
+			e.printStackTrace();
+		}
+		return list;
+	}
+	
+	private ArrayList<Team> miscWhereTeam(String wClause) {
+		ResultSet results;
+		ArrayList<Team> list = new ArrayList<Team>();
+
+		String query = buildQuery(wClause);
+
+		try { // read the Team members from the database
+			Statement stmt = con.createStatement();
+			stmt.setQueryTimeout(5);
+			results = stmt.executeQuery(query);
+
+			while (results.next()) {
+//				User userObj = userController.findUserID(results.getInt("userID"));
+//				list.add(userObj);
+				Team teamObj = teamController.findTeamById(results.getInt("teamID"));
+				list.add(teamObj);
 			}// end while
 			stmt.close();
 			// Association is not to be build

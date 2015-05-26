@@ -22,6 +22,8 @@ public interface IFTeamController  {
 	
 	public ArrayList<User> getTeamMembers(int teamId);
 	
+	public ArrayList<Team> getTeamsFromUser(int userId);
+	
 	public Team findTeam(String name);
 	
 	public Team findTeamById(int id);
