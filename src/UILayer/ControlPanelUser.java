@@ -7,17 +7,24 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
+import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
 
+import CtrLayer.TeamController;
 import CtrLayer.UserController;
+import ModelLayer.Team;
 import ModelLayer.User;
 
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.JPasswordField;
+import javax.swing.JScrollPane;
 
 @SuppressWarnings("serial")
 public class ControlPanelUser extends JDialog {
@@ -27,6 +34,8 @@ public class ControlPanelUser extends JDialog {
 	private JTextField txtName;
 	private JLabel lblStatus;
 	private JPasswordField pwPassword;
+	private JTable table;
+	DefaultTableModel userTable;
 
 	/**
 	 * Launch the application.
@@ -72,22 +81,22 @@ public class ControlPanelUser extends JDialog {
 
 		txtHandle = new JTextField();
 		txtHandle.setEditable(false);
-		txtHandle.setBounds(248, 65, 120, 20);
+		txtHandle.setBounds(248, 65, 120, 14);
 		contentPanel.add(txtHandle);
 		txtHandle.setColumns(10);
 
 		JLabel lblName = new JLabel("Name:");
 		lblName.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblName.setBounds(54, 146, 92, 14);
+		lblName.setBounds(54, 107, 92, 14);
 		contentPanel.add(lblName);
 
 		JLabel lblPassword = new JLabel("Password:");
 		lblPassword.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblPassword.setBounds(54, 226, 92, 14);
+		lblPassword.setBounds(54, 146, 92, 14);
 		contentPanel.add(lblPassword);
 		{
 			txtName = new JTextField();
-			txtName.setBounds(248, 144, 120, 20);
+			txtName.setBounds(248, 105, 120, 14);
 			contentPanel.add(txtName);
 			txtName.setColumns(10);
 		}
@@ -98,8 +107,33 @@ public class ControlPanelUser extends JDialog {
 		}
 
 		pwPassword = new JPasswordField();
-		pwPassword.setBounds(248, 220, 120, 20);
+		pwPassword.setBounds(248, 148, 120, 14);
 		contentPanel.add(pwPassword);
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(54, 181, 314, 101);
+		contentPanel.add(scrollPane);
+		
+		/**
+		 * data table for team members
+		 **/
+		
+		TeamController teamCtr = new TeamController();
+		UserController userCtr = new UserController();
+		User u = userCtr.findUserByHandle(handle);
+		DefaultTableModel data = new DefaultTableModel();
+		data.setColumnIdentifiers(new String[] { "id", "Team Name", "Leader" });
+		ArrayList<Team> teams = teamCtr.getTeamsFromUser(u.getUserID());
+		for (Team t : teams) {
+			data.addRow(new String[] { t.getIdAsString(), t.getName(),
+					userCtr.findUserNameById(t.getLeader()) });
+		}
+		table = new JTable();
+		table.setEnabled(false);
+		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		table.setModel(data);
+		scrollPane.setViewportView(table);
+		
 		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setBounds(0, 304, 409, 27);
