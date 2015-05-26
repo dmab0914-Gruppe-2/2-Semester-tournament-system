@@ -149,10 +149,6 @@ public class MainUI {
 		btnOpenTournament.setBounds(51, 97, 146, 23);
 		controlPanel.add(btnOpenTournament);
 
-		JButton btnNewButton_1 = new JButton("New button");
-		btnNewButton_1.setBounds(207, 97, 89, 23);
-		controlPanel.add(btnNewButton_1);
-
 		JSeparator separator_3 = new JSeparator();
 		separator_3.setBounds(10, 136, 361, 2);
 		controlPanel.add(separator_3);
