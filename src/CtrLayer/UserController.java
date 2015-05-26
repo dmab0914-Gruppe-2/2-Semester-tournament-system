@@ -16,7 +16,7 @@ public class UserController implements IFUserController {
 		User user = new User();
 		user.setHandle(handle);
 		user.setName(name);
-		user.setPassword(password);
+		user.setPassword(stringToHash(password));
 		user.setAdmin(isAdmin);
 
 		try {
