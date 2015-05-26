@@ -62,14 +62,13 @@ public class DBTournament implements IFDBTournament {
 			}
 
 			int rc = -1;
-			String query="INSERT INTO Tournament(id, name, gameName, teamSize, withPlayOff, statusID, startTime, winnerTeam, roundNumber)  VALUES('"+
+			String query="INSERT INTO Tournament(id, name, gameName, teamSize, withPlayOff, statusID, winnerTeam, roundNumber)  VALUES('"+
 					tournament.getId()  + "','"  + //TODO 
 					tournament.getName()  + "','"  +
 					tournament.getGameName() + "','" +
 					tournament.getTeamSize() + "','" +
 					playOffBit + "','" +
 					tournament.statusToInt(tournament.getStatus()) + "','" +
-					tournament.getStartTime() + "','" +
 					tournament.getWinnerTeam() + "','" +
 					tournament.getRoundNumber() + "')";
 
@@ -227,7 +226,7 @@ public class DBTournament implements IFDBTournament {
 	}
 
 	private String buildQuery(String wClause) {
-		String query = "SELECT id, name, gameName, teamSize, withPlayOff, statusID, startTime, winnerTeam, roundNumber FROM Tournament";
+		String query = "SELECT id, name, gameName, teamSize, withPlayOff, statusID, winnerTeam, roundNumber FROM Tournament";
 		if (wClause.length() > 0)
 			query = query + " WHERE " + wClause;
 
@@ -242,7 +241,6 @@ public class DBTournament implements IFDBTournament {
 			tournamentObj.setGameName(results.getString("gameName"));
 			tournamentObj.setTeamSize(results.getInt("teamSize"));
 			tournamentObj.setWithPlayOff(results.getBoolean("withPlayOff"));
-			tournamentObj.setStartTime(results.getDate("startTime"));
 			tournamentObj.setWinnerTeam(new Team(results.getInt("winnerTeam")));
 			tournamentObj.setRoundNumber(results.getInt("roundNumber"));
 		} catch (Exception e) {
