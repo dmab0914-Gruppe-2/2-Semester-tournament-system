@@ -4,7 +4,6 @@ import ModelLayer.Team;
 import ModelLayer.Match;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 /**
  * @author Jacob 12/05/2015
@@ -28,7 +27,6 @@ public class Tournament {
 	private int teamSize;
 	private boolean withPlayOff;
 	private Status status;
-	private Date startTime;
 	private Team winnerTeam; //The team that won the tournament. Will only be defined if the status is done.
 	private int roundNumber;
 	private ArrayList<Team> teams;
@@ -38,40 +36,28 @@ public class Tournament {
 
 	}
 
-	public Tournament(int id, String name, String gameName, int teamSize, boolean withPlayOff, Status status, Date startTime, Team winnerTeam, int roundNumber, ArrayList<Team> teams, ArrayList<Match> matches) {
+	public Tournament(int id, String name, String gameName, int teamSize, boolean withPlayOff, Status status, Team winnerTeam, int roundNumber, ArrayList<Team> teams, ArrayList<Match> matches) {
 		this.id = id;
 		this.name = name;
 		this.gameName = gameName;
 		this.teamSize = teamSize;
 		this.withPlayOff = withPlayOff;
 		this.status = status;
-		this.startTime = startTime;
 		this.winnerTeam = winnerTeam;
 		this.roundNumber = roundNumber;
 		this.teams = teams;
 		this.matches = matches;
 	}
 	
-	public Tournament(int id, String name, String gameName, int teamSize, boolean withPlayOff, Status status, Date startTime, Team winnerTeam, int roundNumber) {
+	public Tournament(int id, String name, String gameName, int teamSize, boolean withPlayOff, Status status, Team winnerTeam, int roundNumber) {
 		this.id = id;
 		this.name = name;
 		this.gameName = gameName;
 		this.teamSize = teamSize;
 		this.withPlayOff = withPlayOff;
 		this.status = status;
-		this.startTime = startTime;
 		this.winnerTeam = winnerTeam;
 		this.roundNumber = roundNumber;
-	}
-	
-	public Tournament(int id, String name, String gameName, int teamSize, boolean withPlayOff, Status status, Date startTime) {
-		this.id = id;
-		this.name = name;
-		this.gameName = gameName;
-		this.teamSize = teamSize;
-		this.withPlayOff = withPlayOff;
-		this.status = status;
-		this.startTime = startTime;
 	}
 	
 	public Tournament(int id, String name, String gameName, int teamSize, boolean withPlayOff, Status status) {
@@ -165,20 +151,6 @@ public class Tournament {
 	 */
 	public void setStatus(Status status) {
 		this.status = status;
-	}
-
-	/**
-	 * @return the startTime
-	 */
-	public Date getStartTime() {
-		return startTime;
-	}
-
-	/**
-	 * @param startTime the startTime to set
-	 */
-	public void setStartTime(Date startTime) {
-		this.startTime = startTime;
 	}
 
 	/**
