@@ -204,6 +204,11 @@ public class MainUI {
 		txtloginHandle.setColumns(10);
 
 		JButton btnlogin = new JButton("Login");
+		btnlogin.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+			}
+		});
 		btnlogin.setFont(new Font("Tahoma", Font.PLAIN, 8));
 
 		JLabel lblErrorMessage = new JLabel("Error Message");
@@ -211,7 +216,7 @@ public class MainUI {
 
 		pwdPassword = new JPasswordField();
 
-		pwdPassword.setToolTipText("Youre password");
+		pwdPassword.setToolTipText("Your password");
 
 		JButton btnCreateUser = new JButton("Create");
 		btnCreateUser.addActionListener(new ActionListener() {
