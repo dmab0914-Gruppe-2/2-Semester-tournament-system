@@ -145,7 +145,8 @@ public class MainUI {
 		controlPanel.add(comboBox);
 
 		JButton btnOpenTournament = new JButton("Open Tournament");
-		btnOpenTournament.setBounds(51, 97, 127, 23);
+		btnOpenTournament.setAlignmentX(Component.CENTER_ALIGNMENT);
+		btnOpenTournament.setBounds(51, 97, 146, 23);
 		controlPanel.add(btnOpenTournament);
 
 		JButton btnNewButton_1 = new JButton("New button");
