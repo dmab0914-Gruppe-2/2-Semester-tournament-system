@@ -3,8 +3,6 @@ package DBLayer;
 import UILayer.MainUI;
 import com.microsoft.sqlserver.jdbc.SQLServerDataSource;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 
 /**
