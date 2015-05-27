@@ -33,6 +33,12 @@ public class TeamController implements IFTeamController {
 	}
 
 	@Override
+	public ArrayList<Team> getTeamsFromUser(int userId) {
+		IFDBTeamMembers dbTM = new DBTeamMembers();
+		return dbTM.getTeamsFromUsers(userId);
+	}
+
+	@Override
 	public void addUserToTeam(User user, Team team) throws Exception {
 		IFDBTeamMembers dbTM = new DBTeamMembers();
 

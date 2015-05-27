@@ -122,7 +122,7 @@ public class DBTournamentTeams implements IFDBTournamentTeams {
 	}
 
 	private String buildQuery(String wClause) {
-		String query = "SELECT tournamentID, teamID FROM TournamentMatches";
+		String query = "SELECT tournamentID, teamID FROM TournamentTeams";
 		if (wClause.length() > 0)
 			query = query + " WHERE " + wClause;
 		return query;

@@ -11,7 +11,6 @@ import java.util.ArrayList;
 
 import CtrLayer.IFTeamController;
 import CtrLayer.TeamController;
-import ModelLayer.IdAllreadyExsistException;
 import ModelLayer.Team;
 import ModelLayer.Tournament;
 import ModelLayer.Tournament.Status;
@@ -43,7 +42,7 @@ public class DBTournament implements IFDBTournament {
 	 * @see DBLayer.IFDBTournament#getTournament(int)
 	 */
 	public Tournament getTournament(int tournamentID, boolean retriveAssociation) {
-		String wClause = "  tournamentID = '" + tournamentID + "'";
+		String wClause = "id = '" + tournamentID + "'";
 		return singleWhere(wClause, retriveAssociation);
 	}
 
@@ -51,72 +50,62 @@ public class DBTournament implements IFDBTournament {
 	 * @see DBLayer.IFDBTournament#addTournament(ModelLayer.Tournament)
 	 */
 	public Tournament addTournament(Tournament tournament) throws Exception {
-		// TODO Auto-generated method stub
-		if(getTournament(tournament.getId(), false) == null) {
-			int playOffBit;
-			if(tournament.isWithPlayOff()) {
-				playOffBit = 1;
-			}
-			else {
-				playOffBit = 0;
-			}
-
-			int rc = -1;
-			String query="INSERT INTO Tournament(id, name, gameName, teamSize, withPlayOff, statusID, winnerTeam, roundNumber)  VALUES('"+
-					tournament.getId()  + "','"  + //TODO 
-					tournament.getName()  + "','"  +
-					tournament.getGameName() + "','" +
-					tournament.getTeamSize() + "','" +
-					playOffBit + "','" +
-					tournament.statusToInt(tournament.getStatus()) + "','" +
-					tournament.getWinnerTeam() + "','" +
-					tournament.getRoundNumber() + "')";
-
-			System.out.println("insert : " + query);
-			try{
-				Statement stmt = con.createStatement();
-				stmt.setQueryTimeout(5);
-				rc = stmt.executeUpdate(query); //Returns the row count which may be the id.
-				/*ResultSet returnSet = stmt.executeQuery("Select SCOPE_IDENTIFIRY();"); //Alternative way to get the id, if before doesn't.
-				returnSet.next();
-				int id = returnSet.getInt(1);*/
-				stmt.close();
-				tournament.setId(rc);
-				return tournament;
-			}//end try
-			catch(SQLException ex){
-				System.out.println("Product haven't been created");
-				throw new Exception("Adding Tournament: " + tournament.getName() + " Couldn't be added.");
-			}
+		int playOffBit;
+		if(tournament.isWithPlayOff()) {
+			playOffBit = 1;
 		}
-		throw new IdAllreadyExsistException ("Tournament: " + tournament.getName() + " Allready exsist.");
+		else {
+			playOffBit = 0;
+		}
+		String query="INSERT INTO Tournament(name, gameName, teamSize, withPlayOff, statusID, winnerTeamID, roundNumber)  VALUES('"+
+				tournament.getName()  + "','"  +
+				tournament.getGameName() + "','" +
+				tournament.getTeamSize() + "','" +
+				playOffBit + "','" +
+				Tournament.statusToInt(tournament.getStatus()) + "'," +
+				"NULL" + ",'" +
+				tournament.getRoundNumber() + "')";
+
+		System.out.println("insert : " + query);
+		ResultSet rs;
+		try{
+			Statement stmt = con.createStatement();
+			stmt.setQueryTimeout(5);
+			stmt.executeUpdate(query); //Returns the row count which may be the id.
+			rs = stmt.executeQuery("SELECT SCOPE_IDENTITY();"); //Makes it possible to retrieve the the incremental id.
+			rs.next();
+			int id = rs.getInt(1); //gets the incremental id.
+			rs.close();
+			stmt.close();
+			System.out.println("Tournaments databse ID: " + id);
+			tournament.setId(id);
+			return tournament;
+		}//end try
+		catch(SQLException ex){
+			System.out.println("Product haven't been added to db " + ex);
+			throw new Exception("Adding Tournament: " + tournament.getName() + " Couldn't be added.");
+		}
 	}
 
 	/* (non-Javadoc)
 	 * @see DBLayer.IFDBTournament#enableSignup(int)
 	 */
 	public boolean enableSignup(int tournamentID) {
-		// TODO Auto-generated method stub
-		Tournament tournament = getTournament(tournamentID, false);
-		if(tournament != null) {
-			String query="UPDATE Tournament SET "+
-					"statusID ='"+ tournament.statusToInt(Status.waiting) + "', "+
-					" WHERE id = '"+ tournamentID + "'";
-			System.out.println("Update query:" + query);
-			try{ // update product
-				Statement stmt = con.createStatement();
-				stmt.setQueryTimeout(5);
-				stmt.executeUpdate(query);
-
-				stmt.close();
-			}//end try
-			catch(Exception ex){
-				System.out.println("Update exception in employee db: "+ex);
-				return false;
-			}
+		String query="UPDATE Tournament SET "+
+				"statusID ='"+ Tournament.statusToInt(Status.ready) + "'"+
+				" WHERE id = '"+ tournamentID + "'";
+		System.out.println("Update query:" + query);
+		try{ // update product
+			Statement stmt = con.createStatement();
+			stmt.setQueryTimeout(5);
+			stmt.executeUpdate(query);
+			stmt.close();
 			return true;
+		}//end try
+		catch(Exception ex){
+			System.out.println("Update exception in enableSingup for tournament db: "+ex);
+			return false;
 		}
-		return false;
 	}
 
 	/* (non-Javadoc)
@@ -158,6 +147,22 @@ public class DBTournament implements IFDBTournament {
 		return null;
 	}
 
+	public boolean removeTournament(int tournamentID) {
+		String query = "DELETE FROM dbo.Tournament WHERE id = '" + tournamentID + "'";
+		System.out.println("DELETE query: " + query);
+
+		try {
+			Statement stmt = con.createStatement();
+			stmt.setQueryTimeout(5);
+			stmt.executeUpdate(query);
+			stmt.close();
+			return true;
+		} catch(Exception ex) {
+			System.out.println("Delete exception in Tournament db: " + ex);
+			return false;
+		}
+	}
+
 	private ArrayList<Tournament> miscWhere(String wClause, boolean retrieveAssociation) {
 		ResultSet results;
 		ArrayList<Tournament> list = new ArrayList<Tournament>();
@@ -177,10 +182,13 @@ public class DBTournament implements IFDBTournament {
 			stmt.close();
 			// Association is to be build
 			if(retrieveAssociation) {
+				System.out.println("Building Association");
 				//The winnerTeam is to be build as well
 				for(Tournament tournamentObj : list){
-					tournamentObj.setWinnerTeam(teamController.findTeamById(tournamentObj.getWinnerTeam().getId()));
-					System.out.println("Winner Team have been added");
+					if(tournamentObj.getWinnerTeam() != null) {
+						tournamentObj.setWinnerTeam(teamController.findTeamById(tournamentObj.getWinnerTeam().getId()));
+						System.out.println("Winner Team have been added");
+					}
 					//Build list of Tournament Teams
 					tournamentObj.setTeams(dbTournamentTeams.getTeamsFromTournament(tournamentObj.getId()));
 				}
@@ -208,9 +216,12 @@ public class DBTournament implements IFDBTournament {
 				tournamentObj = buildTournament(results);
 				stmt.close();
 				// Association is to be build
-				if(retrieveAssociation) {   
-					tournamentObj.setWinnerTeam(teamController.findTeamById(tournamentObj.getWinnerTeam().getId()));
-					System.out.println("Winner Team have been added");
+				if(retrieveAssociation) {
+					System.out.println("Building Association");
+					if(tournamentObj.getWinnerTeam() != null) {
+						tournamentObj.setWinnerTeam(teamController.findTeamById(tournamentObj.getWinnerTeam().getId()));
+						System.out.println("Winner Team have been added");
+					}
 					//Build list of Tournament Teams
 					tournamentObj.setTeams(dbTournamentTeams.getTeamsFromTournament(tournamentObj.getId()));
 				}
@@ -226,7 +237,7 @@ public class DBTournament implements IFDBTournament {
 	}
 
 	private String buildQuery(String wClause) {
-		String query = "SELECT id, name, gameName, teamSize, withPlayOff, statusID, winnerTeam, roundNumber FROM Tournament";
+		String query = "SELECT id, name, gameName, teamSize, withPlayOff, statusID, winnerTeamID, roundNumber FROM Tournament";
 		if (wClause.length() > 0)
 			query = query + " WHERE " + wClause;
 
@@ -241,7 +252,11 @@ public class DBTournament implements IFDBTournament {
 			tournamentObj.setGameName(results.getString("gameName"));
 			tournamentObj.setTeamSize(results.getInt("teamSize"));
 			tournamentObj.setWithPlayOff(results.getBoolean("withPlayOff"));
-			tournamentObj.setWinnerTeam(new Team(results.getInt("winnerTeam")));
+			tournamentObj.setStatus(Tournament.intToStatus(results.getInt("statusID")));
+			tournamentObj.setWinnerTeam(new Team(results.getInt("winnerTeamID")));
+			if(results.wasNull()) { //In case previous read integer was sql statement NULL. aka what we would translate to null in java.
+				tournamentObj.setWinnerTeam(null);
+			}
 			tournamentObj.setRoundNumber(results.getInt("roundNumber"));
 		} catch (Exception e) {
 			System.out.println("error in building the Product object");
