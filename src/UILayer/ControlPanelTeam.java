@@ -33,7 +33,6 @@ public class ControlPanelTeam extends JDialog {
 	private JTextField txtLeader;
 	private JLabel lblStatus;
 	private JTable table;
-	DefaultTableModel userTable;
 
 	/**
 	 * Launch the application.

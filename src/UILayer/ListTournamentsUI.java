@@ -15,8 +15,7 @@ import ModelLayer.Tournament;
 @SuppressWarnings("serial")
 public class ListTournamentsUI extends JPanel {
 	private JTable table;
-	DefaultTableModel userTable;
-	TournamentController tournamentCtr;
+	private TournamentController tournamentCtr;
 
 	/**
 	 * Create the panel.

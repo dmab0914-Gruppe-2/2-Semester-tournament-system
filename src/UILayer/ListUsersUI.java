@@ -13,8 +13,7 @@ import javax.swing.ListSelectionModel;
 @SuppressWarnings("serial")
 public class ListUsersUI extends JPanel {
 	private JTable table;
-	DefaultTableModel userTable;
-	UserController userController;
+	private UserController userController;
 
 	/**
 	 * Create the panel.
