@@ -25,6 +25,7 @@ public class DBConnectionStatus extends Thread {
                 {
                     MainUI.setDBStatus(true);
                     System.out.println("Connection to DB is ok");
+                    MainUI.updateData();
                 }
 
             } catch (InterruptedException e) {
