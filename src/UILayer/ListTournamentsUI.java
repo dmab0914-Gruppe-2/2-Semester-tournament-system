@@ -15,7 +15,8 @@ import ModelLayer.Tournament;
 @SuppressWarnings("serial")
 public class ListTournamentsUI extends JPanel {
 	private JTable table;
-	private TournamentController tournamentCtr;
+	private static TournamentController tournamentCtr;
+	static DefaultTableModel data;
 
 	/**
 	 * Create the panel.
@@ -30,7 +31,7 @@ public class ListTournamentsUI extends JPanel {
 		scrollPane.setBounds(10, 11, 363, 348);
 		add(scrollPane);
 
-		DefaultTableModel data = new DefaultTableModel();
+		data = new DefaultTableModel();
 		data.setColumnIdentifiers(new String[] { "id", "Name", "Game", "Status" });
 		ArrayList<Tournament> tournaments = tournamentCtr.getTournaments();
 		for (Tournament t : tournaments) {
@@ -42,6 +43,18 @@ public class ListTournamentsUI extends JPanel {
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		table.setModel(data);
 		scrollPane.setViewportView(table);
+	}
+
+	public static void updateData(){
+		int rowCount = data.getRowCount();
+		for (int i = rowCount - 1; i >= 0; i--)
+			data.removeRow(i);
+
+		ArrayList<Tournament> tournaments = tournamentCtr.getTournaments();
+		for (Tournament t : tournaments) {
+			data.addRow(new String[] { t.getIdAsString(), t.getName(),
+					t.getGameName(), t.getStatus().toString() });
+		}
 	}
 
 }
