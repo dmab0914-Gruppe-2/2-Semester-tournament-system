@@ -13,7 +13,8 @@ import javax.swing.ListSelectionModel;
 @SuppressWarnings("serial")
 public class ListUsersUI extends JPanel {
 	private JTable table;
-	private UserController userController;
+	private static UserController userController;
+	private static DefaultTableModel data;
 
 	/**
 	 * Create the panel.
@@ -28,7 +29,7 @@ public class ListUsersUI extends JPanel {
 		scrollPane.setBounds(10, 11, 363, 348);
 		add(scrollPane);
 
-		DefaultTableModel data = new DefaultTableModel();
+		data = new DefaultTableModel();
 		data.setColumnIdentifiers(new String[] { "id", "Handle", "name" });
 		ArrayList<User> users = userController.getAllUsers();
 		for (User u : users) {
@@ -40,5 +41,18 @@ public class ListUsersUI extends JPanel {
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		table.setModel(data);
 		scrollPane.setViewportView(table);
+	}
+
+	public static void updateData(){
+		int rowCount = data.getRowCount();
+		for (int i = rowCount - 1; i >= 0; i--)
+			data.removeRow(i);
+
+		ArrayList<User> users = userController.getAllUsers();
+		for (User u : users) {
+			data.addRow(new String[] { u.getUserIdAsString(), u.getHandle(),
+					u.getName() });
+		}
+
 	}
 }
