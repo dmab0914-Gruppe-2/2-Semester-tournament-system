@@ -45,6 +45,8 @@ public class TournamentUI extends JDialog {
 	private JButton btnEndTournament;
 	private JButton btnAdvanceTournament;
 
+	private TournamentController tournamentController;
+
 	/**
 	 * Launch the application.
 	 */
@@ -62,6 +64,7 @@ public class TournamentUI extends JDialog {
 	 * Create the dialog.
 	 */
 	public TournamentUI(String tournamentName) {
+		tournamentController = new TournamentController();
 		initialize();
 		getTournamentData(tournamentName);
 		displayTournamentInfo();
@@ -84,13 +87,23 @@ public class TournamentUI extends JDialog {
 		btnAddTeam = new JButton("Add Team");
 		btnAddTeam.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//Do jack shit.
+				//TODO add team to tournament
 			}
 		});
 
 		btnEnableSignup = new JButton("Enable Signup");
+		btnEnableSignup.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				enableSignup();
+			}
+		});
 
 		btnStartTournament = new JButton("Start Tournament");
+		btnStartTournament.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				startTournament();
+			}
+		});
 
 		btnEndTournament = new JButton("End Tournament");
 
@@ -298,11 +311,13 @@ public class TournamentUI extends JDialog {
 	}
 
 	private void displayTournamentInfo() {
+		tournament = tournamentController.getTournamet(tournament.getId());
 		System.out.println("Tournament Status: " + tournament.getStatus());
 		lblTournamentstatusinfo.setText(Tournament.statusToString(tournament.getStatus()));
 		lblRoundNumberInfo.setText(Integer.toString(tournament.getRoundNumber()));
 		if(tournament.getWinnerTeam() != null) {
 			lblWinnerteaminfo.setText(tournament.getWinnerTeam().getName());
+			lblWinnerteaminfo.setToolTipText(tournament.getWinnerTeam().getName());
 		}
 		else {
 			lblWinnerteaminfo.setText("None yet");
@@ -315,7 +330,9 @@ public class TournamentUI extends JDialog {
 		}
 		lblTeamsizeinfo.setText(Integer.toString(tournament.getTeamSize()));
 		lblGamenameinfo.setText(tournament.getGameName());
+		lblGamenameinfo.setToolTipText(tournament.getGameName());
 		lblNameinfo.setText(tournament.getName());
+		lblNameinfo.setToolTipText(tournament.getName());
 	}
 
 	private void fillTeamCombo() {
@@ -328,5 +345,20 @@ public class TournamentUI extends JDialog {
 		} catch (Exception e) {
 			cb_team.addItem("Error");
 		}
+	}
+
+	private void enableSignup() {
+		tournamentController.enableSignup(tournament.getId());
+		displayTournamentInfo();
+	}
+	
+	private void startTournament() {
+		try {
+			tournamentController.startTournament(tournament.getId());
+		}
+		catch(Exception ex) {
+			System.out.println(ex);
+		}
+		displayTournamentInfo();
 	}
 }
