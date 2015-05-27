@@ -112,8 +112,23 @@ public class UserController implements IFUserController {
 
 	public User login(String username, String password){
 
-
-		return null;
+        User user = findUserByHandle(username);
+        if(user != null){
+            try {
+                String hashed = stringToHash(password);
+                if(hashed.equals(user.getPassword())){
+                    return user;
+                } else{
+                    System.out.println("Wrong password!");
+                    return null;
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }else {
+            System.out.println("Wrong Username!");
+        }
+        return null;
 	}
 	
 	public String findUserNameById(int id) {
