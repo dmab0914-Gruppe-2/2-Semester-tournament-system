@@ -18,9 +18,10 @@ import javax.swing.ListSelectionModel;
 
 @SuppressWarnings("serial")
 public class ListTeamsUI extends JPanel {
-	private JTable table;
-	private TeamController teamController;
-	private UserController userController;
+	private static JTable table;
+	private static TeamController teamController;
+	private static UserController userController;
+	static DefaultTableModel data;
 	
 	/**
 	 * Create the panel.
@@ -35,7 +36,7 @@ public class ListTeamsUI extends JPanel {
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(10, 11, 363, 348);
 		add(scrollPane);
-		DefaultTableModel data = new DefaultTableModel();
+		data = new DefaultTableModel();
 		data.setColumnIdentifiers(new String[] { "id", "Team Name", "Leader" });
 		ArrayList<Team> teams = teamController.getAllTeams();
 		for (Team t : teams) {
@@ -49,4 +50,14 @@ public class ListTeamsUI extends JPanel {
 		scrollPane.setViewportView(table);
 	}
 
+	public static void updateData() {
+		int rowCount = data.getRowCount();
+		for (int i = rowCount - 1; i >= 0; i--)
+			data.removeRow(i);
+
+		ArrayList<Team> teams = teamController.getAllTeams();
+		for (Team t : teams) {
+			data.addRow(new String[]{t.getIdAsString(), t.getName(), userController.findUserNameById(t.getLeader())});
+		}
+	}
 }
