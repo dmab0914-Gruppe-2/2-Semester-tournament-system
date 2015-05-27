@@ -19,9 +19,8 @@ import javax.swing.ListSelectionModel;
 @SuppressWarnings("serial")
 public class ListTeamsUI extends JPanel {
 	private JTable table;
-	DefaultTableModel userTable;
-	TeamController teamController;
-	UserController userController;
+	private TeamController teamController;
+	private UserController userController;
 	
 	/**
 	 * Create the panel.

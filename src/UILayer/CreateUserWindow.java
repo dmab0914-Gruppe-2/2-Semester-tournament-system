@@ -1,16 +1,9 @@
 package UILayer;
 
-import java.awt.BorderLayout;
-import java.awt.FlowLayout;
-
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-
-import java.awt.CardLayout;
-
-import javax.swing.BoxLayout;
 
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
@@ -25,13 +18,13 @@ import javax.swing.JTextField;
 
 import CtrLayer.UserController;
 
+@SuppressWarnings("serial")
 public class CreateUserWindow extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
 	private JTextField txtHandle;
 	private JTextField txtName;
 	private JTextField txtPassword;
-	private UserController uC;
 	private JLabel lblStatus;
 
 	/**

@@ -105,7 +105,6 @@ public class MainUI {
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	@SuppressWarnings("rawtypes")
 	private void initialize() {
 		frmTournamentplanner = new JFrame();
 		frmTournamentplanner.setMaximumSize(new Dimension(1024, 768));

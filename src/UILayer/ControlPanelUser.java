@@ -35,7 +35,6 @@ public class ControlPanelUser extends JDialog {
 	private JLabel lblStatus;
 	private JPasswordField pwPassword;
 	private JTable table;
-	DefaultTableModel userTable;
 
 	/**
 	 * Launch the application.
