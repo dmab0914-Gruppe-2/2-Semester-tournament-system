@@ -13,9 +13,8 @@ import javax.swing.GroupLayout.Alignment;
 import CtrLayer.TournamentController;
 import ModelLayer.Tournament;
 
-import java.awt.BorderLayout;
 import java.util.ArrayList;
-import javax.swing.SpringLayout;
+
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JLabel;
 import javax.swing.JComboBox;
@@ -76,7 +75,7 @@ public class TournamentUI extends JDialog {
 
 		lblTournamentstatusinfo = new JLabel("tournamentStatusInfo");
 
-		cb_team = new JComboBox();
+		cb_team = new JComboBox<String>();
 
 		btnAddTeam = new JButton("Add Team");
 
