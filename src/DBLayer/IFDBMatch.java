@@ -13,7 +13,7 @@ import ModelLayer.Match;
  */
 public interface IFDBMatch {
 	
-	public int addmatch(Match match) throws Exception;
+	public Match addmatch(Match match) throws Exception;
 	
 	public int removeMatch(int matchID);
 	

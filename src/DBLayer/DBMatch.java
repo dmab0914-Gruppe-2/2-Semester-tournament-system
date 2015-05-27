@@ -18,8 +18,7 @@ public class DBMatch implements IFDBMatch {
 	}
 
 	@Override
-	public int addmatch(Match match) throws Exception {
-		int rc = -1;
+	public Match addmatch(Match match)throws Exception {
 		String query = "INSERT INTO Match(team1ID, team2ID, score1, score2, statusID, roundnumber, tournamentID) VALUES('"
 				+ match.getTeam1().getId()
 				+ "','"
@@ -39,14 +38,14 @@ public class DBMatch implements IFDBMatch {
 		try { // insert new match
 			Statement stmt = con.createStatement();
 			stmt.setQueryTimeout(5);
-			rc = stmt.executeUpdate(query);
+			stmt.executeUpdate(query);
 			stmt.close();
 		}// end try
 		catch (SQLException ex) {
 			System.out.println("insert exception in Match db:");
 			throw new Exception("Match is not inserted correct");
 		}
-		return (rc);
+		return match;
 	}
 
 	@Override
