@@ -13,16 +13,35 @@ import javax.swing.GroupLayout.Alignment;
 import CtrLayer.TournamentController;
 import ModelLayer.Tournament;
 
-import java.awt.BorderLayout;
 import java.util.ArrayList;
-import javax.swing.SpringLayout;
+
+import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.JLabel;
+import javax.swing.JComboBox;
+import javax.swing.JTable;
 
 @SuppressWarnings("serial")
 public class TournamentUI extends JDialog {
 
-	Tournament tournamnent;
+	Tournament tournament;
 
 	private final JPanel contentPanel = new JPanel();
+	private JPanel buttonPane;
+	private JButton btnClose;
+	private JTable table;
+	private JComboBox<String> cb_team;
+	private JLabel lblTournamentstatusinfo;
+	private JLabel lblRoundNumberInfo;
+	private JLabel lblWinnerteaminfo;
+	private JLabel lblWithplayoffinfo;
+	private JLabel lblTeamsizeinfo;
+	private JLabel lblGamenameinfo;
+	private JLabel lblNameinfo;
+	private JButton btnAddTeam;
+	private JButton btnEnableSignup;
+	private JButton btnStartTournament;
+	private JButton btnEndTournament;
+	private JButton btnAdvanceTournament;
 
 	/**
 	 * Launch the application.
@@ -43,47 +62,214 @@ public class TournamentUI extends JDialog {
 	public TournamentUI(String tournamentName) {
 		initialize();
 		getTournamentData(tournamentName);
+		displayTournamentInfo();
 	}
 
 	private void initialize() {
-		setBounds(100, 100, 452, 397);
-		SpringLayout springLayout = new SpringLayout();
-		springLayout.putConstraint(SpringLayout.NORTH, contentPanel, 0, SpringLayout.NORTH, getContentPane());
-		springLayout.putConstraint(SpringLayout.WEST, contentPanel, 0, SpringLayout.WEST, getContentPane());
-		getContentPane().setLayout(springLayout);
+		setBounds(100, 100, 529, 397);
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
-		getContentPane().add(contentPanel);
+
+		JPanel panel = new JPanel();
+
+		JLabel lblTournamentStatus = new JLabel("Tournament Status:");
+
+		lblTournamentstatusinfo = new JLabel("tournamentStatusInfo");
+
+		cb_team = new JComboBox<String>();
+
+		btnAddTeam = new JButton("Add Team");
+
+		btnEnableSignup = new JButton("Enable Signup");
+
+		btnStartTournament = new JButton("Start Tournament");
+
+		btnEndTournament = new JButton("End Tournament");
+
+		btnAdvanceTournament = new JButton("Advance Tournament");
+
+		table = new JTable();
 		GroupLayout gl_contentPanel = new GroupLayout(contentPanel);
 		gl_contentPanel.setHorizontalGroup(
-			gl_contentPanel.createParallelGroup(Alignment.LEADING)
-				.addGap(0, 426, Short.MAX_VALUE)
-		);
+				gl_contentPanel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_contentPanel.createSequentialGroup()
+						.addGroup(gl_contentPanel.createParallelGroup(Alignment.TRAILING)
+								.addComponent(table, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+								.addGroup(Alignment.LEADING, gl_contentPanel.createSequentialGroup()
+										.addComponent(panel, GroupLayout.PREFERRED_SIZE, 187, GroupLayout.PREFERRED_SIZE)
+										.addPreferredGap(ComponentPlacement.UNRELATED)
+										.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
+												.addGroup(gl_contentPanel.createSequentialGroup()
+														.addComponent(lblTournamentStatus)
+														.addPreferredGap(ComponentPlacement.RELATED)
+														.addComponent(lblTournamentstatusinfo))
+														.addGroup(gl_contentPanel.createSequentialGroup()
+																.addComponent(btnEndTournament)
+																.addPreferredGap(ComponentPlacement.RELATED)
+																.addComponent(btnAdvanceTournament, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+																.addGroup(gl_contentPanel.createSequentialGroup()
+																		.addComponent(cb_team, 0, 101, Short.MAX_VALUE)
+																		.addPreferredGap(ComponentPlacement.UNRELATED)
+																		.addComponent(btnAddTeam, GroupLayout.PREFERRED_SIZE, 9, Short.MAX_VALUE))
+																		.addGroup(gl_contentPanel.createSequentialGroup()
+																				.addComponent(btnEnableSignup, GroupLayout.PREFERRED_SIZE, 103, GroupLayout.PREFERRED_SIZE)
+																				.addPreferredGap(ComponentPlacement.RELATED)
+																				.addComponent(btnStartTournament, GroupLayout.DEFAULT_SIZE, 155, Short.MAX_VALUE)))))
+																				.addGap(42))
+				);
 		gl_contentPanel.setVerticalGroup(
-			gl_contentPanel.createParallelGroup(Alignment.LEADING)
-				.addGap(0, 325, Short.MAX_VALUE)
-		);
+				gl_contentPanel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_contentPanel.createSequentialGroup()
+						.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
+								.addGroup(gl_contentPanel.createSequentialGroup()
+										.addGap(6)
+										.addGroup(gl_contentPanel.createParallelGroup(Alignment.BASELINE)
+												.addComponent(lblTournamentStatus)
+												.addComponent(lblTournamentstatusinfo))
+												.addPreferredGap(ComponentPlacement.UNRELATED)
+												.addGroup(gl_contentPanel.createParallelGroup(Alignment.BASELINE)
+														.addComponent(cb_team, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+														.addComponent(btnAddTeam))
+														.addPreferredGap(ComponentPlacement.RELATED)
+														.addGroup(gl_contentPanel.createParallelGroup(Alignment.BASELINE)
+																.addComponent(btnEnableSignup)
+																.addComponent(btnStartTournament))
+																.addPreferredGap(ComponentPlacement.RELATED)
+																.addGroup(gl_contentPanel.createParallelGroup(Alignment.BASELINE)
+																		.addComponent(btnEndTournament)
+																		.addComponent(btnAdvanceTournament)))
+																		.addComponent(panel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+																		.addPreferredGap(ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+																		.addComponent(table, GroupLayout.PREFERRED_SIZE, 107, GroupLayout.PREFERRED_SIZE))
+				);
+
+		JLabel lblName = new JLabel("Name:");
+
+		JLabel lblGameName = new JLabel("Game Name:");
+
+		JLabel lblTeamSize = new JLabel("Team Size:");
+
+		JLabel lblWithPlayOff = new JLabel("With Play Off:");
+
+		JLabel lblWinnerTeam = new JLabel("Winner team:");
+
+		JLabel lblRoundNumber = new JLabel("Round Number:");
+
+		JLabel lblTournamentInfo = new JLabel("Tournament Info");
+
+		lblRoundNumberInfo = new JLabel("roundNumberInfo");
+
+		lblWinnerteaminfo = new JLabel("winnerTeamInfo");
+
+		lblWithplayoffinfo = new JLabel("withPlayOffInfo");
+
+		lblTeamsizeinfo = new JLabel("teamSizeInfo");
+
+		lblGamenameinfo = new JLabel("gameNameInfo");
+
+		lblNameinfo = new JLabel("nameInfo");
+
+		GroupLayout gl_panel = new GroupLayout(panel);
+		gl_panel.setHorizontalGroup(
+				gl_panel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel.createSequentialGroup()
+						.addContainerGap()
+						.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+								.addComponent(lblTournamentInfo)
+								.addGroup(gl_panel.createSequentialGroup()
+										.addComponent(lblRoundNumber)
+										.addPreferredGap(ComponentPlacement.UNRELATED)
+										.addComponent(lblRoundNumberInfo))
+										.addGroup(gl_panel.createSequentialGroup()
+												.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+														.addComponent(lblWinnerTeam)
+														.addComponent(lblWithPlayOff)
+														.addComponent(lblTeamSize)
+														.addComponent(lblGameName)
+														.addComponent(lblName))
+														.addGap(18)
+														.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+																.addComponent(lblNameinfo)
+																.addComponent(lblGamenameinfo)
+																.addComponent(lblTeamsizeinfo)
+																.addComponent(lblWithplayoffinfo)
+																.addComponent(lblWinnerteaminfo))))
+																.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+				);
+		gl_panel.setVerticalGroup(
+				gl_panel.createParallelGroup(Alignment.LEADING)
+				.addGroup(Alignment.TRAILING, gl_panel.createSequentialGroup()
+						.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+						.addComponent(lblTournamentInfo)
+						.addPreferredGap(ComponentPlacement.UNRELATED)
+						.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
+								.addComponent(lblName)
+								.addComponent(lblNameinfo))
+								.addPreferredGap(ComponentPlacement.RELATED)
+								.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
+										.addComponent(lblGameName)
+										.addComponent(lblGamenameinfo))
+										.addPreferredGap(ComponentPlacement.RELATED)
+										.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
+												.addComponent(lblTeamSize)
+												.addComponent(lblTeamsizeinfo))
+												.addPreferredGap(ComponentPlacement.RELATED)
+												.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
+														.addComponent(lblWithPlayOff)
+														.addComponent(lblWithplayoffinfo))
+														.addPreferredGap(ComponentPlacement.RELATED)
+														.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
+																.addComponent(lblWinnerTeam)
+																.addComponent(lblWinnerteaminfo))
+																.addPreferredGap(ComponentPlacement.RELATED)
+																.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
+																		.addComponent(lblRoundNumber)
+																		.addComponent(lblRoundNumberInfo))
+																		.addGap(30))
+				);
+		panel.setLayout(gl_panel);
 		contentPanel.setLayout(gl_contentPanel);
 		{
-			JPanel buttonPane = new JPanel();
-			springLayout.putConstraint(SpringLayout.SOUTH, contentPanel, -6, SpringLayout.NORTH, buttonPane);
-			springLayout.putConstraint(SpringLayout.NORTH, buttonPane, 335, SpringLayout.NORTH, getContentPane());
-			springLayout.putConstraint(SpringLayout.WEST, buttonPane, 0, SpringLayout.WEST, getContentPane());
-			springLayout.putConstraint(SpringLayout.EAST, buttonPane, 436, SpringLayout.WEST, getContentPane());
-			getContentPane().add(buttonPane);
+			buttonPane = new JPanel();
 
-			JButton btnClose = new JButton("Close");
+			btnClose = new JButton("Close");
 			btnClose.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					tournamnent = null;
+					tournament = null;
+					System.out.println("Closing Tournament Window");
 					dispose();
 				}
 			});
-			buttonPane.setLayout(new BorderLayout(0, 0));
 			btnClose.setActionCommand("Cancel");
-			buttonPane.add(btnClose);
 
 			getRootPane().setDefaultButton(btnClose);
 		}
+		GroupLayout groupLayout = new GroupLayout(getContentPane());
+		groupLayout.setHorizontalGroup(
+				groupLayout.createParallelGroup(Alignment.TRAILING)
+				.addGroup(groupLayout.createSequentialGroup()
+						.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+								.addComponent(contentPanel, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 481, Short.MAX_VALUE)
+								.addComponent(buttonPane, GroupLayout.DEFAULT_SIZE, 447, Short.MAX_VALUE))
+								.addGap(0))
+				);
+		groupLayout.setVerticalGroup(
+				groupLayout.createParallelGroup(Alignment.TRAILING)
+				.addGroup(groupLayout.createSequentialGroup()
+						.addComponent(contentPanel, GroupLayout.DEFAULT_SIZE, 323, Short.MAX_VALUE)
+						.addPreferredGap(ComponentPlacement.RELATED)
+						.addComponent(buttonPane, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE))
+				);
+		GroupLayout gl_buttonPane = new GroupLayout(buttonPane);
+		gl_buttonPane.setHorizontalGroup(
+				gl_buttonPane.createParallelGroup(Alignment.LEADING)
+				.addComponent(btnClose, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 436, Short.MAX_VALUE)
+				);
+		gl_buttonPane.setVerticalGroup(
+				gl_buttonPane.createParallelGroup(Alignment.LEADING)
+				.addComponent(btnClose, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 29, Short.MAX_VALUE)
+				);
+		buttonPane.setLayout(gl_buttonPane);
+		getContentPane().setLayout(groupLayout);
 	}
 
 	/**
@@ -95,13 +281,31 @@ public class TournamentUI extends JDialog {
 		ArrayList<Tournament> tournaments = tournamentController.getTournaments();
 		boolean found = false;
 		for(int i = 0; !found && i < tournaments.size(); i++) {
-			if(tournaments.get(i).getName() == tournamentName) {
+			if(tournaments.get(i).getName().equals(tournamentName)) {
 				found = true;
-				tournamnent = tournaments.get(i);
+				this.tournament = tournaments.get(i);
 			}
 		}
-		//		txtHandle.setText(u.getHandle());
-		//		txtName.setText(u.getName());
 	}
 
+	private void displayTournamentInfo() {
+		System.out.println("Tournament Status: " + tournament.getStatus());
+		lblTournamentstatusinfo.setText(Tournament.statusToString(tournament.getStatus()));
+		lblRoundNumberInfo.setText(Integer.toString(tournament.getRoundNumber()));
+		if(tournament.getWinnerTeam() != null) {
+			lblWinnerteaminfo.setText(tournament.getWinnerTeam().getName());
+		}
+		else {
+			lblWinnerteaminfo.setText("None yet");
+		}
+		if(tournament.isWithPlayOff()) {
+			lblWithplayoffinfo.setText("Yes");
+		}
+		else {
+			lblWithplayoffinfo.setText("No");
+		}
+		lblTeamsizeinfo.setText(Integer.toString(tournament.getTeamSize()));
+		lblGamenameinfo.setText(tournament.getGameName());
+		lblNameinfo.setText(tournament.getName());
+	}
 }

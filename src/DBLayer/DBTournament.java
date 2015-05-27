@@ -112,16 +112,42 @@ public class DBTournament implements IFDBTournament {
 	 * @see DBLayer.IFDBTournament#startTournament(int)
 	 */
 	public boolean startTournament(int tournamentID) {
-		// TODO Auto-generated method stub
-		return false;
+		String query="UPDATE Tournament SET "+
+				"statusID ='"+ Tournament.statusToInt(Status.running) + "'"+
+				" WHERE id = '"+ tournamentID + "'";
+		System.out.println("Update query:" + query);
+		try{ // update product
+			Statement stmt = con.createStatement();
+			stmt.setQueryTimeout(5);
+			stmt.executeUpdate(query);
+			stmt.close();
+			return true;
+		}//end try
+		catch(Exception ex){
+			System.out.println("Update exception in startTournament for tournament db: "+ex);
+			return false;
+		}
 	}
 
 	/* (non-Javadoc)
 	 * @see DBLayer.IFDBTournament#abortTurnament(int)
 	 */
 	public boolean abortTurnament(int tournamentID) {
-		// TODO Auto-generated method stub
-		return false;
+		String query="UPDATE Tournament SET "+
+				"statusID ='"+ Tournament.statusToInt(Status.cancelled) + "'"+
+				" WHERE id = '"+ tournamentID + "'";
+		System.out.println("Update query:" + query);
+		try{ // update product
+			Statement stmt = con.createStatement();
+			stmt.setQueryTimeout(5);
+			stmt.executeUpdate(query);
+			stmt.close();
+			return true;
+		}//end try
+		catch(Exception ex){
+			System.out.println("Update exception in abortTurnament for tournament db: "+ex);
+			return false;
+		}
 	}
 
 	/* (non-Javadoc)
@@ -135,16 +161,42 @@ public class DBTournament implements IFDBTournament {
 	 * @see DBLayer.IFDBTournament#advanceTournament(int)
 	 */
 	public int advanceTournament(int tournamentID) {
-		// TODO Auto-generated method stub
-		return 0;
+		Tournament t = getTournament(tournamentID, false);
+		String query="UPDATE Tournament SET "+
+				"roundNumber ='"+ (t.getRoundNumber() +1) + "'"+
+				" WHERE id = '"+ tournamentID + "'";
+		System.out.println("Update query:" + query);
+		try{ // update product
+			Statement stmt = con.createStatement();
+			stmt.setQueryTimeout(5);
+			stmt.executeUpdate(query);
+			stmt.close();
+			return 1;
+		}//end try
+		catch(Exception ex){
+			System.out.println("Update exception in advanceTournament for tournament db: "+ex);
+			return 0;
+		}
 	}
 
 	/* (non-Javadoc)
 	 * @see DBLayer.IFDBTournament#endTournament(int)
 	 */
-	public Tournament endTournament(int tournamentID, boolean retriveAssociation) {
-		// TODO Auto-generated method stub
-		return null;
+	public Tournament endTournament(int tournamentID) {
+		String query="UPDATE Tournament SET "+
+				"statusID ='"+ Tournament.statusToInt(Status.done) + "'"+
+				" WHERE id = '"+ tournamentID + "'";
+		System.out.println("Update query:" + query);
+		try{ // update product
+			Statement stmt = con.createStatement();
+			stmt.setQueryTimeout(5);
+			stmt.executeUpdate(query);
+			stmt.close();
+		}//end try
+		catch(Exception ex){
+			System.out.println("Update exception in endTournament for tournament db: "+ex);
+		}
+		return getTournament(tournamentID, false);
 	}
 
 	public boolean removeTournament(int tournamentID) {
