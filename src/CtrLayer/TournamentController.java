@@ -91,7 +91,7 @@ public class TournamentController implements IFTournamentController {
 		return null;
 	}
 
-	public boolean setMatchResults(int matchID, int team1Score, int team2Score) {
+	public int setMatchResults(int matchID, int team1Score, int team2Score) {
 		return dbMatch.setMatchResults(matchID, team1Score, team2Score);
 	}
 

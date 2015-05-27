@@ -14,21 +14,37 @@ public class Match {
     private int team1Score;
     private int team2Score;
     private int roundNumber;
+    private int tournamentId;
     private Status status; //Uses the enum Status from the Tournament class. Please check it out for usage information.
 
     public Match() {
 
     }
     
-    public Match(int id, Team team1, Team team2, int team1Score, int team2Score, int roundNumber, Status status) {
-    	this.setId(id);
+    public Match(int id, Team team1, Team team2, int team1Score, int team2Score, int roundNumber, int tournamentId, Status status) {
+    	this.id = id;
     	this.team1 = team1;
     	this.team2 = team2;
     	this.team1Score = team1Score;
     	this.team2Score = team2Score;
     	this.roundNumber = roundNumber;
+    	this.tournamentId = tournamentId;
     	this.status = status;
     }
+
+	/**
+	 * @return the tournamentId
+	 */
+	public int getTournamentId() {
+		return tournamentId;
+	}
+
+	/**
+	 * @param tournamentId the tournamentId to set
+	 */
+	public void setTournamentId(int tournamentId) {
+		this.tournamentId = tournamentId;
+	}
 
 	/**
 	 * @return the id
