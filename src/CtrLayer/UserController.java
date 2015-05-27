@@ -109,6 +109,12 @@ public class UserController implements IFUserController {
 
 		return stringBuffer.toString();
 	}
+
+	public User login(String username, String password){
+
+
+		return null;
+	}
 	
 	public String findUserNameById(int id) {
 		IFDBUser dbUser = new DBUser();
