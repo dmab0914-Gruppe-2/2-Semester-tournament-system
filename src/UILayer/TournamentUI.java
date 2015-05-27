@@ -15,6 +15,7 @@ import ModelLayer.Tournament;
 
 import java.awt.BorderLayout;
 import java.util.ArrayList;
+import javax.swing.SpringLayout;
 
 @SuppressWarnings("serial")
 public class TournamentUI extends JDialog {
@@ -46,23 +47,28 @@ public class TournamentUI extends JDialog {
 
 	private void initialize() {
 		setBounds(100, 100, 452, 397);
-		getContentPane().setLayout(null);
-		contentPanel.setBounds(0, 0, 436, 179);
+		SpringLayout springLayout = new SpringLayout();
+		springLayout.putConstraint(SpringLayout.NORTH, contentPanel, 0, SpringLayout.NORTH, getContentPane());
+		springLayout.putConstraint(SpringLayout.WEST, contentPanel, 0, SpringLayout.WEST, getContentPane());
+		getContentPane().setLayout(springLayout);
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel);
 		GroupLayout gl_contentPanel = new GroupLayout(contentPanel);
 		gl_contentPanel.setHorizontalGroup(
-				gl_contentPanel.createParallelGroup(Alignment.LEADING)
-				.addGap(-10, -10, Short.MAX_VALUE)
-				);
+			gl_contentPanel.createParallelGroup(Alignment.LEADING)
+				.addGap(0, 426, Short.MAX_VALUE)
+		);
 		gl_contentPanel.setVerticalGroup(
-				gl_contentPanel.createParallelGroup(Alignment.LEADING)
-				.addGap(-10, -10, Short.MAX_VALUE)
-				);
+			gl_contentPanel.createParallelGroup(Alignment.LEADING)
+				.addGap(0, 325, Short.MAX_VALUE)
+		);
 		contentPanel.setLayout(gl_contentPanel);
 		{
 			JPanel buttonPane = new JPanel();
-			buttonPane.setBounds(0, 335, 436, 23);
+			springLayout.putConstraint(SpringLayout.SOUTH, contentPanel, -6, SpringLayout.NORTH, buttonPane);
+			springLayout.putConstraint(SpringLayout.NORTH, buttonPane, 335, SpringLayout.NORTH, getContentPane());
+			springLayout.putConstraint(SpringLayout.WEST, buttonPane, 0, SpringLayout.WEST, getContentPane());
+			springLayout.putConstraint(SpringLayout.EAST, buttonPane, 436, SpringLayout.WEST, getContentPane());
 			getContentPane().add(buttonPane);
 
 			JButton btnClose = new JButton("Close");
@@ -88,8 +94,9 @@ public class TournamentUI extends JDialog {
 		TournamentController tournamentController = new TournamentController();
 		ArrayList<Tournament> tournaments = tournamentController.getTournaments();
 		boolean found = false;
-		for(int i = 0; !found || i < tournaments.size(); i++) {
+		for(int i = 0; !found && i < tournaments.size(); i++) {
 			if(tournaments.get(i).getName() == tournamentName) {
+				found = true;
 				tournamnent = tournaments.get(i);
 			}
 		}
