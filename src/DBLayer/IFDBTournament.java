@@ -30,7 +30,7 @@ public interface IFDBTournament {
 	
 	public int advanceTournament(int tournamentID);
 	
-	public Tournament endTournament(int tournamentID, boolean retriveAssociation);
+	public Tournament endTournament(int tournamentID);
 	
 	public boolean removeTournament(int tournamentID);
 }
