@@ -6,6 +6,7 @@ package CtrLayer;
 import java.util.ArrayList;
 
 import ModelLayer.Match;
+import ModelLayer.Team;
 import ModelLayer.Tournament;
 
 /**
@@ -27,4 +28,12 @@ public interface IFTournamentController {
 	public ArrayList<Match> advanceTournament(int tournamentID);
 	
 	public Tournament endTournament(int tournamentID);
+	
+	public void addTeamToTournament(Tournament tournament, Team team) throws Exception;
+	
+	public void removeTeamFromTournament(Tournament tournament, Team team) throws Exception;
+	
+	public ArrayList<Team> getTournamentTeams(int tournamentID);
+	
+	public ArrayList<Tournament> getTournamentFromTeam(int teamID);
 }

@@ -3,8 +3,10 @@ package CtrLayer;
 import java.util.ArrayList;
 
 import DBLayer.DBTournament;
+import DBLayer.DBTournamentTeams;
 import DBLayer.IFDBMatch;
 import DBLayer.IFDBTournament;
+import DBLayer.IFDBTournamentTeams;
 import ModelLayer.Match;
 import ModelLayer.Team;
 import ModelLayer.Tournament;
@@ -41,17 +43,21 @@ public class TournamentController implements IFTournamentController {
 	 * Starts the tournament form the given id if it exists. Gets the matches
 	 * generated and added to db.
 	 * 
-	 * @param tournamentID	the id of the tournament
-	 * @return The matches	that have been generated and started.
+	 * @param tournamentID
+	 *            the id of the tournament
+	 * @return The matches that have been generated and started.
 	 */
 	public ArrayList<Match> startTournament(int tournamentID) throws Exception {
 		if (dbTournament.startTournament(tournamentID)) {
-			ArrayList<Team> teams = dbTournament.getTournamentTeams(tournamentID);
+			ArrayList<Team> teams = dbTournament
+					.getTournamentTeams(tournamentID);
 			// Asks for a list of matches from the given teams and given scores.
 			// As there isn't any scores to give atm, it asks for an empty
 			// ArrayList.
-			ArrayList<Match> matches = eliminationController.generateRound(teams, new ArrayList<Integer>());
-			// new list with the matches including their id. makes it easier to revert in case one gives an error.
+			ArrayList<Match> matches = eliminationController.generateRound(
+					teams, new ArrayList<Integer>());
+			// new list with the matches including their id. makes it easier to
+			// revert in case one gives an error.
 			ArrayList<Match> newMatches = new ArrayList<Match>();
 			for (int i = 0; i < matches.size(); i++) {
 				matches.get(i).setRoundNumber(1); // First round is always round
@@ -63,10 +69,14 @@ public class TournamentController implements IFTournamentController {
 					// to lock the database.
 					dbTournament.abortTurnament(tournamentID);
 					for (Match match : newMatches) {
-						dbMatch.removeMatch(match.getId()); // Removes every match that have been added to the db.
+						dbMatch.removeMatch(match.getId()); // Removes every
+															// match that have
+															// been added to the
+															// db.
 					}
 					e.printStackTrace(); // Something happened
-					throw new Exception("Something happened, start of Tournament aborted.");
+					throw new Exception(
+							"Something happened, start of Tournament aborted.");
 				}
 			}
 			return newMatches; // Returns the new list of matches which now also
@@ -102,18 +112,55 @@ public class TournamentController implements IFTournamentController {
 		}
 		try {
 			int rn = dbTournament.advanceTournament(tournamentID);
-			ArrayList<Match> newMatches = eliminationController.generateRound(wTeams, wScore);
-			for(Match nw : newMatches){
-				nw.setRoundNumber(nw.getRoundNumber() +1);
+			ArrayList<Match> newMatches = eliminationController.generateRound(
+					wTeams, wScore);
+			for (Match nw : newMatches) {
+				nw.setRoundNumber(nw.getRoundNumber() + 1);
 			}
 			return newMatches;
 		} catch (Exception e) {
-			System.out.println("Error in advance tournament: " + e); 
+			System.out.println("Error in advance tournament: " + e);
 			return null;
 		}
 	}
 
 	public Tournament endTournament(int tournamentID) {
 		return dbTournament.endTournament(tournamentID);
+	}
+
+	@Override
+	public void addTeamToTournament(Tournament tournament, Team team)
+			throws Exception {
+		IFDBTournamentTeams dbTT = new DBTournamentTeams();
+
+		try {
+			dbTT.addTeamToTournament(tournament.getId(), team.getId());
+		} catch (Exception e) {
+			throw new Exception("Error: Team not added!");
+		}
+	}
+
+	@Override
+	public void removeTeamFromTournament(Tournament tournament, Team team)
+			throws Exception {
+		IFDBTournamentTeams dbTT = new DBTournamentTeams();
+		
+		try {
+			dbTT.removeTeamFromTournament(tournament.getId(), team.getId());
+		} catch (Exception e) {
+			throw new Exception("Error: Team not removed!");
+		}
+	}
+
+	@Override
+	public ArrayList<Team> getTournamentTeams(int tournamentID) {
+		IFDBTournamentTeams dbTT = new DBTournamentTeams();
+		return dbTT.getTeamsFromTournament(tournamentID);
+	}
+
+	@Override
+	public ArrayList<Tournament> getTournamentFromTeam(int teamID) {
+		IFDBTournamentTeams dbTT = new DBTournamentTeams();
+		return dbTT.getTournamentFromTeams(teamID);
 	}
 }

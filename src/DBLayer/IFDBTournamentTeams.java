@@ -6,6 +6,7 @@ package DBLayer;
 import java.util.ArrayList;
 
 import ModelLayer.Team;
+import ModelLayer.Tournament;
 
 /**
  * @author Jacob 19/05/2015
@@ -19,6 +20,14 @@ public interface IFDBTournamentTeams {
 	 * @return	ArrayList of teams. Will be empty if none was found.
 	 */
 	public ArrayList<Team> getTeamsFromTournament(int tournamentID);
+	
+	
+	/**
+	 * Finds all Tournament linked to a certain team. 
+	 * @param teamID	The id of the team, to check for.
+	 * @return	ArrayList of tournaments. Will be empty if none was found.
+	 */
+	public ArrayList<Tournament> getTournamentFromTeams(int teamID);
 	
 	/**
 	 * Links a specified team to a specified tournament.
