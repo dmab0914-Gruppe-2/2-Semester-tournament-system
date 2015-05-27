@@ -82,6 +82,11 @@ public class Tournament {
 		this.roundNumber = 1;
 	}
 
+	public String getIdAsString() {
+		String s = Integer.toString(id);
+		return s;
+	}
+	
 	/**
 	 * @return the id
 	 */
