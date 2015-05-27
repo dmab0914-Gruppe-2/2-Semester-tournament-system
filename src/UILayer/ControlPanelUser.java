@@ -173,13 +173,19 @@ public class ControlPanelUser extends JDialog {
 	private void updateUser(String handle) {
 		UserController userCtr = new UserController();
 		User openUser = userCtr.findUserByHandle(handle);
-
+		String pass = new String(pwPassword.getPassword());
+		String hashed = new String();
+		try {
+			hashed = userCtr.stringToHash(pass);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		if (pwPassword.getText().length() >= 3
 				&& txtName.getText().length() > 2) {
 			try {
 				int result = userCtr.updateUser(openUser.getUserID(),
 						txtHandle.getText(), txtName.getText(),
-						pwPassword.getText(), false);
+						hashed, false);
 				if (result == 1) {
 					lblStatus.setText("User updated");
 				} else
