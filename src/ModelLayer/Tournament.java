@@ -274,4 +274,28 @@ public class Tournament {
 		}
 		return null;
 	}
+	
+	/**
+	 * Converts the status to the related String value.
+	 * @param status The status to get related integer for
+	 * @return	The related String of the Status.
+	 */
+	public static String statusToString(Status status) {
+		if(status.equals(Status.waiting)) {
+			return "Waiting";
+		}
+		if(status.equals(Status.ready)) {
+			return "Ready";
+		}
+		if(status.equals(Status.running)) {
+			return "Running";
+		}
+		if(status.equals(Status.done)) {
+			return "Done";
+		}
+		if(status.equals(Status.cancelled)) {
+			return "Cancelled";
+		}
+		return null;
+	}
 }//endClass
