@@ -4,6 +4,8 @@
 //Undo ignore file: git update-index --no-assume-unchanged DBConnection.java
 package DBLayer;
 
+import com.microsoft.sqlserver.jdbc.SQLServerDataSource;
+
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
@@ -11,11 +13,19 @@ import java.sql.DriverManager;
 public class DBConnection {
 	// Constants used to get access to the database
 	// SQL Server
-	private static final String driver = "jdbc:sqlserver://INSERT_HERE"; //Connection adress to the sql server
-	private static final String databaseName = ";databaseName=INSERT_HERE"; //The sql server database
 
-	private static String userName = ";user=INSER_HERE"; //sql database username
-	private static String password = ";password=INSERT_HERE"; //sql database password
+	//TODO Edit these in order to get Data Magic, todo to make it more visible in case you were not looking ;)
+	private static String user = "sa";
+	private static String pass = "isAllowed";
+	private static String conn = "localhost";
+	private static int port = 1433;
+	private static String dbName = "TournamentPlanner";
+
+	private static final String driver = "jdbc:sqlserver://"+conn + ":" + Integer.toString(port);	//localhost:1433"; //Connection adress to the sql server
+	private static final String databaseName = ";databaseName=" + dbName; //The sql server database
+
+	private static String userName = ";user=" + user; //sql database username
+	private static String password = ";password=" + pass; //sql database password
 
 	private DatabaseMetaData dma;
 	private static Connection con;
@@ -107,5 +117,15 @@ public class DBConnection {
 			System.out.println("fejl rollback transaction");
 			System.out.println(e.getMessage());
 		}
+	}
+
+	public static SQLServerDataSource getDataSource() {
+
+		SQLServerDataSource dataSource = new SQLServerDataSource();
+		dataSource.setUser(user);
+		dataSource.setPassword(pass);
+		dataSource.setPortNumber(port);
+		dataSource.setDatabaseName(dbName);
+		return dataSource;
 	}
 }// end DBConnection
