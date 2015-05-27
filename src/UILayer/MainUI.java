@@ -555,7 +555,6 @@ public class MainUI {
 			for (Team t : teams) {
 				cb_team.addItem(t.getName());
 			}
-			cb_team.updateUI();
 		} catch (Exception e) {
 			cb_team.addItem("Error");
 		}
@@ -569,7 +568,6 @@ public class MainUI {
 			for (User u : users) {
 				cb_user.addItem(u.getHandle());
 			}
-			cb_user.updateUI();
 		} catch (Exception e) {
 			cb_user.addItem("Error");
 		}
@@ -583,7 +581,6 @@ public class MainUI {
 			for (Tournament tournament : tournaments) {
 				cb_tournament.addItem(tournament.getName());
 			}
-			cb_tournament.updateUI();
 		} catch (Exception e) {
 			cb_tournament.addItem("Error");
 		}
