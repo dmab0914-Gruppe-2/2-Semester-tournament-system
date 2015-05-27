@@ -55,6 +55,7 @@ public class MainUI {
 	private JPasswordField pwdPassword;
 	private JComboBox cb_team;
 	private JComboBox cb_user;
+	private UserController userController;
 
 	/**
 	 * Launch the application.
@@ -63,7 +64,7 @@ public class MainUI {
 	public static void main(String[] args) { EventQueue.invokeLater(new
 			Runnable() { public void run() { try { MainUI window = new MainUI();
 			window.frmTournamentplanner.setVisible(true); } catch (Exception e) {
-				e.printStackTrace(); } } }); 
+				e.printStackTrace(); } } });
 	}
 
 
@@ -75,6 +76,7 @@ public class MainUI {
 		frmTournamentplanner.setVisible(true);
 		fillTeamCombo();
 		fillUserCombo();
+        userController = new UserController();
 	}
 
 	/**
@@ -200,14 +202,17 @@ public class MainUI {
 		lblLogin.setFont(new Font("Tahoma", Font.PLAIN, 16));
 
 		txtloginHandle = new JTextField();
-		txtloginHandle.setToolTipText("Youre handle");
+		txtloginHandle.setToolTipText("Your handle");
 		txtloginHandle.setColumns(10);
 
 		JButton btnlogin = new JButton("Login");
 		btnlogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
-			}
+                User u = userController.login(txtloginHandle.toString(), pwdPassword.toString());
+                if(u != null){
+
+                }//endIf
+			}//endActionPerformed
 		});
 		btnlogin.setFont(new Font("Tahoma", Font.PLAIN, 8));
 
@@ -448,7 +453,7 @@ public class MainUI {
 		lblConnectionStatus.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		lblConnectionStatus.setHorizontalAlignment(SwingConstants.CENTER);
 
-		JLabel lblToDatabse = new JLabel("to databse");
+		JLabel lblToDatabse = new JLabel("to database");
 		lblToDatabse.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		lblToDatabse.setHorizontalAlignment(SwingConstants.CENTER);
 
