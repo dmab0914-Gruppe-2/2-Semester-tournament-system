@@ -10,7 +10,9 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 
+import CtrLayer.TeamController;
 import CtrLayer.TournamentController;
+import ModelLayer.Team;
 import ModelLayer.Tournament;
 
 import java.util.ArrayList;
@@ -63,6 +65,7 @@ public class TournamentUI extends JDialog {
 		initialize();
 		getTournamentData(tournamentName);
 		displayTournamentInfo();
+		fillTeamCombo();
 	}
 
 	private void initialize() {
@@ -76,8 +79,14 @@ public class TournamentUI extends JDialog {
 		lblTournamentstatusinfo = new JLabel("tournamentStatusInfo");
 
 		cb_team = new JComboBox<String>();
+		cb_team.setFocusTraversalKeysEnabled(false);
 
 		btnAddTeam = new JButton("Add Team");
+		btnAddTeam.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//Do jack shit.
+			}
+		});
 
 		btnEnableSignup = new JButton("Enable Signup");
 
@@ -307,5 +316,17 @@ public class TournamentUI extends JDialog {
 		lblTeamsizeinfo.setText(Integer.toString(tournament.getTeamSize()));
 		lblGamenameinfo.setText(tournament.getGameName());
 		lblNameinfo.setText(tournament.getName());
+	}
+
+	private void fillTeamCombo() {
+		try {
+			TeamController teamController = new TeamController();
+			ArrayList<Team> teams = teamController.getAllTeams();
+			for (Team team : teams) {
+				cb_team.addItem(team.getName());
+			}
+		} catch (Exception e) {
+			cb_team.addItem("Error");
+		}
 	}
 }
