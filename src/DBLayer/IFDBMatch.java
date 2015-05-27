@@ -13,11 +13,13 @@ import ModelLayer.Match;
  */
 public interface IFDBMatch {
 	
-	public Match addmatch(Match match);
+	public int addmatch(Match match) throws Exception;
 	
-	public Match removeMatch(int matchID);
+	public int removeMatch(int matchID);
 	
-	public boolean setMatchResults(int matchID, int team1Score, int team2Score);
+	public Match getMatch(int matchID);
+	
+	public int setMatchResults(int matchID, int team1Score, int team2Score);
 	
 	public ArrayList<Match> getMatches(int tournamentID);
 }

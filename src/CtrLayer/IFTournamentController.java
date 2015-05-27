@@ -22,7 +22,7 @@ public interface IFTournamentController {
 	
 	public ArrayList<Match> startTournament(int tournamentID) throws Exception;
 	
-	public boolean setMatchResults(int matchID, int team1Score, int team2Score);
+	public int setMatchResults(int matchID, int team1Score, int team2Score);
 	
 	public ArrayList<Match> advanceTournament(int tournamentID);
 	
