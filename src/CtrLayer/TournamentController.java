@@ -41,52 +41,36 @@ public class TournamentController implements IFTournamentController {
 	 * Starts the tournament form the given id if it exists. Gets the matches
 	 * generated and added to db.
 	 * 
-	 * @param tournamentID
-	 *            the id of the tournament
-	 * @return The matches that have been generated and started.
+	 * @param tournamentID	the id of the tournament
+	 * @return The matches	that have been generated and started.
 	 */
 	public ArrayList<Match> startTournament(int tournamentID) throws Exception {
 		if (dbTournament.startTournament(tournamentID)) {
-			ArrayList<Team> teams = dbTournament
-					.getTournamentTeams(tournamentID);
+			ArrayList<Team> teams = dbTournament.getTournamentTeams(tournamentID);
 			// Asks for a list of matches from the given teams and given scores.
 			// As there isn't any scores to give atm, it asks for an empty
 			// ArrayList.
-			ArrayList<Match> matches = eliminationController.generateRound(
-					teams, new ArrayList<Integer>());
-			ArrayList<Match> newMatches = new ArrayList<Match>(); // new list
-																	// with the
-																	// matches
-																	// including
-																	// their id.
-																	// makes it
-																	// easier to
-																	// revert in
-																	// case one
-																	// gives an
-																	// error.
+			ArrayList<Match> matches = eliminationController.generateRound(teams, new ArrayList<Integer>());
+			// new list with the matches including their id. makes it easier to revert in case one gives an error.
+			ArrayList<Match> newMatches = new ArrayList<Match>();
 			for (int i = 0; i < matches.size(); i++) {
 				matches.get(i).setRoundNumber(1); // First round is always round
-													// 1.
+				// 1.
 				try {
 					newMatches.add(dbMatch.addmatch(matches.get(i)));
 				} catch (Exception e) { // In case something happened. It will
-										// roll back the changes, without having
-										// to lock the database.
+					// roll back the changes, without having
+					// to lock the database.
 					dbTournament.abortTurnament(tournamentID);
 					for (Match match : newMatches) {
-						dbMatch.removeMatch(match.getId()); // Removes every
-															// match that have
-															// been added to the
-															// db.
+						dbMatch.removeMatch(match.getId()); // Removes every match that have been added to the db.
 					}
 					e.printStackTrace(); // Something happened
-					throw new Exception(
-							"Something happened, start of Tournament aborted.");
+					throw new Exception("Something happened, start of Tournament aborted.");
 				}
 			}
 			return newMatches; // Returns the new list of matches which now also
-								// have an id from/in the database.
+			// have an id from/in the database.
 		}
 		return null;
 	}
