@@ -85,11 +85,7 @@ public class MainUI {
                                        });
 
         Thread connectionThread = new DBConnectionStatus();
-
-
         connectionThread.start();
-
-
     }
 
 
@@ -425,7 +421,8 @@ public class MainUI {
         lblToDatabse.setFont(new Font("Tahoma", Font.PLAIN, 16));
         lblToDatabse.setHorizontalAlignment(SwingConstants.CENTER);
 
-        lblStatus = new JLabel("STATUS");
+        lblStatus = new JLabel("GETTING INFO");
+        lblStatus.setForeground(Color.ORANGE);
         lblStatus.setFont(new Font("Tahoma", Font.BOLD, 16));
         lblStatus.setHorizontalAlignment(SwingConstants.CENTER);
         GroupLayout gl_panelDatabaseConnection = new GroupLayout(
@@ -591,7 +588,7 @@ public class MainUI {
         if(connectionAlive){
             lblStatus.setForeground(Color.GREEN);
             lblStatus.setText("IT'S ALIVE!");
-        }else{
+        }else {
             lblStatus.setForeground(Color.RED);
             lblStatus.setText("Welp, it died..");
         }
