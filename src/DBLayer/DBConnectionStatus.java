@@ -11,6 +11,7 @@ import java.sql.SQLException;
  * Created by Andreas on 27-05-2015.
  */
 public class DBConnectionStatus extends Thread {
+    SQLServerDataSource dataSource = DBConnection.getInstance().getDataSource();
     public DBConnectionStatus() {
         super();
     }
@@ -22,12 +23,6 @@ public class DBConnectionStatus extends Thread {
             try {
 
                 Thread.sleep(1000*10);
-                SQLServerDataSource dataSource = new SQLServerDataSource();
-                dataSource.setUser("sa");
-                dataSource.setPassword("isAllowed");
-                dataSource.setPortNumber(1433);
-                dataSource.setDatabaseName("TournamentPlanner");
-
                 if(dataSource.getConnection() != null)
                 {
                     MainUI.setDBStatus(true);
