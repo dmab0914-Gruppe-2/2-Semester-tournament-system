@@ -72,20 +72,19 @@ public class MainUI {
      */
 
     public static void main(String[] args) {
-        EventQueue.invokeLater(new
-                                       Runnable() {
-                                           public void run() {
-                                               try {
-                                                   MainUI window = new MainUI();
-                                                   window.frmTournamentplanner.setVisible(true);
-                                               } catch (Exception e) {
-                                                   e.printStackTrace();
-                                               }
-                                           }
-                                       });
-
-        Thread connectionThread = new DBConnectionStatus();
-        connectionThread.start();
+    	EventQueue.invokeLater(new
+    			Runnable() {
+    		public void run() {
+    			try {
+    				MainUI window = new MainUI();
+    				window.frmTournamentplanner.setVisible(true);
+    			} catch (Exception e) {
+    				e.printStackTrace();
+    			}
+    		}
+    	});
+    	Thread connectionThread = new DBConnectionStatus();
+    	connectionThread.start();
     }
 
 
