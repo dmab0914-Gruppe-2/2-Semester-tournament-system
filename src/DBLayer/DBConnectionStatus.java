@@ -21,7 +21,7 @@ public class DBConnectionStatus extends Thread {
 
             try {
 
-                Thread.sleep(1000);
+                Thread.sleep(1000*10);
                 SQLServerDataSource dataSource = new SQLServerDataSource();
                 dataSource.setUser("sa");
                 dataSource.setPassword("isAllowed");
