@@ -19,18 +19,7 @@ import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
 
 import java.awt.Color;
-
 import javax.swing.JLabel;
-
-
-
-
-
-
-
-
-
-//import com.jgoodies.forms.factories.DefaultComponentFactory;  wtf jacob??
 import java.awt.Font;
 
 import javax.swing.JTextField;
@@ -78,16 +67,16 @@ public class MainUI {
 	 */
 
 	public static void main(String[] args) { EventQueue.invokeLater(new
-                                                                            Runnable() {
-                                                                                public void run() {
-                                                                                    try {
-                                                                                        MainUI window = new MainUI();
-                                                                                        window.frmTournamentplanner.setVisible(true);
-                                                                                    } catch (Exception e) {
-                                                                                        e.printStackTrace();
-                                                                                    }
-                                                                                }
-                                                                            });
+			Runnable() {
+		public void run() {
+			try {
+				MainUI window = new MainUI();
+				window.frmTournamentplanner.setVisible(true);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	});
 	}
 
 
@@ -178,7 +167,7 @@ public class MainUI {
 			}
 		});
 		controlPanel.add(btnOpenTournament);
-		
+
 		JSeparator separator_3 = new JSeparator();
 		separator_3.setBounds(10, 136, 361, 2);
 		controlPanel.add(separator_3);
@@ -237,7 +226,7 @@ public class MainUI {
 		btnlogin = new JButton("Login");
 		btnlogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-                performLogin();
+				performLogin();
 			}
 		});
 		btnlogin.setFont(new Font("Tahoma", Font.PLAIN, 8));
@@ -263,53 +252,53 @@ public class MainUI {
 		lblPassword = new JLabel("Password:");
 		GroupLayout gl_panelLogin = new GroupLayout(panelLogin);
 		gl_panelLogin.setHorizontalGroup(
-			gl_panelLogin.createParallelGroup(Alignment.LEADING)
+				gl_panelLogin.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panelLogin.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(gl_panelLogin.createParallelGroup(Alignment.LEADING)
-                                .addGroup(gl_panelLogin.createSequentialGroup()
-                                        .addComponent(lblErrorMessage, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addGap(148))
-                                .addGroup(gl_panelLogin.createSequentialGroup()
-                                        .addComponent(btnlogin)
-                                        .addPreferredGap(ComponentPlacement.RELATED)
-                                        .addComponent(btnCreateUser)
-                                        .addContainerGap(44, Short.MAX_VALUE))
-                                .addGroup(gl_panelLogin.createSequentialGroup()
-                                        .addComponent(pwdPassword, GroupLayout.PREFERRED_SIZE, 130, GroupLayout.PREFERRED_SIZE)
-                                        .addContainerGap(32, Short.MAX_VALUE))
-                                .addGroup(gl_panelLogin.createSequentialGroup()
-                                        .addComponent(lblLogin)
-                                        .addContainerGap(86, Short.MAX_VALUE))
-                                .addGroup(gl_panelLogin.createSequentialGroup()
-                                        .addComponent(lblUsername)
-                                        .addContainerGap(110, Short.MAX_VALUE))
-                                .addGroup(gl_panelLogin.createSequentialGroup()
-                                        .addComponent(txtloginHandle, GroupLayout.PREFERRED_SIZE, 147, GroupLayout.PREFERRED_SIZE)
-                                        .addContainerGap(15, Short.MAX_VALUE))
-                                .addGroup(gl_panelLogin.createSequentialGroup()
-                                        .addComponent(lblPassword)
-                                        .addContainerGap(112, Short.MAX_VALUE))))
-		);
+						.addContainerGap()
+						.addGroup(gl_panelLogin.createParallelGroup(Alignment.LEADING)
+								.addGroup(gl_panelLogin.createSequentialGroup()
+										.addComponent(lblErrorMessage, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+										.addGap(148))
+										.addGroup(gl_panelLogin.createSequentialGroup()
+												.addComponent(btnlogin)
+												.addPreferredGap(ComponentPlacement.RELATED)
+												.addComponent(btnCreateUser)
+												.addContainerGap(44, Short.MAX_VALUE))
+												.addGroup(gl_panelLogin.createSequentialGroup()
+														.addComponent(pwdPassword, GroupLayout.PREFERRED_SIZE, 130, GroupLayout.PREFERRED_SIZE)
+														.addContainerGap(32, Short.MAX_VALUE))
+														.addGroup(gl_panelLogin.createSequentialGroup()
+																.addComponent(lblLogin)
+																.addContainerGap(86, Short.MAX_VALUE))
+																.addGroup(gl_panelLogin.createSequentialGroup()
+																		.addComponent(lblUsername)
+																		.addContainerGap(110, Short.MAX_VALUE))
+																		.addGroup(gl_panelLogin.createSequentialGroup()
+																				.addComponent(txtloginHandle, GroupLayout.PREFERRED_SIZE, 147, GroupLayout.PREFERRED_SIZE)
+																				.addContainerGap(15, Short.MAX_VALUE))
+																				.addGroup(gl_panelLogin.createSequentialGroup()
+																						.addComponent(lblPassword)
+																						.addContainerGap(112, Short.MAX_VALUE))))
+				);
 		gl_panelLogin.setVerticalGroup(
-			gl_panelLogin.createParallelGroup(Alignment.LEADING)
+				gl_panelLogin.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panelLogin.createSequentialGroup()
-					.addComponent(lblLogin)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(lblUsername)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(txtloginHandle, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(lblPassword)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(pwdPassword, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addGroup(gl_panelLogin.createParallelGroup(Alignment.BASELINE)
-						.addComponent(btnlogin)
-						.addComponent(btnCreateUser))
-					.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-					.addComponent(lblErrorMessage))
-		);
+						.addComponent(lblLogin)
+						.addPreferredGap(ComponentPlacement.RELATED)
+						.addComponent(lblUsername)
+						.addPreferredGap(ComponentPlacement.RELATED)
+						.addComponent(txtloginHandle, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addPreferredGap(ComponentPlacement.RELATED)
+						.addComponent(lblPassword)
+						.addPreferredGap(ComponentPlacement.RELATED)
+						.addComponent(pwdPassword, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addPreferredGap(ComponentPlacement.RELATED)
+						.addGroup(gl_panelLogin.createParallelGroup(Alignment.BASELINE)
+								.addComponent(btnlogin)
+								.addComponent(btnCreateUser))
+								.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+								.addComponent(lblErrorMessage))
+				);
 		panelLogin.setLayout(gl_panelLogin);
 
 		JPanel panelTitle = new JPanel();
@@ -525,31 +514,31 @@ public class MainUI {
 		frmTournamentplanner.getContentPane().setLayout(groupLayout);
 	}
 
-    private void performLogin() {
-        String pass = new String(pwdPassword.getPassword());
-        loggedInUser = userController.login(txtloginHandle.getText(), pass);
-        if(loggedInUser != null) {
-            lblErrorMessage.setForeground(Color.GREEN);
-            lblErrorMessage.setText("Logged in!");
-            lblErrorMessage.setVisible(true);
+	private void performLogin() {
+		String pass = new String(pwdPassword.getPassword());
+		loggedInUser = userController.login(txtloginHandle.getText(), pass);
+		if(loggedInUser != null) {
+			lblErrorMessage.setForeground(Color.GREEN);
+			lblErrorMessage.setText("Logged in!");
+			lblErrorMessage.setVisible(true);
 
-            //LOGGED IN
-            lblUsername.setVisible(false);
-            txtloginHandle.setVisible(false);
-            lblPassword.setVisible(false);
-            pwdPassword.setVisible(false);
-            btnCreateUser.setVisible(false);
-            btnlogin.setVisible(false);
-            //lblErrorMessage.setVisible(false);
-            lblLogin.setText("Welcome "+ loggedInUser.getHandle());
-        } else{
-            lblErrorMessage.setForeground(Color.RED);
-            lblErrorMessage.setText("INCORRECT LOGIN!");
-            lblErrorMessage.setVisible(true);
-        }
-    }
+			//LOGGED IN
+			lblUsername.setVisible(false);
+			txtloginHandle.setVisible(false);
+			lblPassword.setVisible(false);
+			pwdPassword.setVisible(false);
+			btnCreateUser.setVisible(false);
+			btnlogin.setVisible(false);
+			//lblErrorMessage.setVisible(false);
+			lblLogin.setText("Welcome "+ loggedInUser.getHandle());
+		} else{
+			lblErrorMessage.setForeground(Color.RED);
+			lblErrorMessage.setText("INCORRECT LOGIN!");
+			lblErrorMessage.setVisible(true);
+		}
+	}
 
-    private void fillTeamCombo() {
+	private void fillTeamCombo() {
 		try {
 			TeamController teamController = new TeamController();
 			ArrayList<Team> teams = teamController.getAllTeams();
