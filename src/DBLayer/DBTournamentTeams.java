@@ -12,7 +12,6 @@ import java.util.ArrayList;
 import CtrLayer.IFTeamController;
 import CtrLayer.IFTournamentController;
 import CtrLayer.TeamController;
-import CtrLayer.TournamentController;
 import ModelLayer.Team;
 import ModelLayer.Tournament;
 
@@ -33,7 +32,7 @@ public class DBTournamentTeams implements IFDBTournamentTeams {
 														// creates the
 														// connection to DB.
 		teamController = new TeamController();
-		tournamentController = new TournamentController();
+		//tournamentController = new TournamentController();
 	}
 
 	/*
