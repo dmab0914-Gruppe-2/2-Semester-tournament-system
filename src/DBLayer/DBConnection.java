@@ -15,11 +15,11 @@ public class DBConnection {
 	// SQL Server
 
 	//TODO Edit these in order to get Data Magic, todo to make it more visible in case you were not looking ;)
-	private static String user = "sa";
-	private static String pass = "isAllowed";
-	private static String conn = "localhost";
-	private static int port = 1433;
-	private static String dbName = "TournamentPlanner";
+	private static String user = "";
+	private static String pass = "";
+	private static String conn = "";
+	private static int port = ;
+	private static String dbName = "";
 
 	private static final String driver = "jdbc:sqlserver://"+conn + ":" + Integer.toString(port);	//localhost:1433"; //Connection adress to the sql server
 	private static final String databaseName = ";databaseName=" + dbName; //The sql server database
