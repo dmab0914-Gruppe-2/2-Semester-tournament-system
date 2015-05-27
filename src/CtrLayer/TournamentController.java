@@ -54,31 +54,19 @@ public class TournamentController implements IFTournamentController {
 			// ArrayList.
 			ArrayList<Match> matches = eliminationController.generateRound(
 					teams, new ArrayList<Integer>());
-			ArrayList<Match> newMatches = new ArrayList<Match>(); // new list
-																	// with the
-																	// matches
-																	// including
-																	// their id.
-																	// makes it
-																	// easier to
-																	// revert in
-																	// case one
-																	// gives an
-																	// error.
+			// new list with the matches including their id. makes it easier to revert in case one gives an error.
+			ArrayList<Match> newMatches = new ArrayList<Match>();
 			for (int i = 0; i < matches.size(); i++) {
 				matches.get(i).setRoundNumber(1); // First round is always round
-													// 1.
+				// 1.
 				try {
 					newMatches.add(dbMatch.addmatch(matches.get(i)));
 				} catch (Exception e) { // In case something happened. It will
-										// roll back the changes, without having
-										// to lock the database.
+					// roll back the changes, without having
+					// to lock the database.
 					dbTournament.abortTurnament(tournamentID);
 					for (Match match : newMatches) {
-						dbMatch.removeMatch(match.getId()); // Removes every
-															// match that have
-															// been added to the
-															// db.
+						dbMatch.removeMatch(match.getId()); // Removes every match that have been added to the db.
 					}
 					e.printStackTrace(); // Something happened
 					throw new Exception(
@@ -86,7 +74,7 @@ public class TournamentController implements IFTournamentController {
 				}
 			}
 			return newMatches; // Returns the new list of matches which now also
-								// have an id from/in the database.
+			// have an id from/in the database.
 		}
 		return null;
 	}
