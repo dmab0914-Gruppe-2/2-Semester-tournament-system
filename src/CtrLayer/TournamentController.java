@@ -31,7 +31,7 @@ public class TournamentController implements IFTournamentController {
 		return dbTournament.getTournaments(false);
 	}
 
-	public Tournament getTournamet(int tournamentID) {
+	public Tournament getTournament(int tournamentID) {
 		return dbTournament.getTournament(tournamentID, true);
 	}
 

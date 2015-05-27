@@ -325,7 +325,7 @@ public class TournamentUI extends JDialog {
 	}
 
 	private void displayTournamentInfo() {
-		tournament = tournamentController.getTournamet(tournament.getId());
+		tournament = tournamentController.getTournament(tournament.getId());
 		System.out.println("Tournament Status: " + tournament.getStatus());
 		lblTournamentstatusinfo.setText(Tournament.statusToString(tournament.getStatus()));
 		lblRoundNumberInfo.setText(Integer.toString(tournament.getRoundNumber()));

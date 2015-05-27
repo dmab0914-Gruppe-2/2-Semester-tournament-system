@@ -91,8 +91,8 @@ public class TestTournamentController {
 	 */
 	@Test
 	public void testGetTournamet() {
-		Tournament tournament1 = tournamentController.getTournamet(id1);
-		Tournament tournament2 = tournamentController.getTournamet(id2);
+		Tournament tournament1 = tournamentController.getTournament(id1);
+		Tournament tournament2 = tournamentController.getTournament(id2);
 		assertEquals(gameName1, tournament1.getGameName());
 		assertEquals(gameName2, tournament2.getGameName());
 	}

@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import CtrLayer.IFTeamController;
 import CtrLayer.IFTournamentController;
 import CtrLayer.TeamController;
+import CtrLayer.TournamentController;
 import ModelLayer.Team;
 import ModelLayer.Tournament;
 
@@ -24,7 +25,6 @@ public class DBTournamentTeams implements IFDBTournamentTeams {
 
 	private Connection con;
 	private IFTeamController teamController;
-	private IFTournamentController tournamentController;
 
 	public DBTournamentTeams() {
 		con = DBConnection.getInstance().getDBcon(); // Get instance of
@@ -149,6 +149,7 @@ public class DBTournamentTeams implements IFDBTournamentTeams {
 	private ArrayList<Tournament> miscWhereTournament(String wClause) {
 		ResultSet results;
 		ArrayList<Tournament> list = new ArrayList<Tournament>();
+		IFTournamentController tournamentController = new TournamentController();
 
 		String query = buildQuery(wClause);
 
@@ -156,9 +157,9 @@ public class DBTournamentTeams implements IFDBTournamentTeams {
 			Statement stmt = con.createStatement();
 			stmt.setQueryTimeout(5);
 			results = stmt.executeQuery(query);
-
+			
 			while (results.next()) {
-				Tournament tObj = tournamentController.getTournamet(results
+				Tournament tObj = tournamentController.getTournament(results
 						.getInt("tournamentID"));
 				list.add(tObj);
 			}// end while
