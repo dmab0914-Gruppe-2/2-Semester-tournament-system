@@ -22,6 +22,14 @@ import java.awt.Color;
 
 import javax.swing.JLabel;
 
+
+
+
+
+
+
+
+
 //import com.jgoodies.forms.factories.DefaultComponentFactory;  wtf jacob??
 import java.awt.Font;
 
@@ -38,8 +46,10 @@ import javax.swing.border.LineBorder;
 import javax.swing.JComboBox;
 
 import CtrLayer.TeamController;
+import CtrLayer.TournamentController;
 import CtrLayer.UserController;
 import ModelLayer.Team;
+import ModelLayer.Tournament;
 import ModelLayer.User;
 
 /**
@@ -51,8 +61,9 @@ public class MainUI {
 	private JFrame frmTournamentplanner;
 	private JTextField txtloginHandle;
 	private JPasswordField pwdPassword;
-	private JComboBox cb_team;
-	private JComboBox cb_user;
+	private JComboBox<String> cb_team;
+	private JComboBox<String> cb_user;
+	private JComboBox<String> cb_tournament;
 
 	/**
 	 * Launch the application.
@@ -73,6 +84,7 @@ public class MainUI {
 		frmTournamentplanner.setVisible(true);
 		fillTeamCombo();
 		fillUserCombo();
+		fillTournamentCombo();
 	}
 
 	/**
@@ -138,15 +150,20 @@ public class MainUI {
 		lblTournament.setBounds(31, 41, 79, 14);
 		controlPanel.add(lblTournament);
 
-		JComboBox comboBox = new JComboBox();
-		comboBox.setBounds(41, 66, 271, 20);
-		controlPanel.add(comboBox);
+		cb_tournament = new JComboBox<String>();
+		cb_tournament.setBounds(41, 66, 271, 20);
+		controlPanel.add(cb_tournament);
 
 		JButton btnOpenTournament = new JButton("Open Tournament");
 		btnOpenTournament.setAlignmentX(Component.CENTER_ALIGNMENT);
 		btnOpenTournament.setBounds(51, 97, 146, 23);
+		btnOpenTournament.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				TournamentUI.tournamentUI(cb_tournament.getSelectedItem().toString());
+			}
+		});
 		controlPanel.add(btnOpenTournament);
-
+		
 		JSeparator separator_3 = new JSeparator();
 		separator_3.setBounds(10, 136, 361, 2);
 		controlPanel.add(separator_3);
@@ -156,7 +173,7 @@ public class MainUI {
 		lblTeam.setBounds(31, 149, 46, 14);
 		controlPanel.add(lblTeam);
 
-		cb_team = new JComboBox();
+		cb_team = new JComboBox<String>();
 		cb_team.setBounds(41, 174, 137, 20);
 		controlPanel.add(cb_team);
 
@@ -178,7 +195,7 @@ public class MainUI {
 		lblPlayer.setBounds(31, 256, 46, 14);
 		controlPanel.add(lblPlayer);
 
-		cb_user = new JComboBox();
+		cb_user = new JComboBox<String>();
 		cb_user.setBounds(41, 281, 137, 20);
 		controlPanel.add(cb_user);
 
@@ -205,7 +222,7 @@ public class MainUI {
 		JButton btnlogin = new JButton("Login");
 		btnlogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
+
 			}
 		});
 		btnlogin.setFont(new Font("Tahoma", Font.PLAIN, 8));
@@ -556,25 +573,36 @@ public class MainUI {
 	private void fillTeamCombo() {
 		try {
 			TeamController teamController = new TeamController();
-			ArrayList<Team> teams = teamController .getAllTeams();
+			ArrayList<Team> teams = teamController.getAllTeams();
 			for (Team t : teams) {
 				cb_team.addItem(t.getName());
 			}
 		} catch (Exception e) {
 			cb_team.addItem("Error");
 		}
-
 	}
+
 	private void fillUserCombo() {
 		try {
 			UserController userController = new UserController();
-			ArrayList<User> users = userController .getAllUsers();
+			ArrayList<User> users = userController.getAllUsers();
 			for (User u : users) {
 				cb_user.addItem(u.getHandle());
 			}
 		} catch (Exception e) {
 			cb_user.addItem("Error");
 		}
+	}
 
+	private void fillTournamentCombo() {
+		try {
+			TournamentController tournamentController = new TournamentController();
+			ArrayList<Tournament> tournaments = tournamentController.getTournaments();
+			for (Tournament tournament : tournaments) {
+				cb_tournament.addItem(tournament.getName());
+			}
+		} catch (Exception e) {
+			cb_tournament.addItem("Error");
+		}
 	}
 }
