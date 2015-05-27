@@ -69,8 +69,7 @@ public class TournamentController implements IFTournamentController {
 						dbMatch.removeMatch(match.getId()); // Removes every match that have been added to the db.
 					}
 					e.printStackTrace(); // Something happened
-					throw new Exception(
-							"Something happened, start of Tournament aborted.");
+					throw new Exception("Something happened, start of Tournament aborted.");
 				}
 			}
 			return newMatches; // Returns the new list of matches which now also
