@@ -106,6 +106,7 @@ public class UserControllerTest {
 		hashed2 = userController.stringToHash(password2);
 
 		//TEST
+
 		assertNotEquals(hashed1, hashed2);
 	}
 
