@@ -600,5 +600,9 @@ public class MainUI {
 		fillTeamCombo();
 		fillTournamentCombo();
 		fillUserCombo();
+        ListTeamsUI.updateData();
+        ListTournamentsUI.updateData();
+        ListUsersUI.updateData();
+
 	}
 }
