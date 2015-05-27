@@ -65,13 +65,13 @@ public class TournamentUI extends JDialog {
 	 */
 	public TournamentUI(String tournamentName) {
 		tournamentController = new TournamentController();
-		initialize();
+		initialize(tournamentName);
 		getTournamentData(tournamentName);
 		displayTournamentInfo();
 		fillTeamCombo();
 	}
 
-	private void initialize() {
+	private void initialize(String tournamentName) {
 		setBounds(100, 100, 529, 397);
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -87,7 +87,7 @@ public class TournamentUI extends JDialog {
 		btnAddTeam = new JButton("Add Team");
 		btnAddTeam.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//TODO add team to tournament
+				addTeam(tournamentName);
 			}
 		});
 
@@ -370,6 +370,10 @@ public class TournamentUI extends JDialog {
 		else {
 			System.out.println("Couldn't enable signup for the tournament.");
 		}
+	}
+	
+	private void addTeam(String tournamentName) {
+		
 	}
 
 	private void startTournament() {
