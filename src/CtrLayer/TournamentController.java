@@ -41,19 +41,16 @@ public class TournamentController implements IFTournamentController {
 	 * Starts the tournament form the given id if it exists. Gets the matches
 	 * generated and added to db.
 	 * 
-	 * @param tournamentID
-	 *            the id of the tournament
-	 * @return The matches that have been generated and started.
+	 * @param tournamentID	the id of the tournament
+	 * @return The matches	that have been generated and started.
 	 */
 	public ArrayList<Match> startTournament(int tournamentID) throws Exception {
 		if (dbTournament.startTournament(tournamentID)) {
-			ArrayList<Team> teams = dbTournament
-					.getTournamentTeams(tournamentID);
+			ArrayList<Team> teams = dbTournament.getTournamentTeams(tournamentID);
 			// Asks for a list of matches from the given teams and given scores.
 			// As there isn't any scores to give atm, it asks for an empty
 			// ArrayList.
-			ArrayList<Match> matches = eliminationController.generateRound(
-					teams, new ArrayList<Integer>());
+			ArrayList<Match> matches = eliminationController.generateRound(teams, new ArrayList<Integer>());
 			// new list with the matches including their id. makes it easier to revert in case one gives an error.
 			ArrayList<Match> newMatches = new ArrayList<Match>();
 			for (int i = 0; i < matches.size(); i++) {

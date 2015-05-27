@@ -106,33 +106,43 @@ public class TournamentUI extends JDialog {
 		});
 
 		btnEndTournament = new JButton("End Tournament");
+		btnEndTournament.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//TODO End Tournament
+			}
+		});
 
 		btnAdvanceTournament = new JButton("Advance Tournament");
+		btnAdvanceTournament.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//TODO Advance Tournament
+			}
+		});
 
 		table = new JTable();
 		GroupLayout gl_contentPanel = new GroupLayout(contentPanel);
 		gl_contentPanel.setHorizontalGroup(
 				gl_contentPanel.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPanel.createSequentialGroup()
-						.addGroup(gl_contentPanel.createParallelGroup(Alignment.TRAILING)
-								.addComponent(table, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-								.addGroup(Alignment.LEADING, gl_contentPanel.createSequentialGroup()
+						.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
+								.addComponent(table, GroupLayout.DEFAULT_SIZE, 461, Short.MAX_VALUE)
+								.addGroup(gl_contentPanel.createSequentialGroup()
 										.addComponent(panel, GroupLayout.PREFERRED_SIZE, 187, GroupLayout.PREFERRED_SIZE)
 										.addPreferredGap(ComponentPlacement.UNRELATED)
-										.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
+										.addGroup(gl_contentPanel.createParallelGroup(Alignment.TRAILING)
 												.addGroup(gl_contentPanel.createSequentialGroup()
-														.addComponent(lblTournamentStatus)
+														.addComponent(btnAdvanceTournament, GroupLayout.DEFAULT_SIZE, 147, Short.MAX_VALUE)
 														.addPreferredGap(ComponentPlacement.RELATED)
-														.addComponent(lblTournamentstatusinfo))
-														.addGroup(gl_contentPanel.createSequentialGroup()
-																.addComponent(btnEndTournament)
+														.addComponent(btnEndTournament))
+														.addGroup(Alignment.LEADING, gl_contentPanel.createSequentialGroup()
+																.addComponent(lblTournamentStatus)
 																.addPreferredGap(ComponentPlacement.RELATED)
-																.addComponent(btnAdvanceTournament, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-																.addGroup(gl_contentPanel.createSequentialGroup()
-																		.addComponent(cb_team, 0, 101, Short.MAX_VALUE)
+																.addComponent(lblTournamentstatusinfo))
+																.addGroup(Alignment.LEADING, gl_contentPanel.createSequentialGroup()
+																		.addComponent(cb_team, 0, 173, Short.MAX_VALUE)
 																		.addPreferredGap(ComponentPlacement.UNRELATED)
-																		.addComponent(btnAddTeam, GroupLayout.PREFERRED_SIZE, 9, Short.MAX_VALUE))
-																		.addGroup(gl_contentPanel.createSequentialGroup()
+																		.addComponent(btnAddTeam, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+																		.addGroup(Alignment.LEADING, gl_contentPanel.createSequentialGroup()
 																				.addComponent(btnEnableSignup, GroupLayout.PREFERRED_SIZE, 103, GroupLayout.PREFERRED_SIZE)
 																				.addPreferredGap(ComponentPlacement.RELATED)
 																				.addComponent(btnStartTournament, GroupLayout.DEFAULT_SIZE, 155, Short.MAX_VALUE)))))
@@ -256,9 +266,7 @@ public class TournamentUI extends JDialog {
 			btnClose = new JButton("Close");
 			btnClose.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					tournament = null;
-					System.out.println("Closing Tournament Window");
-					dispose();
+					closeWindows();
 				}
 			});
 			btnClose.setActionCommand("Cancel");
@@ -292,6 +300,12 @@ public class TournamentUI extends JDialog {
 				);
 		buttonPane.setLayout(gl_buttonPane);
 		getContentPane().setLayout(groupLayout);
+	}
+
+	private void closeWindows() {
+		tournament = null;
+		System.out.println("Closing Tournament Window");
+		dispose();
 	}
 
 	/**
@@ -348,17 +362,29 @@ public class TournamentUI extends JDialog {
 	}
 
 	private void enableSignup() {
-		tournamentController.enableSignup(tournament.getId());
-		displayTournamentInfo();
+		if(tournament.getStatus().equals(Tournament.Status.waiting)) {
+			tournamentController.enableSignup(tournament.getId());
+			displayTournamentInfo();
+			System.out.println("signup for the tournament have been enabled.");
+		}
+		else {
+			System.out.println("Couldn't enable signup for the tournament.");
+		}
 	}
-	
+
 	private void startTournament() {
-		try {
-			tournamentController.startTournament(tournament.getId());
+		if(tournament.getStatus().equals(Tournament.Status.ready)) {
+			try {
+				tournamentController.startTournament(tournament.getId());
+				System.out.println("The tournament have been started.");
+			}
+			catch(Exception ex) {
+				System.out.println(ex);
+			}
+			displayTournamentInfo();
 		}
-		catch(Exception ex) {
-			System.out.println(ex);
+		else {
+			System.out.println("The tournament could't be started.");
 		}
-		displayTournamentInfo();
 	}
 }

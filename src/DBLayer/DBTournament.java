@@ -71,7 +71,7 @@ public class DBTournament implements IFDBTournament {
 		try{
 			Statement stmt = con.createStatement();
 			stmt.setQueryTimeout(5);
-			stmt.executeUpdate(query); //Returns the row count which may be the id.
+			stmt.executeUpdate(query);
 			rs = stmt.executeQuery("SELECT SCOPE_IDENTITY();"); //Makes it possible to retrieve the the incremental id.
 			rs.next();
 			int id = rs.getInt(1); //gets the incremental id.
