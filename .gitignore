@@ -22,3 +22,5 @@ wbp-meta/org.eclipse.wb.rcp.wbp-palette.xml
 *.iml
 src/DBLayer/DBConnection.java
 src/DBLayer/DBConnection.java
+src/DBLayer/DBConnection.java
+src/DBLayer/DBConnection.java

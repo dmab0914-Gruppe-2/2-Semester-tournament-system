@@ -148,7 +148,8 @@ public class DBUser implements IFDBUser {
 		User userObj = new User();
 
 		String query = buildQuery(wClause);
-		System.out.println(query);
+		//This were kinda annoying with constant updates
+		//System.out.println(query);
 		try { // read the employee from the database
 			Statement stmt = con.createStatement();
 			stmt.setQueryTimeout(5);
