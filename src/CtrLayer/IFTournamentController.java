@@ -17,6 +17,8 @@ public interface IFTournamentController {
 	
 	public ArrayList<Tournament> getTournaments();
 	
+	public Tournament getTournamentByName(String tournamentName);
+	
 	public Tournament getTournament(int tournamentID);
 	
 	public boolean enableSignup(int tournamentID);

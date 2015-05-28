@@ -30,6 +30,10 @@ public class TournamentController implements IFTournamentController {
 	public ArrayList<Tournament> getTournaments() {
 		return dbTournament.getTournaments(false);
 	}
+	
+	public Tournament getTournamentByName(String tournamentName){
+		return dbTournament.getTournamentByName(tournamentName, false);
+	}
 
 	public Tournament getTournament(int tournamentID) {
 		return dbTournament.getTournament(tournamentID, true);

@@ -18,6 +18,8 @@ public interface IFDBTournament {
 	
 	public Tournament getTournament(int tournamentID, boolean retriveAssociation);
 	
+	public Tournament getTournamentByName(String tournamentName, boolean retriveAssociation);
+	
 	public Tournament addTournament(Tournament tournament)  throws Exception;
 	
 	public boolean enableSignup(int tournamentID);
