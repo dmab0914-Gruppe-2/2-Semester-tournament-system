@@ -24,7 +24,7 @@ public class DBConnectionStatus extends Thread {
                 if(dataSource.getConnection() != null)
                 {
                     MainUI.setDBStatus(true);
-                    System.out.println("Connection to DB is ok");
+                    //System.out.println("Connection to DB is ok");
                     MainUI.updateData();
                 }
 
