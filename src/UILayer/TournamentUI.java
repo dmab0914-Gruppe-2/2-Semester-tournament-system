@@ -375,8 +375,8 @@ public class TournamentUI extends JDialog {
 	private void addTeam(String tournamentName) {
 		TeamController teamCtr = new TeamController();
 		TournamentController tourCtr = new TournamentController();
+		Team team = teamCtr.findTeam(cb_team.getSelectedItem().toString());
 		
-		Team team = teamCtr.findTeam(cb_team.toString());
 		
 		try {
 			tourCtr.addTeamToTournament(tourCtr.getTournamentByName(tournamentName), team);
