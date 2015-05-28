@@ -39,6 +39,15 @@ public class DBTournament implements IFDBTournament {
 	}
 
 	/* (non-Javadoc)
+	 * @see DBLayer.IFDBTournament#getTournamentByName(java.lang.String)
+	 */
+	@Override
+	public Tournament getTournamentByName(String tournamentName, boolean retriveAssociation) {
+		String wClause = "name = '" + tournamentName + "'";
+		return singleWhere(wClause, retriveAssociation);
+	}
+
+	/* (non-Javadoc)
 	 * @see DBLayer.IFDBTournament#getTournament(int)
 	 */
 	public Tournament getTournament(int tournamentID, boolean retriveAssociation) {
