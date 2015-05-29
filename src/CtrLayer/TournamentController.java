@@ -2,6 +2,7 @@ package CtrLayer;
 
 import java.util.ArrayList;
 
+import DBLayer.DBMatch;
 import DBLayer.DBTournament;
 import DBLayer.DBTournamentTeams;
 import DBLayer.IFDBMatch;
@@ -24,7 +25,7 @@ public class TournamentController implements IFTournamentController {
 	public TournamentController() {
 		eliminationController = new EliminationController();
 		dbTournament = new DBTournament();
-		// dbMatch = new DBMatch();
+		dbMatch = new DBMatch();
 	}
 
 	public ArrayList<Tournament> getTournaments() {
@@ -65,6 +66,8 @@ public class TournamentController implements IFTournamentController {
 			ArrayList<Match> newMatches = new ArrayList<Match>();
 			for (int i = 0; i < matches.size(); i++) {
 				matches.get(i).setRoundNumber(1); // First round is always round
+				matches.get(i).setTournamentId(tournamentID); // Adds tournament id to matches for the tournament its belongs to
+				matches.get(i).setStatus(Tournament.intToStatus(3)); // set matches to be running, because a match will first be create when its ready to start.
 				// 1.
 				try {
 					newMatches.add(dbMatch.addmatch(matches.get(i)));
@@ -100,7 +103,7 @@ public class TournamentController implements IFTournamentController {
 
 		Tournament t = dbTournament.getTournament(tournamentID, false);
 
-		ArrayList<Match> lastRound = dbMatch.getMatches(tournamentID);
+		ArrayList<Match> lastRound = dbMatch.getMatchesForTournament(tournamentID);
 		int i = 0;
 		for (Match lr : lastRound) {
 			if (lr.getRoundNumber() == t.getRoundNumber()) {
@@ -166,5 +169,9 @@ public class TournamentController implements IFTournamentController {
 	public ArrayList<Tournament> getTournamentFromTeam(int teamID) {
 		IFDBTournamentTeams dbTT = new DBTournamentTeams();
 		return dbTT.getTournamentFromTeams(teamID);
+	}
+	public ArrayList<Match> getMatchesForTournament(int tournamentID) {
+		IFDBMatch dbM = new DBMatch();
+		return dbM.getMatchesForTournament(tournamentID);
 	}
 }
