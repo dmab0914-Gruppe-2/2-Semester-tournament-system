@@ -20,32 +20,40 @@ public class DBMatch implements IFDBMatch {
 	@Override
 	public Match addmatch(Match match)throws Exception {
 		String query = "INSERT INTO Match(team1ID, team2ID, score1, score2, statusID, roundnumber, tournamentID) VALUES('"
-				+ match.getTeam1().getId()
+				+ Integer.toString(match.getTeam1().getId())
 				+ "','"
-				+ match.getTeam2().getId()
+				+ Integer.toString(match.getTeam2().getId())
 				+ "','"
-				+ match.getTeam1Score()
+				+ Integer.toString(match.getTeam1Score())
 				+ "','"
-				+ match.getTeam2Score()
+				+ Integer.toString(match.getTeam2Score())
 				+ "','"
 				+ Tournament.statusToInt(match.getStatus())
 				+ "','"
-				+ match.getRoundNumber()
+				+ Integer.toString(match.getRoundNumber())
 				+ "','"
-				+ match.getTournamentId() + "')";
+				+ Integer.toString(match.getTournamentId()) + "')";
 		
 		System.out.println("insert : " + query);
+		
+		ResultSet rs;
 		try { // insert new match
 			Statement stmt = con.createStatement();
 			stmt.setQueryTimeout(5);
 			stmt.executeUpdate(query);
+			rs = stmt.executeQuery("SELECT SCOPE_IDENTITY();"); //Makes it possible to retrieve the the incremental id.
+			rs.next();
+			int id = rs.getInt(1); //gets the incremental id.
+			rs.close();
 			stmt.close();
+			System.out.println("Tournaments database ID: " + id);
+			match.setId(id);
+			return match;
 		}// end try
 		catch (SQLException ex) {
 			System.out.println("insert exception in Match db:");
 			throw new Exception("Match is not inserted correct");
 		}
-		return match;
 	}
 
 	@Override
@@ -94,8 +102,9 @@ public class DBMatch implements IFDBMatch {
 	}
 
 	@Override
-	public ArrayList<Match> getMatches(int tournamentID) {
-		return miscWhere("");
+	public ArrayList<Match> getMatchesForTournament(int tournamentID) {
+		String wClause = Integer.toString(tournamentID);
+		return miscWhere(wClause);
 	}
 
 	private Match singleWhere(String wClause) {
@@ -127,8 +136,8 @@ public class DBMatch implements IFDBMatch {
 	private ArrayList<Match> miscWhere(String wClause) {
 		ResultSet results;
 		ArrayList<Match> list = new ArrayList<Match>();
-
-		String query = buildQuery(wClause);
+		
+		String query = buildQuery("tournamentID = " + wClause);
 
 		try { // read the user from the database
 			Statement stmt = con.createStatement();

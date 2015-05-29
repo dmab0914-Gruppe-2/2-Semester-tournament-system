@@ -86,7 +86,7 @@ public class DBTournament implements IFDBTournament {
 			int id = rs.getInt(1); //gets the incremental id.
 			rs.close();
 			stmt.close();
-			System.out.println("Tournaments databse ID: " + id);
+			System.out.println("Tournaments database ID: " + id);
 			tournament.setId(id);
 			return tournament;
 		}//end try

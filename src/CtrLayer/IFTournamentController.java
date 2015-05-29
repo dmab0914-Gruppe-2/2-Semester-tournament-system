@@ -38,4 +38,6 @@ public interface IFTournamentController {
 	public ArrayList<Team> getTournamentTeams(int tournamentID);
 	
 	public ArrayList<Tournament> getTournamentFromTeam(int teamID);
+	
+	public ArrayList<Match> getMatchesForTournament(int tournamentID);
 }

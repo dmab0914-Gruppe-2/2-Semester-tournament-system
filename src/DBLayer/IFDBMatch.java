@@ -21,5 +21,5 @@ public interface IFDBMatch {
 	
 	public int setMatchResults(int matchID, int team1Score, int team2Score);
 	
-	public ArrayList<Match> getMatches(int tournamentID);
+	public ArrayList<Match> getMatchesForTournament(int tournamentID);
 }

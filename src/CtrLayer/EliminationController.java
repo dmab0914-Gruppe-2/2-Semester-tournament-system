@@ -94,8 +94,8 @@ public class EliminationController implements IFEliminationController {
                     Team team2 = teams.get(rndNumber);
 
                     teams.remove(team2);
-                    Match match = new Match();
-                    generateMatch(team1, team2);
+                    //Match match = new Match();
+                     Match match = generateMatch(team1, team2);
                     matches.add(match);
 
                     //System.out.printf("Remaining teams: " + teams.size() +"\n");
