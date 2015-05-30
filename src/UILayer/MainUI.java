@@ -57,7 +57,7 @@ public class MainUI {
 	private static JComboBox<String> cb_team;
 	private static JComboBox<String> cb_user;
 	private static JComboBox<String> cb_tournament;
-	private User loggedInUser;
+	private static User loggedInUser;
 	private UserController userController;
 	private JLabel lblErrorMessage;
 	private JLabel lblUsername;
@@ -66,6 +66,8 @@ public class MainUI {
 	private JButton btnlogin;
 	private JButton btnCreateUser;
 	private static JLabel lblStatus;
+	private JPanel controlPanel;
+	private static JButton btnOpenPlayer;
 
 	/**
 	 * Launch the application.
@@ -92,6 +94,7 @@ public class MainUI {
 	 * Create the application.
 	 */
 	public MainUI() {
+		
 		initialize();
 		frmTournamentplanner.setVisible(true);
 		fillTeamCombo();
@@ -111,7 +114,7 @@ public class MainUI {
 		frmTournamentplanner.setBounds(100, 100, 450, 300);
 		frmTournamentplanner.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		userController = new UserController();
-
+		//loggedInUser = new User();
 		JPanel panelTop = new JPanel();
 
 		JPanel panelBottom = new JPanel();
@@ -146,11 +149,12 @@ public class MainUI {
 		tabbedPane.addTab("Teams", null, listTeamsUI, null);
 		tabbedPane.addTab("Players", null, listUsersUI, null);
 
-		JPanel controlPanel = new JPanel();
+		controlPanel = new JPanel();
 		controlPanel.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
 		controlPanel.setBounds(393, 23, 381, 363);
 		panelBottom.add(controlPanel);
 		controlPanel.setLayout(null);
+		controlPanel.setVisible(false);
 
 		JLabel lblControlpanel = new JLabel("Control Panel");
 		lblControlpanel.setFont(new Font("Tahoma", Font.PLAIN, 16));
@@ -211,7 +215,7 @@ public class MainUI {
 		cb_user.setBounds(41, 281, 137, 20);
 		controlPanel.add(cb_user);
 
-		JButton btnOpenPlayer = new JButton("Open Player");
+		btnOpenPlayer = new JButton("Open Player");
 		btnOpenPlayer.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ControlPanelUser.controlPanelUser(cb_user.getSelectedItem().toString());
@@ -540,6 +544,11 @@ public class MainUI {
 			btnlogin.setVisible(false);
 			//lblErrorMessage.setVisible(false);
 			lblLogin.setText("Welcome " + loggedInUser.getHandle());
+			
+			controlPanel.setVisible(true);
+			
+			// run this to fill user combo box to see only logged in user if not admin
+			fillUserCombo();
 		} else {
 			lblErrorMessage.setForeground(Color.RED);
 			lblErrorMessage.setText("INCORRECT LOGIN!");
@@ -565,9 +574,31 @@ public class MainUI {
 			cb_user.removeAllItems();
 			UserController userController = new UserController();
 			ArrayList<User> users = userController.getAllUsers();
+			boolean v = false;
+			int f = 0;
 			for (User u : users) {
-				cb_user.addItem(u.getHandle());
+				if(loggedInUser.getUserID() == u.getUserID() && !loggedInUser.isAdmin())
+				{
+					cb_user.addItem(u.getHandle());
+					v = true;
+				}
+				else if(loggedInUser.isAdmin()){
+					cb_user.addItem(u.getHandle());
+					v = true;
+				}
+				else if(loggedInUser == null){
+					f = 1;
+					v = false;
+				}
+					
 			}
+			if(v)
+				btnOpenPlayer.setVisible(true);
+			else
+				btnOpenPlayer.setVisible(false);
+			
+			if(f == 1)
+				cb_user.addItem("Fail to get user");
 		} catch (Exception e) {
 			cb_user.addItem("Error");
 		}
@@ -605,4 +636,8 @@ public class MainUI {
         ListUsersUI.updateData();
 
 	}
+	public static User getLoggedUser(){
+		return loggedInUser;
+	}
+	
 }
