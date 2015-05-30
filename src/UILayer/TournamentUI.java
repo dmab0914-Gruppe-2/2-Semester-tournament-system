@@ -113,7 +113,6 @@ public class TournamentUI extends JDialog {
 		btnEndTournament.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				endTournament();
-				// TODO End Tournament
 			}
 		});
 
