@@ -125,40 +125,54 @@ public class TournamentController implements IFTournamentController {
 
 		ArrayList<Match> lastRound = dbMatch
 				.getMatchesForTournament(tournamentID);
-			int i = 0;
-			for (Match lr : lastRound) {
-				if (lr.getRoundNumber() == t.getRoundNumber()) {
-					if (lr.getTeam1Score() > lr.getTeam2Score()) {
-						wTeams.add(lr.getTeam1());
-						wScore.add(lr.getTeam1Score());
-					} else {
-						wTeams.add(lr.getTeam2());
-						wScore.add(lr.getTeam2Score());
-					}
+		int i = 0;
+		for (Match lr : lastRound) {
+			if (lr.getRoundNumber() == t.getRoundNumber()) {
+				if (lr.getTeam1Score() > lr.getTeam2Score()) {
+					wTeams.add(lr.getTeam1());
+					wScore.add(lr.getTeam1Score());
+				} else {
+					wTeams.add(lr.getTeam2());
+					wScore.add(lr.getTeam2Score());
 				}
-				i++;
 			}
+			i++;
+		}
 
-			try {
-				int rn = dbTournament.advanceTournament(tournamentID);
-				ArrayList<Match> newMatches = eliminationController
-						.generateRound(wTeams, wScore);
-				for (Match nw : newMatches) {
-					nw.setRoundNumber(t.getRoundNumber() + 1);
-					nw.setTournamentId(t.getId());
-					dbMatch.addmatch(nw);
-				}
-				System.out.println("advanced to next round");
-				return newMatches;
-			} catch (Exception e) {
-				System.out.println("Error in advance tournament: " + e);
-				dbTournament.rollBackRound(tournamentID);
-				return null;
+		try {
+			int rn = dbTournament.advanceTournament(tournamentID);
+			ArrayList<Match> newMatches = eliminationController.generateRound(
+					wTeams, wScore);
+			for (Match nw : newMatches) {
+				nw.setRoundNumber(t.getRoundNumber() + 1);
+				nw.setTournamentId(t.getId());
+				dbMatch.addmatch(nw);
 			}
+			System.out.println("advanced to next round");
+			return newMatches;
+		} catch (Exception e) {
+			System.out.println("Error in advance tournament: " + e);
+			dbTournament.rollBackRound(tournamentID);
+			return null;
+		}
 	}
 
 	public Tournament endTournament(int tournamentID) {
-		return dbTournament.endTournament(tournamentID);
+		Tournament t = dbTournament.getTournament(tournamentID, false);
+		ArrayList<Match> lastRound = dbMatch
+				.getMatchesForTournament(tournamentID);
+		Team winner = null;
+
+		for (Match lr : lastRound) {
+			if (lr.getRoundNumber() == t.getRoundNumber()) {
+				if (lr.getTeam1Score() > lr.getTeam2Score()) {
+					winner = lr.getTeam1();
+				} else {
+					winner = lr.getTeam2();
+				}
+			}
+		}
+		return dbTournament.endTournament(tournamentID, winner);
 	}
 
 	@Override

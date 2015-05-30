@@ -112,6 +112,7 @@ public class TournamentUI extends JDialog {
 		btnEndTournament = new JButton("End Tournament");
 		btnEndTournament.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				endTournament();
 				// TODO End Tournament
 			}
 		});
@@ -129,183 +130,71 @@ public class TournamentUI extends JDialog {
 
 		lblStatus = new JLabel("");
 		GroupLayout gl_contentPanel = new GroupLayout(contentPanel);
-		gl_contentPanel
-				.setHorizontalGroup(gl_contentPanel
-						.createParallelGroup(Alignment.TRAILING)
-						.addGroup(
-								gl_contentPanel
-										.createSequentialGroup()
-										.addComponent(panel,
-												GroupLayout.PREFERRED_SIZE,
-												187, GroupLayout.PREFERRED_SIZE)
-										.addPreferredGap(
-												ComponentPlacement.UNRELATED)
-										.addGroup(
-												gl_contentPanel
-														.createParallelGroup(
-																Alignment.LEADING)
-														.addGroup(
-																gl_contentPanel
-																		.createSequentialGroup()
-																		.addGroup(
-																				gl_contentPanel
-																						.createParallelGroup(
-																								Alignment.LEADING)
-																						.addGroup(
-																								gl_contentPanel
-																										.createSequentialGroup()
-																										.addComponent(
-																												btnAdvanceTournament,
-																												GroupLayout.DEFAULT_SIZE,
-																												147,
-																												Short.MAX_VALUE)
-																										.addPreferredGap(
-																												ComponentPlacement.RELATED)
-																										.addComponent(
-																												btnEndTournament))
-																						.addGroup(
-																								gl_contentPanel
-																										.createSequentialGroup()
-																										.addComponent(
-																												lblTournamentStatus)
-																										.addPreferredGap(
-																												ComponentPlacement.RELATED)
-																										.addComponent(
-																												lblTournamentstatusinfo))
-																						.addGroup(
-																								gl_contentPanel
-																										.createSequentialGroup()
-																										.addComponent(
-																												cb_team,
-																												0,
-																												170,
-																												Short.MAX_VALUE)
-																										.addPreferredGap(
-																												ComponentPlacement.UNRELATED)
-																										.addComponent(
-																												btnAddTeam,
-																												GroupLayout.PREFERRED_SIZE,
-																												84,
-																												Short.MAX_VALUE))
-																						.addGroup(
-																								gl_contentPanel
-																										.createSequentialGroup()
-																										.addComponent(
-																												btnEnableSignup,
-																												GroupLayout.PREFERRED_SIZE,
-																												103,
-																												GroupLayout.PREFERRED_SIZE)
-																										.addPreferredGap(
-																												ComponentPlacement.RELATED)
-																										.addComponent(
-																												btnStartTournament,
-																												GroupLayout.DEFAULT_SIZE,
-																												155,
-																												Short.MAX_VALUE)))
-																		.addGap(42))
-														.addGroup(
-																gl_contentPanel
-																		.createSequentialGroup()
-																		.addComponent(
-																				lblStatus,
-																				GroupLayout.PREFERRED_SIZE,
-																				160,
-																				GroupLayout.PREFERRED_SIZE)
-																		.addContainerGap())))
-						.addGroup(
-								gl_contentPanel
-										.createSequentialGroup()
-										.addComponent(panel_setMatch,
-												GroupLayout.PREFERRED_SIZE,
-												488, GroupLayout.PREFERRED_SIZE)
-										.addContainerGap())
-						.addGroup(
-								gl_contentPanel
-										.createSequentialGroup()
-										.addComponent(separator,
-												GroupLayout.DEFAULT_SIZE, 493,
-												Short.MAX_VALUE)
-										.addContainerGap()));
-		gl_contentPanel
-				.setVerticalGroup(gl_contentPanel
-						.createParallelGroup(Alignment.LEADING)
-						.addGroup(
-								gl_contentPanel
-										.createSequentialGroup()
-										.addGroup(
-												gl_contentPanel
-														.createParallelGroup(
-																Alignment.LEADING,
-																false)
-														.addGroup(
-																gl_contentPanel
-																		.createSequentialGroup()
-																		.addGap(6)
-																		.addGroup(
-																				gl_contentPanel
-																						.createParallelGroup(
-																								Alignment.BASELINE)
-																						.addComponent(
-																								lblTournamentStatus)
-																						.addComponent(
-																								lblTournamentstatusinfo))
-																		.addPreferredGap(
-																				ComponentPlacement.UNRELATED)
-																		.addGroup(
-																				gl_contentPanel
-																						.createParallelGroup(
-																								Alignment.BASELINE)
-																						.addComponent(
-																								cb_team,
-																								GroupLayout.PREFERRED_SIZE,
-																								GroupLayout.DEFAULT_SIZE,
-																								GroupLayout.PREFERRED_SIZE)
-																						.addComponent(
-																								btnAddTeam))
-																		.addPreferredGap(
-																				ComponentPlacement.RELATED)
-																		.addGroup(
-																				gl_contentPanel
-																						.createParallelGroup(
-																								Alignment.BASELINE)
-																						.addComponent(
-																								btnEnableSignup)
-																						.addComponent(
-																								btnStartTournament))
-																		.addPreferredGap(
-																				ComponentPlacement.RELATED)
-																		.addGroup(
-																				gl_contentPanel
-																						.createParallelGroup(
-																								Alignment.BASELINE)
-																						.addComponent(
-																								btnEndTournament)
-																						.addComponent(
-																								btnAdvanceTournament))
-																		.addPreferredGap(
-																				ComponentPlacement.RELATED,
-																				GroupLayout.DEFAULT_SIZE,
-																				Short.MAX_VALUE)
-																		.addComponent(
-																				lblStatus,
-																				GroupLayout.PREFERRED_SIZE,
-																				23,
-																				GroupLayout.PREFERRED_SIZE))
-														.addComponent(
-																panel,
-																GroupLayout.PREFERRED_SIZE,
-																GroupLayout.DEFAULT_SIZE,
-																GroupLayout.PREFERRED_SIZE))
-										.addPreferredGap(
-												ComponentPlacement.RELATED)
-										.addComponent(separator,
-												GroupLayout.PREFERRED_SIZE, 2,
-												GroupLayout.PREFERRED_SIZE)
-										.addGap(10)
-										.addComponent(panel_setMatch,
-												GroupLayout.PREFERRED_SIZE,
-												109, GroupLayout.PREFERRED_SIZE)
-										.addContainerGap(28, Short.MAX_VALUE)));
+		gl_contentPanel.setHorizontalGroup(
+			gl_contentPanel.createParallelGroup(Alignment.TRAILING)
+				.addGroup(gl_contentPanel.createSequentialGroup()
+					.addComponent(panel, GroupLayout.PREFERRED_SIZE, 187, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_contentPanel.createSequentialGroup()
+							.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
+								.addGroup(gl_contentPanel.createSequentialGroup()
+									.addComponent(btnAdvanceTournament, GroupLayout.DEFAULT_SIZE, 147, Short.MAX_VALUE)
+									.addPreferredGap(ComponentPlacement.RELATED)
+									.addComponent(btnEndTournament))
+								.addGroup(gl_contentPanel.createSequentialGroup()
+									.addComponent(lblTournamentStatus)
+									.addPreferredGap(ComponentPlacement.RELATED)
+									.addComponent(lblTournamentstatusinfo))
+								.addGroup(gl_contentPanel.createSequentialGroup()
+									.addComponent(cb_team, 0, 170, Short.MAX_VALUE)
+									.addPreferredGap(ComponentPlacement.UNRELATED)
+									.addComponent(btnAddTeam, GroupLayout.PREFERRED_SIZE, 84, Short.MAX_VALUE))
+								.addGroup(gl_contentPanel.createSequentialGroup()
+									.addComponent(btnEnableSignup, GroupLayout.PREFERRED_SIZE, 103, GroupLayout.PREFERRED_SIZE)
+									.addPreferredGap(ComponentPlacement.RELATED)
+									.addComponent(btnStartTournament, GroupLayout.DEFAULT_SIZE, 155, Short.MAX_VALUE)))
+							.addGap(42))
+						.addGroup(gl_contentPanel.createSequentialGroup()
+							.addComponent(lblStatus, GroupLayout.DEFAULT_SIZE, 296, Short.MAX_VALUE)
+							.addContainerGap())))
+				.addGroup(gl_contentPanel.createSequentialGroup()
+					.addComponent(panel_setMatch, GroupLayout.PREFERRED_SIZE, 488, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap())
+				.addGroup(gl_contentPanel.createSequentialGroup()
+					.addComponent(separator, GroupLayout.DEFAULT_SIZE, 493, Short.MAX_VALUE)
+					.addContainerGap())
+		);
+		gl_contentPanel.setVerticalGroup(
+			gl_contentPanel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_contentPanel.createSequentialGroup()
+					.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING, false)
+						.addGroup(gl_contentPanel.createSequentialGroup()
+							.addGap(6)
+							.addGroup(gl_contentPanel.createParallelGroup(Alignment.BASELINE)
+								.addComponent(lblTournamentStatus)
+								.addComponent(lblTournamentstatusinfo))
+							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addGroup(gl_contentPanel.createParallelGroup(Alignment.BASELINE)
+								.addComponent(cb_team, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addComponent(btnAddTeam))
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addGroup(gl_contentPanel.createParallelGroup(Alignment.BASELINE)
+								.addComponent(btnEnableSignup)
+								.addComponent(btnStartTournament))
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addGroup(gl_contentPanel.createParallelGroup(Alignment.BASELINE)
+								.addComponent(btnEndTournament)
+								.addComponent(btnAdvanceTournament))
+							.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+							.addComponent(lblStatus, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE))
+						.addComponent(panel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(separator, GroupLayout.PREFERRED_SIZE, 2, GroupLayout.PREFERRED_SIZE)
+					.addGap(10)
+					.addComponent(panel_setMatch, GroupLayout.PREFERRED_SIZE, 109, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(28, Short.MAX_VALUE))
+		);
 		panel_setMatch.setLayout(null);
 
 		JLabel lblSetMatchResult = new JLabel("Set match result");
@@ -664,7 +553,7 @@ public class TournamentUI extends JDialog {
 		if (tournament.getStatus().equals(Tournament.Status.running)) {
 			try {
 				if (tournamentController.advanceTournament(tournament.getId()) != null) {
-					System.out.println("Tournament has been advanced! HEST");
+					System.out.println("Tournament has been advanced!");
 					fillMatchCombo(tournamentName);
 				} else {
 					lblStatus.setText("You need to end tournamet!");
@@ -676,5 +565,16 @@ public class TournamentUI extends JDialog {
 		} else {
 			System.out.println("Tournament cold not be advanced!");
 		}
+	}
+	
+	private void endTournament() {
+		TeamController teamController = new TeamController();
+		try{
+			Tournament endedTour = tournamentController.endTournament(tournament.getId());
+			lblStatus.setText("Congratulation to " + teamController.findTeamById(endedTour.getWinnerTeam().getId()).getName() + " you have won!!!!");
+		}catch (Exception e) {
+			lblStatus.setText("cant stop now!");
+		}
+		displayTournamentInfo();
 	}
 }

@@ -210,10 +210,8 @@ public class DBTournament implements IFDBTournament {
 	/* (non-Javadoc)
 	 * @see DBLayer.IFDBTournament#endTournament(int)
 	 */
-	public Tournament endTournament(int tournamentID) {
-		String query="UPDATE Tournament SET "+
-				"statusID ='"+ Tournament.statusToInt(Status.done) + "'"+
-				" WHERE id = '"+ tournamentID + "'";
+	public Tournament endTournament(int tournamentID, Team winner) {
+		String query="UPDATE Tournament SET winnerTeamID ='" + winner.getId() + "', statusID ='"+ Tournament.statusToInt(Status.done) + "'"+ " WHERE id = '"+ tournamentID + "'";
 		System.out.println("Update query:" + query);
 		try{ // update product
 			Statement stmt = con.createStatement();
