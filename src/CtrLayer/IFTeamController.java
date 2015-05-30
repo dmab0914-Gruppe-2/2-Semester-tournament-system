@@ -102,6 +102,7 @@ public interface IFTeamController {
 
 	/*
 	 * Method to get all teams return Arraylist with all teams
+	 * @return Arraylist of all teams
 	 */
 	public ArrayList<Team> getAllTeams();
 }
