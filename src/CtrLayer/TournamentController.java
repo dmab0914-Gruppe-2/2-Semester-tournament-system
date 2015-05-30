@@ -31,8 +31,8 @@ public class TournamentController implements IFTournamentController {
 	public ArrayList<Tournament> getTournaments() {
 		return dbTournament.getTournaments(false);
 	}
-	
-	public Tournament getTournamentByName(String tournamentName){
+
+	public Tournament getTournamentByName(String tournamentName) {
 		return dbTournament.getTournamentByName(tournamentName, false);
 	}
 
@@ -66,8 +66,28 @@ public class TournamentController implements IFTournamentController {
 			ArrayList<Match> newMatches = new ArrayList<Match>();
 			for (int i = 0; i < matches.size(); i++) {
 				matches.get(i).setRoundNumber(1); // First round is always round
-				matches.get(i).setTournamentId(tournamentID); // Adds tournament id to matches for the tournament its belongs to
-				matches.get(i).setStatus(Tournament.intToStatus(3)); // set matches to be running, because a match will first be create when its ready to start.
+				matches.get(i).setTournamentId(tournamentID); // Adds tournament
+																// id to matches
+																// for the
+																// tournament
+																// its belongs
+																// to
+				matches.get(i).setStatus(Tournament.intToStatus(3)); // set
+																		// matches
+																		// to be
+																		// running,
+																		// because
+																		// a
+																		// match
+																		// will
+																		// first
+																		// be
+																		// create
+																		// when
+																		// its
+																		// ready
+																		// to
+																		// start.
 				// 1.
 				try {
 					newMatches.add(dbMatch.addmatch(matches.get(i)));
@@ -103,32 +123,38 @@ public class TournamentController implements IFTournamentController {
 
 		Tournament t = dbTournament.getTournament(tournamentID, false);
 
-		ArrayList<Match> lastRound = dbMatch.getMatchesForTournament(tournamentID);
-		int i = 0;
-		for (Match lr : lastRound) {
-			if (lr.getRoundNumber() == t.getRoundNumber()) {
-				if (lr.getTeam1Score() > lr.getTeam2Score()) {
-					wTeams.add(i, lr.getTeam1());
-					wScore.add(i, lr.getTeam1Score());
-				} else {
-					wTeams.add(i, lr.getTeam2());
-					wScore.add(i, lr.getTeam2Score());
+		ArrayList<Match> lastRound = dbMatch
+				.getMatchesForTournament(tournamentID);
+			int i = 0;
+			for (Match lr : lastRound) {
+				if (lr.getRoundNumber() == t.getRoundNumber()) {
+					if (lr.getTeam1Score() > lr.getTeam2Score()) {
+						wTeams.add(lr.getTeam1());
+						wScore.add(lr.getTeam1Score());
+					} else {
+						wTeams.add(lr.getTeam2());
+						wScore.add(lr.getTeam2Score());
+					}
 				}
+				i++;
 			}
-			i++;
-		}
-		try {
-			int rn = dbTournament.advanceTournament(tournamentID);
-			ArrayList<Match> newMatches = eliminationController.generateRound(
-					wTeams, wScore);
-			for (Match nw : newMatches) {
-				nw.setRoundNumber(nw.getRoundNumber() + 1);
+
+			try {
+				int rn = dbTournament.advanceTournament(tournamentID);
+				ArrayList<Match> newMatches = eliminationController
+						.generateRound(wTeams, wScore);
+				for (Match nw : newMatches) {
+					nw.setRoundNumber(t.getRoundNumber() + 1);
+					nw.setTournamentId(t.getId());
+					dbMatch.addmatch(nw);
+				}
+				System.out.println("advanced to next round");
+				return newMatches;
+			} catch (Exception e) {
+				System.out.println("Error in advance tournament: " + e);
+				dbTournament.rollBackRound(tournamentID);
+				return null;
 			}
-			return newMatches;
-		} catch (Exception e) {
-			System.out.println("Error in advance tournament: " + e);
-			return null;
-		}
 	}
 
 	public Tournament endTournament(int tournamentID) {
@@ -151,7 +177,7 @@ public class TournamentController implements IFTournamentController {
 	public void removeTeamFromTournament(Tournament tournament, Team team)
 			throws Exception {
 		IFDBTournamentTeams dbTT = new DBTournamentTeams();
-		
+
 		try {
 			dbTT.removeTeamFromTournament(tournament.getId(), team.getId());
 		} catch (Exception e) {
@@ -170,8 +196,14 @@ public class TournamentController implements IFTournamentController {
 		IFDBTournamentTeams dbTT = new DBTournamentTeams();
 		return dbTT.getTournamentFromTeams(teamID);
 	}
+
 	public ArrayList<Match> getMatchesForTournament(int tournamentID) {
 		IFDBMatch dbM = new DBMatch();
 		return dbM.getMatchesForTournament(tournamentID);
+	}
+
+	public Match getMatch(int matchID) {
+		IFDBMatch dbM = new DBMatch();
+		return dbM.getMatch(matchID);
 	}
 }

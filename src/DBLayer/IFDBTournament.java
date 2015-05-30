@@ -32,6 +32,8 @@ public interface IFDBTournament {
 	
 	public int advanceTournament(int tournamentID);
 	
+	public int rollBackRound(int tournamentID);
+	
 	public Tournament endTournament(int tournamentID);
 	
 	public boolean removeTournament(int tournamentID);
