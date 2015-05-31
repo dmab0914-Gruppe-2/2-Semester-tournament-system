@@ -28,6 +28,15 @@ public class TournamentController implements IFTournamentController {
 		dbMatch = new DBMatch();
 	}
 
+	public void addTournamenet(String name, String gameName, int teamSize,
+			boolean withPlayOff) throws Exception {
+		try {
+		dbTournament.addTournament(new Tournament(name, gameName, teamSize, withPlayOff, Tournament.intToStatus(1)));
+		} catch (Exception e) {
+			System.out.println("error in new team");
+		}
+	}
+
 	public ArrayList<Tournament> getTournaments() {
 		return dbTournament.getTournaments(false);
 	}
@@ -66,14 +75,28 @@ public class TournamentController implements IFTournamentController {
 			ArrayList<Match> newMatches = new ArrayList<Match>();
 			for (int i = 0; i < matches.size(); i++) {
 				matches.get(i).setRoundNumber(1); // First round is always round
-				matches.get(i).setTournamentId(tournamentID); // Adds tournament id to matches
-																// for the tournament
-																// its belongs to
+				matches.get(i).setTournamentId(tournamentID); // Adds tournament
+																// id to matches
+																// for the
+																// tournament
+																// its belongs
+																// to
 				matches.get(i).setStatus(Tournament.intToStatus(3)); // set
-																		// matches to be running,
-																		// because a match will first
-																		// be create when its
-																		// ready to start.
+																		// matches
+																		// to be
+																		// running,
+																		// because
+																		// a
+																		// match
+																		// will
+																		// first
+																		// be
+																		// create
+																		// when
+																		// its
+																		// ready
+																		// to
+																		// start.
 				// 1.
 				try {
 					newMatches.add(dbMatch.addmatch(matches.get(i)));

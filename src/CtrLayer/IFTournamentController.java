@@ -16,6 +16,14 @@ import ModelLayer.Tournament;
 public interface IFTournamentController {
 	
 	/*
+	 * Method to add new tournament
+	 * @param name of the tournament
+	 * @param gameName of the game tournament is for
+	 * @param teamSize size for the team to this tournament
+	 * @param withPlayOff is tournament is with a playoff round
+	 */
+	public void addTournamenet(String name, String gameName, int teamSize, boolean withPlayOff) throws Exception;
+	/*
 	 * Method to get all tournaments 
 	 * @return ArrayList of all tournaments
 	 */
