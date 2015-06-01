@@ -187,14 +187,31 @@ public class DBTournament implements IFDBTournament {
 			return 0;
 		}
 	}
+	
+	public int rollBackRound(int tournamentID) {
+		Tournament t = getTournament(tournamentID, false);
+		String query="UPDATE Tournament SET "+
+				"roundNumber ='"+ (t.getRoundNumber() -1) + "'"+
+				" WHERE id = '"+ tournamentID + "'";
+		System.out.println("Update query:" + query);
+		try{ // update product
+			Statement stmt = con.createStatement();
+			stmt.setQueryTimeout(5);
+			stmt.executeUpdate(query);
+			stmt.close();
+			return 1;
+		}//end try
+		catch(Exception ex){
+			System.out.println("Update exception in roll back round for tournament db: "+ex);
+			return 0;
+		}
+	}
 
 	/* (non-Javadoc)
 	 * @see DBLayer.IFDBTournament#endTournament(int)
 	 */
-	public Tournament endTournament(int tournamentID) {
-		String query="UPDATE Tournament SET "+
-				"statusID ='"+ Tournament.statusToInt(Status.done) + "'"+
-				" WHERE id = '"+ tournamentID + "'";
+	public Tournament endTournament(int tournamentID, Team winner) {
+		String query="UPDATE Tournament SET winnerTeamID ='" + winner.getId() + "', statusID ='"+ Tournament.statusToInt(Status.done) + "'"+ " WHERE id = '"+ tournamentID + "'";
 		System.out.println("Update query:" + query);
 		try{ // update product
 			Statement stmt = con.createStatement();

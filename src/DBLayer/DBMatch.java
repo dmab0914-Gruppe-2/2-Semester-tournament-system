@@ -82,7 +82,7 @@ public class DBMatch implements IFDBMatch {
 	public int setMatchResults(int matchID, int team1Score, int team2Score) {
 		int rc = -1;
 		String query = "UPDATE Match SET " + "score1 = '" + team1Score
-				+ "', " + "score2 = '" + team2Score + "' WHERE id = '" 
+				+ "', " + "score2 = '" + team2Score + "', statusID = 4 WHERE id = '" 
 				+ matchID + "'";
 		
 		System.out.println("Update query:" + query);

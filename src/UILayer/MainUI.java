@@ -22,7 +22,6 @@ import java.awt.Color;
 
 import javax.swing.JLabel;
 
-
 //import com.jgoodies.forms.factories.DefaultComponentFactory;  wtf jacob??
 import java.awt.Font;
 
@@ -57,7 +56,7 @@ public class MainUI {
 	private static JComboBox<String> cb_team;
 	private static JComboBox<String> cb_user;
 	private static JComboBox<String> cb_tournament;
-	private User loggedInUser;
+	private static User loggedInUser;
 	private UserController userController;
 	private JLabel lblErrorMessage;
 	private JLabel lblUsername;
@@ -66,14 +65,15 @@ public class MainUI {
 	private JButton btnlogin;
 	private JButton btnCreateUser;
 	private static JLabel lblStatus;
+	private JPanel controlPanel;
+	private static JButton btnOpenPlayer;
 
 	/**
 	 * Launch the application.
 	 */
 
 	public static void main(String[] args) {
-		EventQueue.invokeLater(new
-				Runnable() {
+		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
 					MainUI window = new MainUI();
@@ -87,11 +87,11 @@ public class MainUI {
 		connectionThread.start();
 	}
 
-
 	/**
 	 * Create the application.
 	 */
 	public MainUI() {
+
 		initialize();
 		frmTournamentplanner.setVisible(true);
 		fillTeamCombo();
@@ -111,7 +111,7 @@ public class MainUI {
 		frmTournamentplanner.setBounds(100, 100, 450, 300);
 		frmTournamentplanner.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		userController = new UserController();
-
+		// loggedInUser = new User();
 		JPanel panelTop = new JPanel();
 
 		JPanel panelBottom = new JPanel();
@@ -121,17 +121,17 @@ public class MainUI {
 				.createParallelGroup(Alignment.TRAILING)
 				.addComponent(panelTop, GroupLayout.DEFAULT_SIZE, 784,
 						Short.MAX_VALUE)
-						.addComponent(panelBottom, GroupLayout.DEFAULT_SIZE, 784,
-								Short.MAX_VALUE));
+				.addComponent(panelBottom, GroupLayout.DEFAULT_SIZE, 784,
+						Short.MAX_VALUE));
 		groupLayout.setVerticalGroup(groupLayout.createParallelGroup(
 				Alignment.LEADING).addGroup(
-						groupLayout
+				groupLayout
 						.createSequentialGroup()
 						.addComponent(panelTop, GroupLayout.PREFERRED_SIZE,
 								169, GroupLayout.PREFERRED_SIZE)
-								.addPreferredGap(ComponentPlacement.RELATED)
-								.addComponent(panelBottom, GroupLayout.DEFAULT_SIZE,
-										386, Short.MAX_VALUE)));
+						.addPreferredGap(ComponentPlacement.RELATED)
+						.addComponent(panelBottom, GroupLayout.DEFAULT_SIZE,
+								386, Short.MAX_VALUE)));
 		panelBottom.setLayout(null);
 
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
@@ -146,11 +146,12 @@ public class MainUI {
 		tabbedPane.addTab("Teams", null, listTeamsUI, null);
 		tabbedPane.addTab("Players", null, listUsersUI, null);
 
-		JPanel controlPanel = new JPanel();
+		controlPanel = new JPanel();
 		controlPanel.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
 		controlPanel.setBounds(393, 23, 381, 363);
 		panelBottom.add(controlPanel);
 		controlPanel.setLayout(null);
+		controlPanel.setVisible(false);
 
 		JLabel lblControlpanel = new JLabel("Control Panel");
 		lblControlpanel.setFont(new Font("Tahoma", Font.PLAIN, 16));
@@ -171,7 +172,8 @@ public class MainUI {
 		btnOpenTournament.setBounds(51, 97, 146, 23);
 		btnOpenTournament.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				TournamentUI.tournamentUI(cb_tournament.getSelectedItem().toString());
+				TournamentUI.tournamentUI(cb_tournament.getSelectedItem()
+						.toString());
 			}
 		});
 		controlPanel.add(btnOpenTournament);
@@ -192,7 +194,8 @@ public class MainUI {
 		JButton btnOpenTeam = new JButton("Open Team");
 		btnOpenTeam.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ControlPanelTeam.controlPanelTeam(cb_team.getSelectedItem().toString());
+				ControlPanelTeam.controlPanelTeam(cb_team.getSelectedItem()
+						.toString());
 			}
 		});
 		btnOpenTeam.setBounds(51, 205, 127, 23);
@@ -211,14 +214,39 @@ public class MainUI {
 		cb_user.setBounds(41, 281, 137, 20);
 		controlPanel.add(cb_user);
 
-		JButton btnOpenPlayer = new JButton("Open Player");
+		btnOpenPlayer = new JButton("Open Player");
 		btnOpenPlayer.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ControlPanelUser.controlPanelUser(cb_user.getSelectedItem().toString());
+				ControlPanelUser.controlPanelUser(cb_user.getSelectedItem()
+						.toString());
 			}
 		});
 		btnOpenPlayer.setBounds(51, 312, 127, 23);
 		controlPanel.add(btnOpenPlayer);
+
+		JButton btnNewTeam = new JButton("New Team");
+		btnNewTeam.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				CreateTeamWindow.createTeamWindow();
+
+			}
+		});
+		btnNewTeam.setBounds(188, 205, 108, 23);
+		controlPanel.add(btnNewTeam);
+
+		JButton btnNewTournament = new JButton("New Tournament");
+		btnNewTournament.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				CreateTournamentWindow.createTournamentWindow();
+			}
+		});
+		btnNewTournament.setBounds(207, 97, 152, 23);
+		controlPanel.add(btnNewTournament);
+		if (loggedInUser != null)
+			if (getLoggedUser().isAdmin()) {
+				btnNewTournament.setVisible(true);
+			} else
+				btnNewTournament.setVisible(false);
 
 		JPanel panelLogin = new JPanel();
 		panelLogin.setAlignmentX(Component.LEFT_ALIGNMENT);
@@ -259,54 +287,115 @@ public class MainUI {
 
 		lblPassword = new JLabel("Password:");
 		GroupLayout gl_panelLogin = new GroupLayout(panelLogin);
-		gl_panelLogin.setHorizontalGroup(
-				gl_panelLogin.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panelLogin.createSequentialGroup()
-						.addContainerGap()
-						.addGroup(gl_panelLogin.createParallelGroup(Alignment.LEADING)
-								.addGroup(gl_panelLogin.createSequentialGroup()
-										.addComponent(lblErrorMessage, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-										.addGap(148))
-										.addGroup(gl_panelLogin.createSequentialGroup()
+		gl_panelLogin
+				.setHorizontalGroup(gl_panelLogin
+						.createParallelGroup(Alignment.LEADING)
+						.addGroup(
+								gl_panelLogin
+										.createSequentialGroup()
+										.addContainerGap()
+										.addGroup(
+												gl_panelLogin
+														.createParallelGroup(
+																Alignment.LEADING)
+														.addGroup(
+																gl_panelLogin
+																		.createSequentialGroup()
+																		.addComponent(
+																				lblErrorMessage,
+																				GroupLayout.DEFAULT_SIZE,
+																				GroupLayout.DEFAULT_SIZE,
+																				Short.MAX_VALUE)
+																		.addGap(148))
+														.addGroup(
+																gl_panelLogin
+																		.createSequentialGroup()
+																		.addComponent(
+																				btnlogin)
+																		.addPreferredGap(
+																				ComponentPlacement.RELATED)
+																		.addComponent(
+																				btnCreateUser)
+																		.addContainerGap(
+																				44,
+																				Short.MAX_VALUE))
+														.addGroup(
+																gl_panelLogin
+																		.createSequentialGroup()
+																		.addComponent(
+																				pwdPassword,
+																				GroupLayout.PREFERRED_SIZE,
+																				130,
+																				GroupLayout.PREFERRED_SIZE)
+																		.addContainerGap(
+																				32,
+																				Short.MAX_VALUE))
+														.addGroup(
+																gl_panelLogin
+																		.createSequentialGroup()
+																		.addComponent(
+																				lblLogin)
+																		.addContainerGap(
+																				86,
+																				Short.MAX_VALUE))
+														.addGroup(
+																gl_panelLogin
+																		.createSequentialGroup()
+																		.addComponent(
+																				lblUsername)
+																		.addContainerGap(
+																				110,
+																				Short.MAX_VALUE))
+														.addGroup(
+																gl_panelLogin
+																		.createSequentialGroup()
+																		.addComponent(
+																				txtloginHandle,
+																				GroupLayout.PREFERRED_SIZE,
+																				147,
+																				GroupLayout.PREFERRED_SIZE)
+																		.addContainerGap(
+																				15,
+																				Short.MAX_VALUE))
+														.addGroup(
+																gl_panelLogin
+																		.createSequentialGroup()
+																		.addComponent(
+																				lblPassword)
+																		.addContainerGap(
+																				112,
+																				Short.MAX_VALUE)))));
+		gl_panelLogin.setVerticalGroup(gl_panelLogin.createParallelGroup(
+				Alignment.LEADING)
+				.addGroup(
+						gl_panelLogin
+								.createSequentialGroup()
+								.addComponent(lblLogin)
+								.addPreferredGap(ComponentPlacement.RELATED)
+								.addComponent(lblUsername)
+								.addPreferredGap(ComponentPlacement.RELATED)
+								.addComponent(txtloginHandle,
+										GroupLayout.PREFERRED_SIZE,
+										GroupLayout.DEFAULT_SIZE,
+										GroupLayout.PREFERRED_SIZE)
+								.addPreferredGap(ComponentPlacement.RELATED)
+								.addComponent(lblPassword)
+								.addPreferredGap(ComponentPlacement.RELATED)
+								.addComponent(pwdPassword,
+										GroupLayout.PREFERRED_SIZE,
+										GroupLayout.DEFAULT_SIZE,
+										GroupLayout.PREFERRED_SIZE)
+								.addPreferredGap(ComponentPlacement.RELATED)
+								.addGroup(
+										gl_panelLogin
+												.createParallelGroup(
+														Alignment.BASELINE)
 												.addComponent(btnlogin)
-												.addPreferredGap(ComponentPlacement.RELATED)
-												.addComponent(btnCreateUser)
-												.addContainerGap(44, Short.MAX_VALUE))
-												.addGroup(gl_panelLogin.createSequentialGroup()
-														.addComponent(pwdPassword, GroupLayout.PREFERRED_SIZE, 130, GroupLayout.PREFERRED_SIZE)
-														.addContainerGap(32, Short.MAX_VALUE))
-														.addGroup(gl_panelLogin.createSequentialGroup()
-																.addComponent(lblLogin)
-																.addContainerGap(86, Short.MAX_VALUE))
-																.addGroup(gl_panelLogin.createSequentialGroup()
-																		.addComponent(lblUsername)
-																		.addContainerGap(110, Short.MAX_VALUE))
-																		.addGroup(gl_panelLogin.createSequentialGroup()
-																				.addComponent(txtloginHandle, GroupLayout.PREFERRED_SIZE, 147, GroupLayout.PREFERRED_SIZE)
-																				.addContainerGap(15, Short.MAX_VALUE))
-																				.addGroup(gl_panelLogin.createSequentialGroup()
-																						.addComponent(lblPassword)
-																						.addContainerGap(112, Short.MAX_VALUE))))
-				);
-		gl_panelLogin.setVerticalGroup(
-				gl_panelLogin.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panelLogin.createSequentialGroup()
-						.addComponent(lblLogin)
-						.addPreferredGap(ComponentPlacement.RELATED)
-						.addComponent(lblUsername)
-						.addPreferredGap(ComponentPlacement.RELATED)
-						.addComponent(txtloginHandle, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(ComponentPlacement.RELATED)
-						.addComponent(lblPassword)
-						.addPreferredGap(ComponentPlacement.RELATED)
-						.addComponent(pwdPassword, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(ComponentPlacement.RELATED)
-						.addGroup(gl_panelLogin.createParallelGroup(Alignment.BASELINE)
-								.addComponent(btnlogin)
-								.addComponent(btnCreateUser))
-								.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-								.addComponent(lblErrorMessage))
-				);
+												.addComponent(btnCreateUser))
+								.addPreferredGap(ComponentPlacement.RELATED,
+										GroupLayout.DEFAULT_SIZE,
+										Short.MAX_VALUE)
+								.addComponent(lblErrorMessage)));
 		panelLogin.setLayout(gl_panelLogin);
 
 		JPanel panelTitle = new JPanel();
@@ -327,87 +416,87 @@ public class MainUI {
 		JSeparator separator = new JSeparator();
 		GroupLayout gl_panelTitle = new GroupLayout(panelTitle);
 		gl_panelTitle
-		.setHorizontalGroup(gl_panelTitle
-				.createParallelGroup(Alignment.LEADING)
-				.addGroup(
-						gl_panelTitle
-						.createSequentialGroup()
-						.addContainerGap()
+				.setHorizontalGroup(gl_panelTitle
+						.createParallelGroup(Alignment.LEADING)
 						.addGroup(
 								gl_panelTitle
-								.createParallelGroup(
-										Alignment.LEADING)
+										.createSequentialGroup()
+										.addContainerGap()
 										.addGroup(
 												gl_panelTitle
-												.createSequentialGroup()
-												.addGroup(
-														gl_panelTitle
 														.createParallelGroup(
 																Alignment.LEADING)
-																.addComponent(
-																		separator_1,
-																		GroupLayout.DEFAULT_SIZE,
-																		539,
-																		Short.MAX_VALUE)
-																		.addComponent(
-																				lblYourTournamentMade))
-																				.addContainerGap())
-																				.addGroup(
-																						gl_panelTitle
-																						.createSequentialGroup()
-																						.addComponent(
-																								lblTitle,
-																								GroupLayout.DEFAULT_SIZE,
-																								GroupLayout.DEFAULT_SIZE,
-																								Short.MAX_VALUE)
-																								.addPreferredGap(
-																										ComponentPlacement.RELATED)
-																										.addComponent(
-																												separator,
-																												GroupLayout.PREFERRED_SIZE,
-																												1,
-																												GroupLayout.PREFERRED_SIZE)
-																												.addContainerGap(
-																														405,
-																														Short.MAX_VALUE)))));
-		gl_panelTitle
-		.setVerticalGroup(gl_panelTitle
-				.createParallelGroup(Alignment.LEADING)
-				.addGroup(
-						gl_panelTitle
-						.createSequentialGroup()
-						.addGap(36)
-						.addGroup(
-								gl_panelTitle
-								.createParallelGroup(
-										Alignment.TRAILING)
-										.addGroup(
-												gl_panelTitle
-												.createSequentialGroup()
-												.addComponent(
-														separator,
-														GroupLayout.PREFERRED_SIZE,
-														GroupLayout.DEFAULT_SIZE,
-														GroupLayout.PREFERRED_SIZE)
-														.addGap(28))
 														.addGroup(
 																gl_panelTitle
-																.createSequentialGroup()
-																.addComponent(
-																		lblTitle,
-																		GroupLayout.PREFERRED_SIZE,
-																		38,
-																		GroupLayout.PREFERRED_SIZE)
+																		.createSequentialGroup()
+																		.addGroup(
+																				gl_panelTitle
+																						.createParallelGroup(
+																								Alignment.LEADING)
+																						.addComponent(
+																								separator_1,
+																								GroupLayout.DEFAULT_SIZE,
+																								539,
+																								Short.MAX_VALUE)
+																						.addComponent(
+																								lblYourTournamentMade))
+																		.addContainerGap())
+														.addGroup(
+																gl_panelTitle
+																		.createSequentialGroup()
+																		.addComponent(
+																				lblTitle,
+																				GroupLayout.DEFAULT_SIZE,
+																				GroupLayout.DEFAULT_SIZE,
+																				Short.MAX_VALUE)
+																		.addPreferredGap(
+																				ComponentPlacement.RELATED)
+																		.addComponent(
+																				separator,
+																				GroupLayout.PREFERRED_SIZE,
+																				1,
+																				GroupLayout.PREFERRED_SIZE)
+																		.addContainerGap(
+																				405,
+																				Short.MAX_VALUE)))));
+		gl_panelTitle
+				.setVerticalGroup(gl_panelTitle
+						.createParallelGroup(Alignment.LEADING)
+						.addGroup(
+								gl_panelTitle
+										.createSequentialGroup()
+										.addGap(36)
+										.addGroup(
+												gl_panelTitle
+														.createParallelGroup(
+																Alignment.TRAILING)
+														.addGroup(
+																gl_panelTitle
+																		.createSequentialGroup()
+																		.addComponent(
+																				separator,
+																				GroupLayout.PREFERRED_SIZE,
+																				GroupLayout.DEFAULT_SIZE,
+																				GroupLayout.PREFERRED_SIZE)
+																		.addGap(28))
+														.addGroup(
+																gl_panelTitle
+																		.createSequentialGroup()
+																		.addComponent(
+																				lblTitle,
+																				GroupLayout.PREFERRED_SIZE,
+																				38,
+																				GroupLayout.PREFERRED_SIZE)
 																		.addPreferredGap(
 																				ComponentPlacement.UNRELATED)))
-																				.addComponent(separator_1,
-																						GroupLayout.PREFERRED_SIZE,
-																						GroupLayout.DEFAULT_SIZE,
-																						GroupLayout.PREFERRED_SIZE)
-																						.addPreferredGap(
-																								ComponentPlacement.RELATED)
-																								.addComponent(lblYourTournamentMade)
-																								.addContainerGap(47, Short.MAX_VALUE)));
+										.addComponent(separator_1,
+												GroupLayout.PREFERRED_SIZE,
+												GroupLayout.DEFAULT_SIZE,
+												GroupLayout.PREFERRED_SIZE)
+										.addPreferredGap(
+												ComponentPlacement.RELATED)
+										.addComponent(lblYourTournamentMade)
+										.addContainerGap(47, Short.MAX_VALUE)));
 		panelTitle.setLayout(gl_panelTitle);
 
 		JPanel panelDatabaseConnection = new JPanel();
@@ -427,36 +516,36 @@ public class MainUI {
 		GroupLayout gl_panelDatabaseConnection = new GroupLayout(
 				panelDatabaseConnection);
 		gl_panelDatabaseConnection
-		.setHorizontalGroup(gl_panelDatabaseConnection
-				.createParallelGroup(Alignment.LEADING)
-				.addComponent(lblConnectionStatus,
-						GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE)
+				.setHorizontalGroup(gl_panelDatabaseConnection
+						.createParallelGroup(Alignment.LEADING)
+						.addComponent(lblConnectionStatus,
+								GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE)
 						.addGroup(
 								gl_panelDatabaseConnection
-								.createSequentialGroup()
-								.addGap(10)
-								.addComponent(lblToDatabse,
-										GroupLayout.DEFAULT_SIZE, 159,
-										Short.MAX_VALUE)
+										.createSequentialGroup()
+										.addGap(10)
+										.addComponent(lblToDatabse,
+												GroupLayout.DEFAULT_SIZE, 159,
+												Short.MAX_VALUE)
 										.addContainerGap())
-										.addGroup(
-												gl_panelDatabaseConnection
-												.createSequentialGroup()
-												.addContainerGap()
-												.addComponent(lblStatus,
-														GroupLayout.DEFAULT_SIZE, 159,
-														Short.MAX_VALUE)
-														.addContainerGap()));
+						.addGroup(
+								gl_panelDatabaseConnection
+										.createSequentialGroup()
+										.addContainerGap()
+										.addComponent(lblStatus,
+												GroupLayout.DEFAULT_SIZE, 159,
+												Short.MAX_VALUE)
+										.addContainerGap()));
 		gl_panelDatabaseConnection.setVerticalGroup(gl_panelDatabaseConnection
 				.createParallelGroup(Alignment.LEADING).addGroup(
 						gl_panelDatabaseConnection.createSequentialGroup()
-						.addContainerGap()
-						.addComponent(lblConnectionStatus)
-						.addPreferredGap(ComponentPlacement.RELATED)
-						.addComponent(lblToDatabse)
-						.addPreferredGap(ComponentPlacement.RELATED)
-						.addComponent(lblStatus)
-						.addContainerGap(46, Short.MAX_VALUE)));
+								.addContainerGap()
+								.addComponent(lblConnectionStatus)
+								.addPreferredGap(ComponentPlacement.RELATED)
+								.addComponent(lblToDatabse)
+								.addPreferredGap(ComponentPlacement.RELATED)
+								.addComponent(lblStatus)
+								.addContainerGap(46, Short.MAX_VALUE)));
 		panelDatabaseConnection.setLayout(gl_panelDatabaseConnection);
 
 		JSeparator separator_2 = new JSeparator();
@@ -465,60 +554,60 @@ public class MainUI {
 				.createParallelGroup(Alignment.LEADING)
 				.addGroup(
 						gl_panelTop
-						.createSequentialGroup()
-						.addComponent(panelLogin,
-								GroupLayout.PREFERRED_SIZE, 172,
-								GroupLayout.PREFERRED_SIZE)
+								.createSequentialGroup()
+								.addComponent(panelLogin,
+										GroupLayout.PREFERRED_SIZE, 172,
+										GroupLayout.PREFERRED_SIZE)
 								.addGap(2)
 								.addComponent(panelTitle,
 										GroupLayout.PREFERRED_SIZE, 421,
 										Short.MAX_VALUE)
-										.addPreferredGap(ComponentPlacement.UNRELATED)
-										.addComponent(panelDatabaseConnection,
-												GroupLayout.PREFERRED_SIZE, 179,
-												GroupLayout.PREFERRED_SIZE))
-												.addGroup(
-														gl_panelTop
-														.createSequentialGroup()
-														.addContainerGap()
-														.addComponent(separator_2,
-																GroupLayout.DEFAULT_SIZE, 751,
-																Short.MAX_VALUE).addGap(23)));
-		gl_panelTop
-		.setVerticalGroup(gl_panelTop
-				.createParallelGroup(Alignment.LEADING)
+								.addPreferredGap(ComponentPlacement.UNRELATED)
+								.addComponent(panelDatabaseConnection,
+										GroupLayout.PREFERRED_SIZE, 179,
+										GroupLayout.PREFERRED_SIZE))
 				.addGroup(
 						gl_panelTop
-						.createSequentialGroup()
+								.createSequentialGroup()
+								.addContainerGap()
+								.addComponent(separator_2,
+										GroupLayout.DEFAULT_SIZE, 751,
+										Short.MAX_VALUE).addGap(23)));
+		gl_panelTop
+				.setVerticalGroup(gl_panelTop
+						.createParallelGroup(Alignment.LEADING)
 						.addGroup(
 								gl_panelTop
-								.createParallelGroup(
-										Alignment.LEADING)
+										.createSequentialGroup()
 										.addGroup(
-												Alignment.TRAILING,
 												gl_panelTop
-												.createSequentialGroup()
-												.addGap(2)
-												.addComponent(
-														panelDatabaseConnection,
-														GroupLayout.DEFAULT_SIZE,
-														156,
-														Short.MAX_VALUE))
+														.createParallelGroup(
+																Alignment.LEADING)
+														.addGroup(
+																Alignment.TRAILING,
+																gl_panelTop
+																		.createSequentialGroup()
+																		.addGap(2)
+																		.addComponent(
+																				panelDatabaseConnection,
+																				GroupLayout.DEFAULT_SIZE,
+																				156,
+																				Short.MAX_VALUE))
 														.addComponent(
 																panelTitle,
 																Alignment.TRAILING,
 																GroupLayout.PREFERRED_SIZE,
 																GroupLayout.DEFAULT_SIZE,
 																GroupLayout.PREFERRED_SIZE)
-																.addComponent(
-																		panelLogin,
-																		GroupLayout.DEFAULT_SIZE,
-																		GroupLayout.DEFAULT_SIZE,
-																		Short.MAX_VALUE))
-																		.addGap(2)
-																		.addComponent(separator_2,
-																				GroupLayout.PREFERRED_SIZE, 9,
-																				GroupLayout.PREFERRED_SIZE)));
+														.addComponent(
+																panelLogin,
+																GroupLayout.DEFAULT_SIZE,
+																GroupLayout.DEFAULT_SIZE,
+																Short.MAX_VALUE))
+										.addGap(2)
+										.addComponent(separator_2,
+												GroupLayout.PREFERRED_SIZE, 9,
+												GroupLayout.PREFERRED_SIZE)));
 		panelTop.setLayout(gl_panelTop);
 		frmTournamentplanner.getContentPane().setLayout(groupLayout);
 	}
@@ -531,15 +620,21 @@ public class MainUI {
 			lblErrorMessage.setText("Logged in!");
 			lblErrorMessage.setVisible(true);
 
-			//LOGGED IN
+			// LOGGED IN
 			lblUsername.setVisible(false);
 			txtloginHandle.setVisible(false);
 			lblPassword.setVisible(false);
 			pwdPassword.setVisible(false);
 			btnCreateUser.setVisible(false);
 			btnlogin.setVisible(false);
-			//lblErrorMessage.setVisible(false);
+			// lblErrorMessage.setVisible(false);
 			lblLogin.setText("Welcome " + loggedInUser.getHandle());
+
+			controlPanel.setVisible(true);
+
+			// run this to fill user combo box to see only logged in user if not
+			// admin
+			fillUserCombo();
 		} else {
 			lblErrorMessage.setForeground(Color.RED);
 			lblErrorMessage.setText("INCORRECT LOGIN!");
@@ -565,9 +660,29 @@ public class MainUI {
 			cb_user.removeAllItems();
 			UserController userController = new UserController();
 			ArrayList<User> users = userController.getAllUsers();
+			boolean v = false;
+			int f = 0;
 			for (User u : users) {
-				cb_user.addItem(u.getHandle());
+				if (loggedInUser.getUserID() == u.getUserID()
+						&& !loggedInUser.isAdmin()) {
+					cb_user.addItem(u.getHandle());
+					v = true;
+				} else if (loggedInUser.isAdmin()) {
+					cb_user.addItem(u.getHandle());
+					v = true;
+				} else if (loggedInUser == null) {
+					f = 1;
+					v = false;
+				}
+
 			}
+			if (v)
+				btnOpenPlayer.setVisible(true);
+			else
+				btnOpenPlayer.setVisible(false);
+
+			if (f == 1)
+				cb_user.addItem("Fail to get user");
 		} catch (Exception e) {
 			cb_user.addItem("Error");
 		}
@@ -577,7 +692,8 @@ public class MainUI {
 		try {
 			cb_tournament.removeAllItems();
 			TournamentController tournamentController = new TournamentController();
-			ArrayList<Tournament> tournaments = tournamentController.getTournaments();
+			ArrayList<Tournament> tournaments = tournamentController
+					.getTournaments();
 			for (Tournament tournament : tournaments) {
 				cb_tournament.addItem(tournament.getName());
 			}
@@ -586,23 +702,27 @@ public class MainUI {
 		}
 	}
 
-	public static void setDBStatus(boolean connectionAlive){
-		if(connectionAlive){
+	public static void setDBStatus(boolean connectionAlive) {
+		if (connectionAlive) {
 			lblStatus.setForeground(Color.GREEN);
 			lblStatus.setText("IT'S ALIVE!");
-		}else {
+		} else {
 			lblStatus.setForeground(Color.RED);
 			lblStatus.setText("Welp, it died..");
 		}
 	}
-	
+
 	public static void updateData() {
 		fillTeamCombo();
 		fillTournamentCombo();
 		fillUserCombo();
-        ListTeamsUI.updateData();
-        ListTournamentsUI.updateData();
-        ListUsersUI.updateData();
+		ListTeamsUI.updateData();
+		ListTournamentsUI.updateData();
+		ListUsersUI.updateData();
 
+	}
+
+	public static User getLoggedUser() {
+		return loggedInUser;
 	}
 }

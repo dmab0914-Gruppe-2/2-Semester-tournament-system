@@ -34,7 +34,7 @@ public class DBTeam implements IFDBTeam {
 	@Override
 	public int insertTeam(Team team) throws Exception {
 		int rc = -1;
-		String query = "INSERT INTO Team(name,leader) VALUES('"
+		String query = "INSERT INTO Team(name,leaderID) VALUES('"
 				+ team.getName()
 				+ "','"
 				+ team.getLeader()+ "')";

@@ -47,6 +47,7 @@ public class TournamentUI extends JDialog {
 
 	private TournamentController tournamentController;
 	private JComboBox<String> cb_chooseMatch;
+	private JLabel lblStatus;
 
 	/**
 	 * Launch the application.
@@ -95,6 +96,10 @@ public class TournamentUI extends JDialog {
 		});
 
 		btnEnableSignup = new JButton("Enable Signup");
+		if (MainUI.getLoggedUser().isAdmin())
+			btnEnableSignup.setVisible(true);
+		else
+			btnEnableSignup.setVisible(false);
 		btnEnableSignup.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				enableSignup();
@@ -102,6 +107,10 @@ public class TournamentUI extends JDialog {
 		});
 
 		btnStartTournament = new JButton("Start Tournament");
+		if (MainUI.getLoggedUser().isAdmin())
+			btnStartTournament.setVisible(true);
+		else
+			btnStartTournament.setVisible(false);
 		btnStartTournament.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				startTournament(tournamentName);
@@ -109,26 +118,36 @@ public class TournamentUI extends JDialog {
 		});
 
 		btnEndTournament = new JButton("End Tournament");
+		if (MainUI.getLoggedUser().isAdmin())
+			btnEndTournament.setVisible(true);
+		else
+			btnEndTournament.setVisible(false);
 		btnEndTournament.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// TODO End Tournament
+				endTournament();
 			}
 		});
 
 		btnAdvanceTournament = new JButton("Advance Tournament");
+		if (MainUI.getLoggedUser().isAdmin())
+			btnAdvanceTournament.setVisible(true);
+		else
+			btnAdvanceTournament.setVisible(false);
 		btnAdvanceTournament.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				advanceTournament();
+				advanceTournament(tournamentName);
 			}
 		});
 
 		JPanel panel_setMatch = new JPanel();
 
 		JSeparator separator = new JSeparator();
+
+		lblStatus = new JLabel("");
 		GroupLayout gl_contentPanel = new GroupLayout(contentPanel);
 		gl_contentPanel
 				.setHorizontalGroup(gl_contentPanel
-						.createParallelGroup(Alignment.LEADING)
+						.createParallelGroup(Alignment.TRAILING)
 						.addGroup(
 								gl_contentPanel
 										.createSequentialGroup()
@@ -144,55 +163,71 @@ public class TournamentUI extends JDialog {
 														.addGroup(
 																gl_contentPanel
 																		.createSequentialGroup()
+																		.addGroup(
+																				gl_contentPanel
+																						.createParallelGroup(
+																								Alignment.LEADING)
+																						.addGroup(
+																								gl_contentPanel
+																										.createSequentialGroup()
+																										.addComponent(
+																												btnAdvanceTournament,
+																												GroupLayout.DEFAULT_SIZE,
+																												147,
+																												Short.MAX_VALUE)
+																										.addPreferredGap(
+																												ComponentPlacement.RELATED)
+																										.addComponent(
+																												btnEndTournament))
+																						.addGroup(
+																								gl_contentPanel
+																										.createSequentialGroup()
+																										.addComponent(
+																												lblTournamentStatus)
+																										.addPreferredGap(
+																												ComponentPlacement.RELATED)
+																										.addComponent(
+																												lblTournamentstatusinfo))
+																						.addGroup(
+																								gl_contentPanel
+																										.createSequentialGroup()
+																										.addComponent(
+																												cb_team,
+																												0,
+																												170,
+																												Short.MAX_VALUE)
+																										.addPreferredGap(
+																												ComponentPlacement.UNRELATED)
+																										.addComponent(
+																												btnAddTeam,
+																												GroupLayout.PREFERRED_SIZE,
+																												84,
+																												Short.MAX_VALUE))
+																						.addGroup(
+																								gl_contentPanel
+																										.createSequentialGroup()
+																										.addComponent(
+																												btnEnableSignup,
+																												GroupLayout.PREFERRED_SIZE,
+																												103,
+																												GroupLayout.PREFERRED_SIZE)
+																										.addPreferredGap(
+																												ComponentPlacement.RELATED)
+																										.addComponent(
+																												btnStartTournament,
+																												GroupLayout.DEFAULT_SIZE,
+																												155,
+																												Short.MAX_VALUE)))
+																		.addGap(42))
+														.addGroup(
+																gl_contentPanel
+																		.createSequentialGroup()
 																		.addComponent(
-																				btnAdvanceTournament,
+																				lblStatus,
 																				GroupLayout.DEFAULT_SIZE,
-																				147,
+																				296,
 																				Short.MAX_VALUE)
-																		.addPreferredGap(
-																				ComponentPlacement.RELATED)
-																		.addComponent(
-																				btnEndTournament))
-														.addGroup(
-																gl_contentPanel
-																		.createSequentialGroup()
-																		.addComponent(
-																				lblTournamentStatus)
-																		.addPreferredGap(
-																				ComponentPlacement.RELATED)
-																		.addComponent(
-																				lblTournamentstatusinfo))
-														.addGroup(
-																gl_contentPanel
-																		.createSequentialGroup()
-																		.addComponent(
-																				cb_team,
-																				0,
-																				170,
-																				Short.MAX_VALUE)
-																		.addPreferredGap(
-																				ComponentPlacement.UNRELATED)
-																		.addComponent(
-																				btnAddTeam,
-																				GroupLayout.PREFERRED_SIZE,
-																				84,
-																				Short.MAX_VALUE))
-														.addGroup(
-																gl_contentPanel
-																		.createSequentialGroup()
-																		.addComponent(
-																				btnEnableSignup,
-																				GroupLayout.PREFERRED_SIZE,
-																				103,
-																				GroupLayout.PREFERRED_SIZE)
-																		.addPreferredGap(
-																				ComponentPlacement.RELATED)
-																		.addComponent(
-																				btnStartTournament,
-																				GroupLayout.DEFAULT_SIZE,
-																				155,
-																				Short.MAX_VALUE)))
-										.addGap(42))
+																		.addContainerGap())))
 						.addGroup(
 								gl_contentPanel
 										.createSequentialGroup()
@@ -201,11 +236,10 @@ public class TournamentUI extends JDialog {
 												488, GroupLayout.PREFERRED_SIZE)
 										.addContainerGap())
 						.addGroup(
-								Alignment.TRAILING,
 								gl_contentPanel
 										.createSequentialGroup()
 										.addComponent(separator,
-												GroupLayout.DEFAULT_SIZE, 504,
+												GroupLayout.DEFAULT_SIZE, 493,
 												Short.MAX_VALUE)
 										.addContainerGap()));
 		gl_contentPanel
@@ -217,7 +251,8 @@ public class TournamentUI extends JDialog {
 										.addGroup(
 												gl_contentPanel
 														.createParallelGroup(
-																Alignment.LEADING)
+																Alignment.LEADING,
+																false)
 														.addGroup(
 																gl_contentPanel
 																		.createSequentialGroup()
@@ -262,7 +297,16 @@ public class TournamentUI extends JDialog {
 																						.addComponent(
 																								btnEndTournament)
 																						.addComponent(
-																								btnAdvanceTournament)))
+																								btnAdvanceTournament))
+																		.addPreferredGap(
+																				ComponentPlacement.RELATED,
+																				GroupLayout.DEFAULT_SIZE,
+																				Short.MAX_VALUE)
+																		.addComponent(
+																				lblStatus,
+																				GroupLayout.PREFERRED_SIZE,
+																				23,
+																				GroupLayout.PREFERRED_SIZE))
 														.addComponent(
 																panel,
 																GroupLayout.PREFERRED_SIZE,
@@ -279,6 +323,10 @@ public class TournamentUI extends JDialog {
 												109, GroupLayout.PREFERRED_SIZE)
 										.addContainerGap(28, Short.MAX_VALUE)));
 		panel_setMatch.setLayout(null);
+		if(MainUI.getLoggedUser().isAdmin())
+			panel_setMatch.setVisible(true);
+		else
+			panel_setMatch.setVisible(false);
 
 		JLabel lblSetMatchResult = new JLabel("Set match result");
 		lblSetMatchResult.setBounds(10, 11, 186, 14);
@@ -295,9 +343,12 @@ public class TournamentUI extends JDialog {
 		JButton btnOpenMatch = new JButton("Set Result");
 		btnOpenMatch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int first = cb_chooseMatch.getSelectedItem().toString().indexOf("(") + 1;
-				int last = cb_chooseMatch.getSelectedItem().toString().indexOf(")");
-				String Str = cb_chooseMatch.getSelectedItem().toString().substring(first, last);
+				int first = cb_chooseMatch.getSelectedItem().toString()
+						.indexOf("(") + 1;
+				int last = cb_chooseMatch.getSelectedItem().toString()
+						.indexOf(")");
+				String Str = cb_chooseMatch.getSelectedItem().toString()
+						.substring(first, last);
 				int matchID = Integer.parseInt(Str);// matchID to open match
 				SetResult.setResultWindow(matchID);
 			}
@@ -555,6 +606,9 @@ public class TournamentUI extends JDialog {
 		TeamController teamController = new TeamController();
 		Tournament tour = tournamentController
 				.getTournamentByName(tournamentName);
+		if (cb_chooseMatch.getItemCount() > 0) {
+			cb_chooseMatch.removeAllItems();
+		}
 		ArrayList<Match> matches = new ArrayList<Match>();
 		if (tour.getStatus().equals(Tournament.Status.running)) {
 			try {
@@ -568,16 +622,19 @@ public class TournamentUI extends JDialog {
 							.getId());
 				}
 				for (Match m : matches) {
-					cb_chooseMatch.addItem("("
-							+ m.getId()
-							+ ") Round: "
-							+ m.getRoundNumber()
-							+ " - "
-							+ teamController.findTeamById(m.getTeam1().getId())
-									.getName()
-							+ " VS. "
-							+ teamController.findTeamById(m.getTeam2().getId())
-									.getName() + " Status: " + m.getStatus());
+					if (m.getRoundNumber() == tour.getRoundNumber()) {
+						cb_chooseMatch.addItem("("
+								+ m.getId()
+								+ ") Round: "
+								+ m.getRoundNumber()
+								+ " - "
+								+ teamController.findTeamById(
+										m.getTeam1().getId()).getName()
+								+ " VS. "
+								+ teamController.findTeamById(
+										m.getTeam2().getId()).getName()
+								+ " Status: " + m.getStatus());
+					}
 				}
 			} catch (Exception e) {
 				cb_chooseMatch.addItem("Error");
@@ -601,10 +658,13 @@ public class TournamentUI extends JDialog {
 		Team team = teamCtr.findTeam(cb_team.getSelectedItem().toString());
 
 		try {
-			tourCtr.addTeamToTournament(
-					tourCtr.getTournamentByName(tournamentName), team);
+			if(MainUI.getLoggedUser().getUserID() == team.getLeader()) {
+				tourCtr.addTeamToTournament(tourCtr.getTournamentByName(tournamentName), team);
+			} else
+				lblStatus.setText("Your not this team leader!");
 		} catch (Exception e) {
 			System.out.println("Couldn't enable add team for the tournament.");
+			lblStatus.setText("This team are in the tournament!");
 		}
 	}
 
@@ -623,18 +683,36 @@ public class TournamentUI extends JDialog {
 		}
 	}
 
-	private void advanceTournament() {
+	private void advanceTournament(String tournamentName) {
 		if (tournament.getStatus().equals(Tournament.Status.running)) {
 			try {
-				tournamentController.advanceTournament(tournament.getId());
-				System.out.println("Tournament has been advanced!");
+				if (tournamentController.advanceTournament(tournament.getId()) != null) {
+					System.out.println("Tournament has been advanced!");
+					fillMatchCombo(tournamentName);
+				} else {
+					lblStatus.setText("You need to end tournamet!");
+				}
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 			displayTournamentInfo();
-
 		} else {
 			System.out.println("Tournament cold not be advanced!");
 		}
+	}
+
+	private void endTournament() {
+		TeamController teamController = new TeamController();
+		try {
+			Tournament endedTour = tournamentController
+					.endTournament(tournament.getId());
+			lblStatus.setText("Congratulation to "
+					+ teamController.findTeamById(
+							endedTour.getWinnerTeam().getId()).getName()
+					+ " you have won!!!!");
+		} catch (Exception e) {
+			lblStatus.setText("cant stop now!");
+		}
+		displayTournamentInfo();
 	}
 }

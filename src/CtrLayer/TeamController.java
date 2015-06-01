@@ -12,9 +12,8 @@ import ModelLayer.User;
 public class TeamController implements IFTeamController {
 
 	@Override
-	public void addTeam(int id, String name, int leader) throws Exception {
+	public void addTeam(String name, int leader) throws Exception {
 		Team team = new Team();
-		team.setId(id);
 		team.setName(name);
 		team.setLeader(leader);
 

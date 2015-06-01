@@ -28,11 +28,20 @@ public class TournamentController implements IFTournamentController {
 		dbMatch = new DBMatch();
 	}
 
+	public void addTournamenet(String name, String gameName, int teamSize,
+			boolean withPlayOff) throws Exception {
+		try {
+		dbTournament.addTournament(new Tournament(name, gameName, teamSize, withPlayOff, Tournament.intToStatus(1)));
+		} catch (Exception e) {
+			System.out.println("error in new team");
+		}
+	}
+
 	public ArrayList<Tournament> getTournaments() {
 		return dbTournament.getTournaments(false);
 	}
-	
-	public Tournament getTournamentByName(String tournamentName){
+
+	public Tournament getTournamentByName(String tournamentName) {
 		return dbTournament.getTournamentByName(tournamentName, false);
 	}
 
@@ -54,21 +63,23 @@ public class TournamentController implements IFTournamentController {
 	 */
 	public ArrayList<Match> startTournament(int tournamentID) throws Exception {
 		if (dbTournament.startTournament(tournamentID)) {
-			ArrayList<Team> teams = dbTournament
-					.getTournamentTeams(tournamentID);
+			ArrayList<Team> teams = dbTournament.getTournamentTeams(tournamentID);
 			// Asks for a list of matches from the given teams and given scores.
 			// As there isn't any scores to give atm, it asks for an empty
 			// ArrayList.
-			ArrayList<Match> matches = eliminationController.generateRound(
+			ArrayList<Match> matches = eliminationController.generateSERound(
 					teams, new ArrayList<Integer>());
 			// new list with the matches including their id. makes it easier to
 			// revert in case one gives an error.
 			ArrayList<Match> newMatches = new ArrayList<Match>();
 			for (int i = 0; i < matches.size(); i++) {
 				matches.get(i).setRoundNumber(1); // First round is always round
-				matches.get(i).setTournamentId(tournamentID); // Adds tournament id to matches for the tournament its belongs to
-				matches.get(i).setStatus(Tournament.intToStatus(3)); // set matches to be running, because a match will first be create when its ready to start.
-				// 1.
+				matches.get(i).setTournamentId(tournamentID); // Adds tournament id to matches
+																// for the tournament its belongs to
+				matches.get(i).setStatus(Tournament.intToStatus(3)); // set matches to be running,
+																		// because a match will
+																		// first be create when its
+																		// ready to start.
 				try {
 					newMatches.add(dbMatch.addmatch(matches.get(i)));
 				} catch (Exception e) { // In case something happened. It will
@@ -108,31 +119,48 @@ public class TournamentController implements IFTournamentController {
 		for (Match lr : lastRound) {
 			if (lr.getRoundNumber() == t.getRoundNumber()) {
 				if (lr.getTeam1Score() > lr.getTeam2Score()) {
-					wTeams.add(i, lr.getTeam1());
-					wScore.add(i, lr.getTeam1Score());
+					wTeams.add(lr.getTeam1());
+					wScore.add(lr.getTeam1Score());
 				} else {
-					wTeams.add(i, lr.getTeam2());
-					wScore.add(i, lr.getTeam2Score());
+					wTeams.add(lr.getTeam2());
+					wScore.add(lr.getTeam2Score());
 				}
 			}
 			i++;
 		}
 		try {
 			int rn = dbTournament.advanceTournament(tournamentID);
-			ArrayList<Match> newMatches = eliminationController.generateRound(
-					wTeams, wScore);
+			ArrayList<Match> newMatches = eliminationController.generateSERound(wTeams, wScore);
 			for (Match nw : newMatches) {
-				nw.setRoundNumber(nw.getRoundNumber() + 1);
+				nw.setRoundNumber(t.getRoundNumber() + 1);
+				nw.setTournamentId(t.getId());
+				dbMatch.addmatch(nw);
 			}
+			System.out.println("advanced to next round");
 			return newMatches;
 		} catch (Exception e) {
 			System.out.println("Error in advance tournament: " + e);
+			dbTournament.rollBackRound(tournamentID);
 			return null;
 		}
 	}
 
 	public Tournament endTournament(int tournamentID) {
-		return dbTournament.endTournament(tournamentID);
+		Tournament t = dbTournament.getTournament(tournamentID, false);
+		ArrayList<Match> lastRound = dbMatch
+				.getMatchesForTournament(tournamentID);
+		Team winner = null;
+
+		for (Match lr : lastRound) {
+			if (lr.getRoundNumber() == t.getRoundNumber()) {
+				if (lr.getTeam1Score() > lr.getTeam2Score()) {
+					winner = lr.getTeam1();
+				} else {
+					winner = lr.getTeam2();
+				}
+			}
+		}
+		return dbTournament.endTournament(tournamentID, winner);
 	}
 
 	@Override
@@ -151,7 +179,7 @@ public class TournamentController implements IFTournamentController {
 	public void removeTeamFromTournament(Tournament tournament, Team team)
 			throws Exception {
 		IFDBTournamentTeams dbTT = new DBTournamentTeams();
-		
+
 		try {
 			dbTT.removeTeamFromTournament(tournament.getId(), team.getId());
 		} catch (Exception e) {
@@ -170,8 +198,14 @@ public class TournamentController implements IFTournamentController {
 		IFDBTournamentTeams dbTT = new DBTournamentTeams();
 		return dbTT.getTournamentFromTeams(teamID);
 	}
+
 	public ArrayList<Match> getMatchesForTournament(int tournamentID) {
 		IFDBMatch dbM = new DBMatch();
 		return dbM.getMatchesForTournament(tournamentID);
+	}
+
+	public Match getMatch(int matchID) {
+		IFDBMatch dbM = new DBMatch();
+		return dbM.getMatch(matchID);
 	}
 }
