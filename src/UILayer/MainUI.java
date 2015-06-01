@@ -505,7 +505,7 @@ public class MainUI {
 		lblConnectionStatus.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		lblConnectionStatus.setHorizontalAlignment(SwingConstants.CENTER);
 
-		JLabel lblToDatabse = new JLabel("to databse");
+		JLabel lblToDatabse = new JLabel("to database");
 		lblToDatabse.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		lblToDatabse.setHorizontalAlignment(SwingConstants.CENTER);
 
