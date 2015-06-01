@@ -18,7 +18,7 @@ public class DBConnection {
 	private static String user = "";
 	private static String pass = "";
 	private static String conn = "";
-	private static int port = 0;
+	private static int port = 0 ;
 	private static String dbName = "";
 
 	private static final String driver = "jdbc:sqlserver://"+conn + ":" + Integer.toString(port);	//localhost:1433"; //Connection adress to the sql server
@@ -126,6 +126,7 @@ public class DBConnection {
 		dataSource.setPassword(pass);
 		dataSource.setPortNumber(port);
 		dataSource.setDatabaseName(dbName);
+		dataSource.setURL("jdbc:sqlserver://" + conn);
 		return dataSource;
 	}
 }// end DBConnection
