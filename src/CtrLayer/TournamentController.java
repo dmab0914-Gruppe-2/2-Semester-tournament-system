@@ -63,41 +63,23 @@ public class TournamentController implements IFTournamentController {
 	 */
 	public ArrayList<Match> startTournament(int tournamentID) throws Exception {
 		if (dbTournament.startTournament(tournamentID)) {
-			ArrayList<Team> teams = dbTournament
-					.getTournamentTeams(tournamentID);
+			ArrayList<Team> teams = dbTournament.getTournamentTeams(tournamentID);
 			// Asks for a list of matches from the given teams and given scores.
 			// As there isn't any scores to give atm, it asks for an empty
 			// ArrayList.
-			ArrayList<Match> matches = eliminationController.generateRound(
+			ArrayList<Match> matches = eliminationController.generateSERound(
 					teams, new ArrayList<Integer>());
 			// new list with the matches including their id. makes it easier to
 			// revert in case one gives an error.
 			ArrayList<Match> newMatches = new ArrayList<Match>();
 			for (int i = 0; i < matches.size(); i++) {
 				matches.get(i).setRoundNumber(1); // First round is always round
-				matches.get(i).setTournamentId(tournamentID); // Adds tournament
-																// id to matches
-																// for the
-																// tournament
-																// its belongs
-																// to
-				matches.get(i).setStatus(Tournament.intToStatus(3)); // set
-																		// matches
-																		// to be
-																		// running,
-																		// because
-																		// a
-																		// match
-																		// will
-																		// first
-																		// be
-																		// create
-																		// when
-																		// its
-																		// ready
-																		// to
-																		// start.
-				// 1.
+				matches.get(i).setTournamentId(tournamentID); // Adds tournament id to matches
+																// for the tournament its belongs to
+				matches.get(i).setStatus(Tournament.intToStatus(3)); // set matches to be running,
+																		// because a match will
+																		// first be create when its
+																		// ready to start.
 				try {
 					newMatches.add(dbMatch.addmatch(matches.get(i)));
 				} catch (Exception e) { // In case something happened. It will
@@ -132,8 +114,7 @@ public class TournamentController implements IFTournamentController {
 
 		Tournament t = dbTournament.getTournament(tournamentID, false);
 
-		ArrayList<Match> lastRound = dbMatch
-				.getMatchesForTournament(tournamentID);
+		ArrayList<Match> lastRound = dbMatch.getMatchesForTournament(tournamentID);
 		int i = 0;
 		for (Match lr : lastRound) {
 			if (lr.getRoundNumber() == t.getRoundNumber()) {
@@ -147,11 +128,9 @@ public class TournamentController implements IFTournamentController {
 			}
 			i++;
 		}
-
 		try {
 			int rn = dbTournament.advanceTournament(tournamentID);
-			ArrayList<Match> newMatches = eliminationController.generateRound(
-					wTeams, wScore);
+			ArrayList<Match> newMatches = eliminationController.generateSERound(wTeams, wScore);
 			for (Match nw : newMatches) {
 				nw.setRoundNumber(t.getRoundNumber() + 1);
 				nw.setTournamentId(t.getId());

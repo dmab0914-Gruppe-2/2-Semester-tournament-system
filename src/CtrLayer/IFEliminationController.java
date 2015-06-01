@@ -14,6 +14,6 @@ public interface IFEliminationController {
 	 *               If this is the first match, throw an empty list of scores and a random setup will be generated
 	 * @return ArrayList of Match(es) to be played
 	 */
-	public abstract ArrayList<Match> generateRound(ArrayList<Team> teams, ArrayList<Integer> scores);//endMethod
+	public abstract ArrayList<Match> generateSERound(ArrayList<Team> teams, ArrayList<Integer> scores);//endMethod
 
 }
