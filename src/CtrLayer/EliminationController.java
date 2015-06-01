@@ -19,7 +19,7 @@ public class EliminationController implements IFEliminationController {
     }//endConstructor
 
     /**
-     *
+     * generates a list of Matches which in effect is a round
      * @param teams A list of participating teams in the set of matches
      * @param scores A list of scores from last Round which is being used to generate next round with set scores.
      *               If this is the first match, throw an empty list of scores and a random setup will be generated
@@ -165,6 +165,11 @@ public class EliminationController implements IFEliminationController {
         return match;
     }
 
+    /**
+     *
+     * @param scores ArrayList<Integer> scores
+     * @return Position of Maximum entry
+     */
     private int getMaxScore(ArrayList<Integer> scores){
         boolean max = false;
         int i = 0;
