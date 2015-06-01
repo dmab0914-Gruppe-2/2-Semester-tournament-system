@@ -28,14 +28,19 @@ public class EliminationController implements IFEliminationController {
     public ArrayList<Match> generateSERound(ArrayList<Team> teams, ArrayList<Integer> scores) {
 
         ArrayList<Match> matches = new ArrayList<>();
+
         /**
          * Scores and teams are the same size
          */
         if(teams.size() == scores.size()){
+
             boolean complete = false;
+
             //generates matches
             while (!complete) {
+
                 int maxScorePos = getMaxScore(scores);
+
 
                 if (maxScorePos != -1) {
 
@@ -59,11 +64,14 @@ public class EliminationController implements IFEliminationController {
                 } else {
                     throw new IndexOutOfBoundsException();
                 }//endIf
+
+
                 if (scores.size() == 0 && teams.size() == 0) {
                     complete = true;
                 }else if(scores.size() != teams.size()){
                     throw new IndexOutOfBoundsException();
                 }//endIf
+
             }//endWhile
 
 
@@ -75,6 +83,8 @@ public class EliminationController implements IFEliminationController {
                 System.out.println("Teams are divisible by two, number of teams: " + teams.size());
 
                 while(teams.size() > 0) {
+
+
                     int rndNumber = rndNumber(teams.size());
                     Team team1 = teams.get(rndNumber);
 
@@ -87,12 +97,16 @@ public class EliminationController implements IFEliminationController {
                     //Match match = new Match();
                      Match match = generateMatch(team1, team2);
                     matches.add(match);
+
                     //System.out.printf("Remaining teams: " + teams.size() +"\n");
+
                 }//endFor
             } else if (teams.size() % 2 != 0) {
+
             System.out.println("Teams are NOT divisible by two, number of teams: " + teams.size());
 
             while (teams.size() > 0){
+
                 if(teams.size() >= 3){
                     int rndNumber = rndNumber(teams.size());
                     Team team1 = teams.get(rndNumber);
@@ -103,6 +117,7 @@ public class EliminationController implements IFEliminationController {
                     teams.remove(team2);
                     Match match = generateMatch(team1, team2);
                     matches.add(match);
+
                 }else if(teams.size() == 1){
                     Match match = new Match();
                     Team team = teams.get(0);
@@ -135,6 +150,7 @@ public class EliminationController implements IFEliminationController {
         int i  = rnd.nextInt(input);
         return i;
     }//endRndNumber
+
     /**
      * Generates a match of two teams
      * @param one team one participating in the tournament
@@ -148,6 +164,12 @@ public class EliminationController implements IFEliminationController {
         match.setStatus(Tournament.Status.waiting);
         return match;
     }
+
+    /**
+     *  returns the maximum value of the input arrayList
+     * @param scores ArrayList<Integer> scores
+     * @return Position of Maximum entry
+     */
     private int getMaxScore(ArrayList<Integer> scores){
         boolean max = false;
         int i = 0;
@@ -157,6 +179,7 @@ public class EliminationController implements IFEliminationController {
             if(scores.get(i) > maxValue){
                 maxPos = i;
                 maxValue = scores.get(i);
+
             }//endIf
             i++;
             if(maxValue == -1){
@@ -168,4 +191,5 @@ public class EliminationController implements IFEliminationController {
         }//endWhile
         return maxPos;
     }//endMethod
+
 }//endClass
