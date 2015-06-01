@@ -50,7 +50,7 @@ public class TestEliminationController {
             i++;
         }
 
-        ArrayList<Match> matches = eliminationController.generateRound(teams, scores);
+        ArrayList<Match> matches = eliminationController.generateSERound(teams, scores);
 
         assertEquals(5, matches.size());
 
@@ -80,7 +80,7 @@ public class TestEliminationController {
             i++;
         }
 
-        ArrayList<Match> matches = eliminationController.generateRound(teams, scores);
+        ArrayList<Match> matches = eliminationController.generateSERound(teams, scores);
 
         assertEquals(5, matches.size());
     }
@@ -106,7 +106,7 @@ public class TestEliminationController {
             i++;
         }
 
-        eliminationController.generateRound(teams, scores);
+        eliminationController.generateSERound(teams, scores);
     }
 
     @Test
@@ -119,7 +119,7 @@ public class TestEliminationController {
             teams.add(team);
             i++;
         }
-        ArrayList<Match> matches = eliminationController.generateRound(teams, new ArrayList<Integer>());
+        ArrayList<Match> matches = eliminationController.generateSERound(teams, new ArrayList<Integer>());
         assertEquals(5, matches.size());
     }
 
@@ -134,7 +134,7 @@ public class TestEliminationController {
             teams.add(team);
             i++;
         }
-        ArrayList<Match> matches = eliminationController.generateRound(teams, new ArrayList<Integer>());
+        ArrayList<Match> matches = eliminationController.generateSERound(teams, new ArrayList<Integer>());
         assertEquals(5, matches.size());
     }
 }
