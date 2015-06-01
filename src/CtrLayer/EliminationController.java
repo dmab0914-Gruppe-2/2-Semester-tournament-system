@@ -25,7 +25,7 @@ public class EliminationController implements IFEliminationController {
      *               If this is the first match, throw an empty list of scores and a random setup will be generated
      * @return ArrayList of Match(es) to be played
      */
-    public ArrayList<Match> generateRound(ArrayList<Team> teams, ArrayList<Integer> scores) {
+    public ArrayList<Match> generateSERound(ArrayList<Team> teams, ArrayList<Integer> scores) {
 
         ArrayList<Match> matches = new ArrayList<>();
 
