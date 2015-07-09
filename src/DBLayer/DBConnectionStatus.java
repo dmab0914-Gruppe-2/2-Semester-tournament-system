@@ -9,7 +9,7 @@ import java.sql.SQLException;
  * Created by Andreas on 27-05-2015.
  */
 public class DBConnectionStatus extends Thread {
-    SQLServerDataSource dataSource = DBConnection.getDataSource();
+    private SQLServerDataSource dataSource = DBConnection.getDataSource();
     public DBConnectionStatus() {
         super();
     }
